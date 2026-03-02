@@ -16473,6 +16473,7 @@
             "description": "Internal server error"
           }
         },
+        "description": "Offboard a user with configurable options for mailbox conversion, access delegation, license removal, and more",
         "x-cipp-role": "Identity.User.ReadWrite",
         "x-cipp-scheduled-branch": true,
         "x-cipp-dynamic-options": true,
@@ -16483,19 +16484,91 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "PostExecution": {
-                    "$ref": "#/components/schemas/PostExecution"
+                  "tenantFilter": {
+                    "type": "string"
                   },
-                  "reference": {
+                  "user": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "ConvertToShared": {
+                    "type": "boolean"
+                  },
+                  "HideFromGAL": {
+                    "type": "boolean"
+                  },
+                  "removeCalendarInvites": {
+                    "type": "boolean"
+                  },
+                  "removePermissions": {
+                    "type": "boolean"
+                  },
+                  "removeCalendarPermissions": {
+                    "type": "boolean"
+                  },
+                  "RemoveRules": {
+                    "type": "boolean"
+                  },
+                  "RemoveMobile": {
+                    "type": "boolean"
+                  },
+                  "RemoveGroups": {
+                    "type": "boolean"
+                  },
+                  "RemoveLicenses": {
+                    "type": "boolean"
+                  },
+                  "RevokeSessions": {
+                    "type": "boolean"
+                  },
+                  "DisableSignIn": {
+                    "type": "boolean"
+                  },
+                  "ClearImmutableId": {
+                    "type": "boolean"
+                  },
+                  "ResetPass": {
+                    "type": "boolean"
+                  },
+                  "RemoveMFADevices": {
+                    "type": "boolean"
+                  },
+                  "RemoveTeamsPhoneDID": {
+                    "type": "boolean"
+                  },
+                  "DeleteUser": {
+                    "type": "boolean"
+                  },
+                  "AccessNoAutomap": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "AccessAutomap": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "OnedriveAccess": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "forward": {
+                    "type": "string"
+                  },
+                  "disableForwarding": {
+                    "type": "boolean"
+                  },
+                  "KeepCopy": {
+                    "type": "boolean"
+                  },
+                  "OOO": {
                     "type": "string"
                   },
                   "Scheduled": {
                     "$ref": "#/components/schemas/ScheduledTask"
                   },
-                  "tenantFilter": {
-                    "type": "string"
+                  "PostExecution": {
+                    "$ref": "#/components/schemas/PostExecution"
                   },
-                  "user": {
+                  "reference": {
                     "type": "string"
                   }
                 },

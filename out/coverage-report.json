@@ -320,9 +320,9 @@
     "constructed_body": []
   },
   "type_inference_coverage": {
-    "total_params": 2459,
-    "non_string_params": 482,
-    "pct_typed": 19.6
+    "total_params": 2482,
+    "non_string_params": 506,
+    "pct_typed": 20.4
   },
   "note": "blind_endpoints: API function found but zero params extracted. probable_404s: ORPHAN endpoints with active call sites \u2014 genuine runtime 404s in CIPP. orphan_delta.new: endpoints that became ORPHAN since last run \u2014 investigate immediately. sidecar_candidates = all endpoints without a sidecar that need one. type_inference_coverage.pct_typed: % params with a richer type than default 'string' \u2014 increases as sidecars and TYPE_HINTS improve."
 }

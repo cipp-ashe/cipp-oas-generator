@@ -83,10 +83,10 @@ jobs:
             --theme.openapi.theme.colors.http.put='#06AED4' \
             --theme.openapi.theme.colors.http.patch='#9E77ED' \
             --theme.openapi.theme.colors.http.delete='#F04438' \
-            --theme.openapi.theme.rightPanel.backgroundColor='#101826' \
+            --theme.openapi.theme.rightPanel.backgroundColor='#0C121D' \
             --theme.openapi.theme.rightPanel.textColor='#FFFFFF' \
-            --theme.openapi.theme.codeBlock.backgroundColor='#F9FAFB' \
-            --theme.openapi.theme.schema.nestedBackground='#FAFBFC' \
+            --theme.openapi.theme.codeBlock.backgroundColor='#1A1F2E' \
+            --theme.openapi.theme.schema.nestedBackground='#0C121D' \
             --theme.openapi.theme.schema.typeNameColor='#F77F00' \
             --theme.openapi.theme.schema.typeTitleColor='#101828' \
             --theme.openapi.theme.spacing.unit='5' \

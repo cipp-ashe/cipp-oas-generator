@@ -1,0 +1,19 @@
+{
+  "add_params": [
+    { "name": "Action",           "in": "body", "required": true,  "type": "string", "confidence": "high", "description": "Dispatch action. Formatter hard-codes 'AddEdit'. PS1 supports: AddEdit, Delete. Defaults handled by switch." },
+    { "name": "groupId",          "in": "body", "required": false, "type": "string", "confidence": "high", "description": "Group GUID. For edit form this is pre-populated from router query. PS1 auto-generates a new GUID if not provided." },
+    { "name": "groupName",        "in": "body", "required": true,  "type": "string", "confidence": "high", "description": "Display name for the tenant group." },
+    { "name": "groupDescription", "in": "body", "required": false, "type": "string", "confidence": "high" },
+    { "name": "groupType",        "in": "body", "required": false, "type": "string", "confidence": "high", "description": "Enum: 'static'|'dynamic'. PS1 defaults to 'static' if not provided.", "enum": ["static", "dynamic"] },
+    { "name": "members",          "in": "body", "required": false, "type": "array",  "confidence": "high", "description": "Array of {label, value: customerId} tenant objects. Used only for static groups." },
+    { "name": "dynamicRules",     "in": "body", "required": false, "type": "array",  "confidence": "high", "description": "Array of rule objects [{property: string, operator: string, value: any}]. Formatter unwraps property/operator from {label,value} objects. Required when groupType='dynamic'." },
+    { "name": "ruleLogic",        "in": "body", "required": false, "type": "string", "confidence": "high", "description": "Logic for combining dynamic rules. Enum: 'and'|'or'. PS1 defaults to 'and'." }
+  ],
+  "remove_params": [],
+  "trust_level": "verified",
+  "tested_version": null,
+  "notes": "customDataformatter in the edit tenant group page: spreads all form values into formattedData, adds Action='AddEdit', and for dynamic groups replaces dynamicRules with unwrapped versions (property.value || property, operator.value || operator, value passed through). Static groups pass members as-is. PS1 reads all these fields directly by name.",
+  "x_cipp_warnings": [
+    "customDataformatter is present on the CippFormPage for this endpoint. Form field names and/or types may be renamed or restructured before POST. Verify the transformer function in the frontend page file and correct param names/types accordingly."
+  ]
+}

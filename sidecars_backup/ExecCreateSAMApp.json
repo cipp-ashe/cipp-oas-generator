@@ -1,0 +1,16 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 1 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "access_token",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "access_token parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api. Verified and promoted to high confidence."
+}

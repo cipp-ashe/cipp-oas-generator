@@ -1,0 +1,49 @@
+{
+  "override_confidence": "high",
+  "_comment": "Auto-generated from: CippIntunePolicy (6 fields)",
+  "override_method": "POST",
+  "parameters": [
+    {
+      "name": "TemplateList",
+      "in": "body",
+      "required": false,
+      "type": "object",
+      "description": "Please choose a template to apply."
+    },
+    {
+      "name": "RAWJson",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Conditional Access Parameters"
+    },
+    {
+      "name": "AssignTo",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "AssignTo"
+    },
+    {
+      "name": "customGroup",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Custom Group Names separated by comma. Wildcards (*) are allowed"
+    },
+    {
+      "name": "assignmentFilter",
+      "in": "body",
+      "required": false,
+      "type": "object",
+      "description": "Assignment Filter (Optional)"
+    },
+    {
+      "name": "assignmentFilterType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Assignment Filter Mode"
+    }
+  ]
+}

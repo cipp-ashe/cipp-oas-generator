@@ -1,0 +1,60 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
+  "trust_level": "inferred",
+  "notes": "External form component \u2014 fields from child component(s), not inline. Resolved: CippAddAssignmentFilterTemplateForm (CippAddAssignmentFilterTemplateForm.jsx). 5 param(s) still defaulting to string \u2014 verify types.",
+  "add_params": [
+    {
+      "name": "GUID",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddAssignmentFilterTemplateForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddAssignmentFilterTemplateForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "description",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddAssignmentFilterTemplateForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "assignmentFilterManagementType",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddAssignmentFilterTemplateForm.jsx",
+      "type": "string",
+      "enum": [
+        "devices",
+        "apps"
+      ]
+    },
+    {
+      "name": "platform",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddAssignmentFilterTemplateForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "rule",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddAssignmentFilterTemplateForm.jsx",
+      "type": "string"
+    }
+  ]
+}

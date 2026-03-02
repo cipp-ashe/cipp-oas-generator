@@ -1,10 +1,6 @@
 {
-  "trust_level": "verified",
-  "remove_params": [
-    "companyName",
-    "jobTitle",
-    "businessPhone"
-  ],
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
   "add_params": [
     {
       "name": "Company",
@@ -29,7 +25,111 @@
       "type": "string",
       "confidence": "medium",
       "description": "(auto) API uses 'phone', frontend sends 'businessPhone' \u2014 likely the same field (similarity=0.56). Verify and correct type."
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: displayName"
+    },
+    {
+      "name": "State",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: State"
+    },
+    {
+      "name": "tenantid",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: tenantid"
+    },
+    {
+      "name": "lastName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: lastName"
+    },
+    {
+      "name": "PostalCode",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: PostalCode"
+    },
+    {
+      "name": "StreetAddress",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: StreetAddress"
+    },
+    {
+      "name": "mobilePhone",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: mobilePhone"
+    },
+    {
+      "name": "firstName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: firstName"
+    },
+    {
+      "name": "email",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: email"
+    },
+    {
+      "name": "mailTip",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: mailTip"
+    },
+    {
+      "name": "website",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: website"
+    },
+    {
+      "name": "City",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: City"
+    },
+    {
+      "name": "hidefromGAL",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: hidefromGAL"
+    },
+    {
+      "name": "CountryOrRegion",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: CountryOrRegion"
     }
+  ],
+  "trust_level": "verified",
+  "remove_params": [
+    "companyName",
+    "jobTitle",
+    "businessPhone"
   ],
   "notes": "Naming divergence: 3 param(s) where API and frontend use different names for the same field. Auto-matched by name similarity. Verify each pair before publishing."
 }

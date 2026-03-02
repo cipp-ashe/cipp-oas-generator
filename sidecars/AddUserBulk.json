@@ -1,7 +1,6 @@
 {
-  "override_synopsis": "Bulk-create users in a tenant via CSV import",
   "override_confidence": "high",
-  "remove_params": ["label", "value"],
+  "_comment": "Enriched with PS1 data on 2026-03-02",
   "add_params": [
     {
       "name": "tenantFilter",
@@ -34,7 +33,26 @@
       "type": "LabelValue",
       "description": "Usage location applied to all created users. Accepts LabelValue or raw ISO country code string.",
       "confidence": "high"
+    },
+    {
+      "name": "value",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: value"
+    },
+    {
+      "name": "label",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: label"
     }
   ],
-  "notes": "BulkUser is an array of user row objects. Each row supports: mailNickName (required), domain (required), displayName OR givenName+surname (one required), password (optional, auto-generated if omitted), businessPhones (optional), plus any additional Graph user properties via PSObject passthrough (open schema). label and value params removed — they are LabelValue unwrap artifacts from $UsageLocation.label and $AssignedLicenses.value access, not top-level body fields."
+  "override_synopsis": "Bulk-create users in a tenant via CSV import",
+  "remove_params": [
+    "label",
+    "value"
+  ],
+  "notes": "BulkUser is an array of user row objects. Each row supports: mailNickName (required), domain (required), displayName OR givenName+surname (one required), password (optional, auto-generated if omitted), businessPhones (optional), plus any additional Graph user properties via PSObject passthrough (open schema). label and value params removed \u2014 they are LabelValue unwrap artifacts from $UsageLocation.label and $AssignedLicenses.value access, not top-level body fields."
 }

@@ -1,5 +1,25 @@
 {
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
+  "parameters": [
+    {
+      "name": "Entries",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: Entries"
+    },
+    {
+      "name": "ListType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ListType"
+    }
+  ],
   "trust_level": "reversed",
-  "override_methods": ["POST"],
-  "notes": "RENAMED — frontend calls /api/RemoveTenantAllowBlockList as a row action but the PS1 is Invoke-AddTenantAllowBlockList which handles both add and remove via a ListType/Action toggle. No separate delete PS1 exists."
+  "override_methods": [
+    "POST"
+  ],
+  "notes": "RENAMED \u2014 frontend calls /api/RemoveTenantAllowBlockList as a row action but the PS1 is Invoke-AddTenantAllowBlockList which handles both add and remove via a ListType/Action toggle. No separate delete PS1 exists."
 }

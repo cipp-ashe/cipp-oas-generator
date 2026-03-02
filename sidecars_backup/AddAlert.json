@@ -1,0 +1,105 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 12 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "actions",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "description": "actions parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "AlertComment",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "AlertComment parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "command",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "command parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "conditions",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "conditions parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "excludedTenants",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "excludedTenants parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "logbook",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "logbook parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "postExecution",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "description": "postExecution parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "preset",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "preset parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "recurrence",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "recurrence parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "RowKey",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "RowKey parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "startDateTime",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "startDateTime parameter",
+      "confidence": "high",
+      "format": "date-time"
+    },
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "tenantFilter parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

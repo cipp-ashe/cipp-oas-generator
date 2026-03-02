@@ -1,0 +1,32 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 3 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "Hudu.NextSync",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Hudu.NextSync parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "NinjaOne.Enabled",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "NinjaOne.Enabled parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "NinjaOne.Instance",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "NinjaOne.Instance parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api. Verified and promoted to high confidence."
+}

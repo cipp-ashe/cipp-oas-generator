@@ -1,0 +1,88 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 10 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "addrow.displayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "addrow.displayName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "addrow.mail",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "addrow.mail parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "addrow.redirectUri",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "addrow.redirectUri parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "bulkGuests",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "bulkGuests parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "displayName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "mail",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "mail parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "message",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "message parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "redirectUri",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "redirectUri parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "sendInvite",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "description": "sendInvite parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "tenantFilter parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

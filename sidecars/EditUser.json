@@ -1,7 +1,6 @@
 {
-  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
-  "trust_level": "inferred",
-  "notes": "External form component \u2014 fields from child component(s), not inline. Resolved: CippAddEditUser (CippAddEditUser.jsx). 28 param(s) still defaulting to string \u2014 verify types.",
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred. | Enriched 2026-03-02",
   "add_params": [
     {
       "name": "userTemplate",
@@ -364,6 +363,64 @@
       "type": "string",
       "confidence": "medium",
       "description": "(auto) from API scan"
+    },
+    {
+      "name": "CopyFrom",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: CopyFrom"
+    },
+    {
+      "name": "usageLocation.value",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: usageLocation.value"
+    },
+    {
+      "name": "defaultAttributes.",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: defaultAttributes."
+    },
+    {
+      "name": "sherwebLicense.value",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: sherwebLicense.value"
+    },
+    {
+      "name": "DisplayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: DisplayName"
+    },
+    {
+      "name": "AddedAliases",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AddedAliases"
+    },
+    {
+      "name": "primDomain.value",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: primDomain.value"
+    },
+    {
+      "name": "customData.",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: customData."
     }
-  ]
+  ],
+  "trust_level": "inferred",
+  "notes": "External form component \u2014 fields from child component(s), not inline. Resolved: CippAddEditUser (CippAddEditUser.jsx). 28 param(s) still defaulting to string \u2014 verify types."
 }

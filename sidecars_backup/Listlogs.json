@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["GET"],
+  "notes": "PROBABLE 404 — frontend calls /api/Listlogs (logs/logentry.js params: logentryid+dateFilter; tenant/manage/history.js params: tenant+StartDate+EndDate+Filter) but no Invoke-Listlogs.ps1 exists. PS1 is Invoke-ListAuditLogs at Tenant/Administration/Alerts/. Failure mode: log viewer and tenant history timeline show empty. Fix: rename PS1 to Invoke-Listlogs.ps1 or update both frontend call sites to /api/ListAuditLogs."
+}

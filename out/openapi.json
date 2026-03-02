@@ -256,7 +256,7 @@
                   "actions": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   },
                   "AlertComment": {
@@ -277,7 +277,7 @@
                   "postExecution": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   },
                   "preset": {
@@ -1566,7 +1566,7 @@
                   "actionType": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   },
                   "ActivationDate": {
@@ -1636,7 +1636,7 @@
                   "conditionType": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   },
                   "CopyTo": {
@@ -1762,7 +1762,7 @@
                   "exceptionType": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   },
                   "ExpiryDate": {
@@ -2848,7 +2848,7 @@
                   "defaultNotificationActions": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   },
                   "defaultRoles": {
@@ -3488,7 +3488,7 @@
                   "TemplateList": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   }
                 }
@@ -5598,7 +5598,7 @@
                   "TemplateList": {
                     "type": "object",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     },
                     "properties": {
                       "Count": {
@@ -6677,7 +6677,7 @@
                   "defaultNotificationActions": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   },
                   "defaultRoles": {
@@ -8174,8 +8174,7 @@
                 "type": "object",
                 "properties": {
                   "AddedAliases": {
-                    "type": "string",
-                    "description": "Additional SMTP aliases, newline-delimited (server splits on \\n)"
+                    "type": "string"
                   },
                   "id": {
                     "type": "string"
@@ -15284,7 +15283,7 @@
                   "PostExecution": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   },
                   "reason": {
@@ -27484,13 +27483,13 @@
                   "recipient": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   },
                   "sender": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   },
                   "startDate": {
@@ -27500,7 +27499,7 @@
                   "status": {
                     "type": "array",
                     "items": {
-                      "$ref": "#/components/schemas/LabelValue"
+                      "type": "string"
                     }
                   },
                   "tenantFilter": {

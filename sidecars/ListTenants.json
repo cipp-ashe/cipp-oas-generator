@@ -1,0 +1,79 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 8 params | Enriched 2026-03-02",
+  "add_params": [
+    {
+      "name": "AllTenantSelector",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "AllTenantSelector parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "IncludeOffboardingDefaults",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "IncludeOffboardingDefaults parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Mode",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Mode parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "tenantFilter",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "tenantFilter parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "TriggerRefresh",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "TriggerRefresh parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "TenantFilter",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: TenantFilter"
+    },
+    {
+      "name": "ClearCache",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "ClearCache parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "integrationCompany",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "integrationCompany parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "TenantsOnly",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "TenantsOnly parameter",
+      "confidence": "high"
+    }
+  ],
+  "trust_level": "verified",
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

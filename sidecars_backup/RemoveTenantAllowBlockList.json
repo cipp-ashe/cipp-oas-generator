@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["POST"],
+  "notes": "RENAMED — frontend calls /api/RemoveTenantAllowBlockList as a row action but the PS1 is Invoke-AddTenantAllowBlockList which handles both add and remove via a ListType/Action toggle. No separate delete PS1 exists."
+}

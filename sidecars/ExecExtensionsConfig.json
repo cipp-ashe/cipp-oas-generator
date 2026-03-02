@@ -1,0 +1,60 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 3 params | Enriched 2026-03-02",
+  "add_params": [
+    {
+      "name": "Hudu.NextSync",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Hudu.NextSync parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "NinjaOne.Enabled",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "NinjaOne.Enabled parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "NinjaOne.Instance",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "NinjaOne.Instance parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "PSObject.Properties.Name",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: PSObject.Properties.Name"
+    },
+    {
+      "name": "NinjaOne",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: NinjaOne"
+    },
+    {
+      "name": "Hudu",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: Hudu"
+    },
+    {
+      "name": "PSObject",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: PSObject"
+    }
+  ],
+  "trust_level": "verified",
+  "notes": "Parameters extracted from: api. Verified and promoted to high confidence."
+}

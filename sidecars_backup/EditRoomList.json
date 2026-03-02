@@ -1,0 +1,21 @@
+{
+  "add_params": [
+    { "name": "tenantFilter",  "in": "body", "required": true,  "type": "string",  "confidence": "high" },
+    { "name": "groupId",       "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Room list group ID (Guid or id). PS1 reads $RoomListObj.groupId." },
+    { "name": "displayName",   "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "description",   "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "mailNickname",  "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "PS1 passes as 'Name' to Set-DistributionGroup." },
+    { "name": "AddMember",     "in": "body", "required": false, "type": "array",   "confidence": "high", "description": "Array of room email addresses (strings or {value: email} objects) to add." },
+    { "name": "RemoveMember",  "in": "body", "required": false, "type": "array",   "confidence": "high", "description": "Array of room email addresses or objects to remove." },
+    { "name": "AddOwner",      "in": "body", "required": false, "type": "array",   "confidence": "high", "description": "Array of user objects [{value: UPN, addedFields: {id}}] to add as owners." },
+    { "name": "RemoveOwner",   "in": "body", "required": false, "type": "array",   "confidence": "high", "description": "Array of user objects [{value: UPN, addedFields: {id}}] to remove from owners." },
+    { "name": "allowExternal", "in": "body", "required": false, "type": "boolean", "confidence": "high", "description": "Only sent if changed from original value (formatter deletes it if unchanged)." }
+  ],
+  "remove_params": [],
+  "trust_level": "verified",
+  "tested_version": null,
+  "notes": "customDataformatter spreads all form values and only removes allowExternal if it equals the originalAllowExternal value (prevents sending an unchanged boolean). All other fields pass through unchanged. PS1 reads $RoomListObj.* directly with the same camelCase field names.",
+  "x_cipp_warnings": [
+    "customDataformatter is present on the CippFormPage for this endpoint. Form field names and/or types may be renamed or restructured before POST. Verify the transformer function in the frontend page file and correct param names/types accordingly."
+  ]
+}

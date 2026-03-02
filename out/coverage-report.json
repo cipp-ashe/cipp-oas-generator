@@ -14,14 +14,7 @@
     "ORPHAN": "Frontend calls endpoint but no Invoke-*.ps1 found",
     "STUB": "No sources at all \u2014 sidecar-only documentation"
   },
-  "blind_endpoints": [
-    "CIPPDBTestsRun",
-    "ExecExtensionNinjaOneQueue",
-    "ExecSchedulerBillingRun",
-    "ListGenericTestFunction",
-    "ListHaloClients",
-    "ListPendingWebhooks"
-  ],
+  "blind_endpoints": [],
   "orphan_endpoints": [
     "AddCustomDomain",
     "AddStandardTemplate",
@@ -108,44 +101,11 @@
   ],
   "orphan_delta": {
     "new": [],
-    "resolved": [
-      "ExecBreachSearch",
-      "ExecCSPLicense",
-      "ExecListAppId",
-      "ExecUniversalSearch",
-      "ExecUniversalSearchV2",
-      "ExecUserSettings",
-      "ListBreachesAccount",
-      "ListCSPsku",
-      "ListExtensionsConfig",
-      "ListExternalTenantInfo",
-      "ListGraphExplorerPresets",
-      "ListIPWhitelist",
-      "ListNotificationConfig",
-      "ListOrg",
-      "ListPotentialApps",
-      "ListUsersAndGroups",
-      "Listlogs",
-      "RemoveTenantAllowBlockList"
-    ]
+    "resolved": []
   },
-  "sidecar_candidates": [
-    "CIPPDBTestsRun",
-    "ExecExtensionNinjaOneQueue",
-    "ExecSchedulerBillingRun",
-    "ListGenericTestFunction",
-    "ListHaloClients",
-    "ListPendingWebhooks"
-  ],
+  "sidecar_candidates": [],
   "sidecar_candidates_by_reason": {
-    "blind": [
-      "CIPPDBTestsRun",
-      "ExecExtensionNinjaOneQueue",
-      "ExecSchedulerBillingRun",
-      "ListGenericTestFunction",
-      "ListHaloClients",
-      "ListPendingWebhooks"
-    ],
+    "blind": [],
     "external_form_component": [],
     "data_transform": [],
     "constructed_body": []

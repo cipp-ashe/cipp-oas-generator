@@ -1,0 +1,370 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
+  "trust_level": "inferred",
+  "notes": "External form component \u2014 fields from child component(s), not inline. Resolved: CippAddEditUser (CippAddEditUser.jsx). 28 param(s) still defaulting to string \u2014 verify types.",
+  "add_params": [
+    {
+      "name": "userTemplate",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "LabelValue"
+    },
+    {
+      "name": "givenName",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "surname",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "addedAliases",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "Autopassword",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "boolean"
+    },
+    {
+      "name": "password",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string",
+      "format": "password"
+    },
+    {
+      "name": "MustChangePass",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "boolean"
+    },
+    {
+      "name": "usageLocation",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "LabelValue"
+    },
+    {
+      "name": "sherweb",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "boolean"
+    },
+    {
+      "name": "removeLicenses",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "boolean"
+    },
+    {
+      "name": "jobTitle",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "streetAddress",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "city",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "state",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "postalCode",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "country",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "companyName",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "department",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "mobilePhone",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "businessPhones",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "otherMails",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "AddToGroups",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx (array of LabelValue)",
+      "type": "array"
+    },
+    {
+      "name": "RemoveFromGroups",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx (array of LabelValue)",
+      "type": "array"
+    },
+    {
+      "name": "Scheduled.enabled",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "boolean"
+    },
+    {
+      "name": "Scheduled.date",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string",
+      "format": "date-time"
+    },
+    {
+      "name": "postExecution.webhook",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "boolean"
+    },
+    {
+      "name": "postExecution.email",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "boolean"
+    },
+    {
+      "name": "postExecution.psa",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "boolean"
+    },
+    {
+      "name": "reference",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "string"
+    },
+    {
+      "name": "primDomain",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "LabelValue"
+    },
+    {
+      "name": "licenses",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "array"
+    },
+    {
+      "name": "setManager",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "LabelValue"
+    },
+    {
+      "name": "setSponsor",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "LabelValue"
+    },
+    {
+      "name": "copyFrom",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddEditUser.jsx",
+      "type": "LabelValue"
+    },
+    {
+      "name": "PostExecution",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    },
+    {
+      "name": "id",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    },
+    {
+      "name": "username",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    },
+    {
+      "name": "Domain",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    },
+    {
+      "name": "mailNickname",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    },
+    {
+      "name": "defaultAttributes",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    },
+    {
+      "name": "customData",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    },
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    },
+    {
+      "name": "sherwebLicense",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    },
+    {
+      "name": "userPrincipalName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    }
+  ]
+}

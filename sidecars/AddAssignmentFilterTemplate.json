@@ -1,7 +1,6 @@
 {
-  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
-  "trust_level": "inferred",
-  "notes": "External form component \u2014 fields from child component(s), not inline. Resolved: CippAddAssignmentFilterTemplateForm (CippAddAssignmentFilterTemplateForm.jsx). 5 param(s) still defaulting to string \u2014 verify types.",
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred. | Enriched 2026-03-02",
   "add_params": [
     {
       "name": "GUID",
@@ -54,6 +53,29 @@
       "confidence": "medium",
       "description": "(auto) from CippAddAssignmentFilterTemplateForm.jsx",
       "type": "string"
+    },
+    {
+      "name": "Displayname",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: Displayname"
+    },
+    {
+      "name": "displayname",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: displayname"
+    },
+    {
+      "name": "Description",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: Description"
     }
-  ]
+  ],
+  "trust_level": "inferred",
+  "notes": "External form component \u2014 fields from child component(s), not inline. Resolved: CippAddAssignmentFilterTemplateForm (CippAddAssignmentFilterTemplateForm.jsx). 5 param(s) still defaulting to string \u2014 verify types."
 }

@@ -1,0 +1,149 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 15 params | Enriched 2026-03-02",
+  "description": "Just-in-time admin management API endpoint. This function can create users, add roles, remove roles, delete, or disable a user.",
+  "add_params": [
+    {
+      "name": "AdminRoles",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "AdminRoles parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Domain",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "Domain parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "EndDate",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "EndDate parameter",
+      "confidence": "high",
+      "format": "date-time"
+    },
+    {
+      "name": "existingUser",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "existingUser parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "ExpireAction",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "ExpireAction parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "FirstName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "FirstName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "jitAdminTemplate",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "jitAdminTemplate parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "LastName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "LastName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "PostExecution",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "description": "PostExecution parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "reason",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "reason parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "StartDate",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "StartDate parameter",
+      "confidence": "high",
+      "format": "date-time"
+    },
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "tenantFilter parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "userAction",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "userAction parameter",
+      "confidence": "high",
+      "enum": [
+        "create",
+        "select"
+      ]
+    },
+    {
+      "name": "username",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "username parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "UseTAP",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "description": "UseTAP parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Username",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: Username"
+    },
+    {
+      "name": "Reason",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: Reason"
+    }
+  ],
+  "trust_level": "verified",
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

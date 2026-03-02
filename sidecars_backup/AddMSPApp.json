@@ -1,0 +1,64 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 7 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "AssignTo",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "AssignTo parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "CustomGroup",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "CustomGroup parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "DisplayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "DisplayName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "PackageName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "PackageName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "params",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "params parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "RMMName",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "RMMName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "selectedTenants",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "selectedTenants parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api. Verified and promoted to high confidence."
+}

@@ -1,6 +1,17 @@
 {
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
+  "parameters": [
+    {
+      "name": "account",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: account"
+    }
+  ],
   "trust_level": "reversed",
-  "override_methods": ["GET"],
-  "deprecated": true,
-  "notes": "REMOVED — HaveIBeenPwned breach lookup feature was removed from the CIPP API. Frontend still calls /api/ListBreachesAccount (tools/breachlookup/index.js) but no PS1 exists."
+  "override_methods": [
+    "GET"
+  ]
 }

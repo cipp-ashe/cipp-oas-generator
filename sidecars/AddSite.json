@@ -1,0 +1,85 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 7 params | Enriched 2026-03-02",
+  "add_params": [
+    {
+      "name": "sensitivityLabel",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "sensitivityLabel parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "siteDescription",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "siteDescription parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "siteDesign",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "siteDesign parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "siteName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "siteName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "siteOwner",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "siteOwner parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "templateName",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "templateName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "tenantFilter parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "siteDesign.value",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: siteDesign.value"
+    },
+    {
+      "name": "siteOwner.value",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: siteOwner.value"
+    },
+    {
+      "name": "templateName.value",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: templateName.value"
+    }
+  ],
+  "trust_level": "verified",
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

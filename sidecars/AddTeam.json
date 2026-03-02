@@ -1,10 +1,52 @@
 {
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
   "add_params": [
-    { "name": "tenantID",    "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Tenant domain/ID. Formatter reads from useSettings().currentTenant and sends as 'tenantID'. PS1 reads as $TeamObj.tenantid (case-insensitive)." },
-    { "name": "displayName", "in": "body", "required": true,  "type": "string",  "confidence": "high" },
-    { "name": "description", "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "owner",       "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Owner UPN extracted from user selector .value by formatter. PS1 passes as member@odata.bind with role 'owner'." },
-    { "name": "visibility",  "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Enum: 'public' | 'private'. Default 'public'." }
+    {
+      "name": "tenantID",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "Tenant domain/ID. Formatter reads from useSettings().currentTenant and sends as 'tenantID'. PS1 reads as $TeamObj.tenantid (case-insensitive)."
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "description",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "owner",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "Owner UPN extracted from user selector .value by formatter. PS1 passes as member@odata.bind with role 'owner'."
+    },
+    {
+      "name": "visibility",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Enum: 'public' | 'private'. Default 'public'."
+    },
+    {
+      "name": "tenantid",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: tenantid"
+    }
   ],
   "remove_params": [],
   "trust_level": "verified",

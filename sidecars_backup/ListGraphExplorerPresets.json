@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["GET"],
+  "notes": "PROBABLE 404 — frontend calls /api/ListGraphExplorerPresets (CIPPTableToptoolbar.js, 3 sites) but no Invoke-ListGraphExplorerPresets.ps1 exists. PS1 is Invoke-ExecGraphExplorerPreset in Tenant/Tools. Failure mode: graph explorer preset selector empty. Fix: rename PS1 or update frontend URL."
+}

@@ -1,0 +1,31 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 2 params | Enriched 2026-03-02",
+  "add_params": [
+    {
+      "name": "GUID",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "GUID parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "id parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "ID",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: ID"
+    }
+  ],
+  "trust_level": "verified",
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

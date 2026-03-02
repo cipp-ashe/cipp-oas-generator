@@ -1,0 +1,33 @@
+{
+  "override_synopsis": "AddUser",
+  "override_description": "Create a new user in a tenant, optionally scheduled",
+  "override_confidence": "high",
+  "add_params": [
+    {"name": "tenantFilter",  "in": "body", "required": true,  "type": "string",  "description": "Target tenant domain"},
+    {"name": "displayName",   "in": "body", "required": true,  "type": "string"},
+    {"name": "givenName",     "in": "body", "required": false, "type": "string"},
+    {"name": "surname",       "in": "body", "required": false, "type": "string"},
+    {"name": "username",      "in": "body", "required": true,  "type": "string",  "description": "UPN prefix (before the @)"},
+    {"name": "primDomain",    "in": "body", "required": true,  "type": "LabelValue", "description": "Domain for UPN"},
+    {"name": "password",      "in": "body", "required": false, "type": "string",  "description": "Initial password. Omit to auto-generate."},
+    {"name": "MustChangePass","in": "body", "required": false, "type": "boolean"},
+    {"name": "usageLocation", "in": "body", "required": false, "type": "LabelValue"},
+    {"name": "licenses",      "in": "body", "required": false, "type": "array",   "description": "SKU IDs to assign"},
+    {"name": "jobTitle",      "in": "body", "required": false, "type": "string"},
+    {"name": "department",    "in": "body", "required": false, "type": "string"},
+    {"name": "streetAddress", "in": "body", "required": false, "type": "string"},
+    {"name": "city",          "in": "body", "required": false, "type": "string"},
+    {"name": "state",         "in": "body", "required": false, "type": "string"},
+    {"name": "postalCode",    "in": "body", "required": false, "type": "string"},
+    {"name": "country",       "in": "body", "required": false, "type": "string"},
+    {"name": "companyName",   "in": "body", "required": false, "type": "string"},
+    {"name": "mobilePhone",   "in": "body", "required": false, "type": "string"},
+    {"name": "businessPhones","in": "body", "required": false, "type": "array"},
+    {"name": "copyFrom",      "in": "body", "required": false, "type": "LabelValue", "description": "Copy group memberships from this user"},
+    {"name": "userTemplate",  "in": "body", "required": false, "type": "LabelValue", "description": "Apply a saved user template"},
+    {"name": "Scheduled",     "in": "body", "required": false, "type": "ScheduledTask"},
+    {"name": "postExecution", "in": "body", "required": false, "type": "PostExecution"},
+    {"name": "reference",     "in": "body", "required": false, "type": "string",  "description": "External reference ID (PSA ticket, etc.)"}
+  ],
+  "notes": "Body is consumed as a blob ($UserObj = $Request.Body) then passed to New-CIPPUserTask. Params reconstructed from frontend form (CippAddEditUser.jsx) and New-CIPPUserTask internals. Branches on Scheduled.enabled: true path calls Add-CIPPScheduledTask, false path creates immediately and returns password."
+}

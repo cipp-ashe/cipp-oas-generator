@@ -1,0 +1,6 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — BLIND endpoint with 0 params",
+  "trust_level": "inferred",
+  "notes": "BLIND endpoint — no parameters extracted from PowerShell. This is likely an internal/scheduled task or reads from headers/context only."
+}

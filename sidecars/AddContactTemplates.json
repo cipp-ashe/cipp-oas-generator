@@ -1,26 +1,127 @@
 {
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
   "add_params": [
-    { "name": "displayName",    "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Template display name; also used as 'name' key internally" },
-    { "name": "firstName",      "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "lastName",       "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "email",          "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "hidefromGAL",    "in": "body", "required": false, "type": "boolean", "confidence": "high", "description": "Hide from Global Address List" },
-    { "name": "streetAddress",  "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "postalCode",     "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "city",           "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "state",          "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "country",        "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Country code (2-letter ISO code extracted from autocomplete object by formatter)" },
-    { "name": "companyName",    "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "mobilePhone",    "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "businessPhone",  "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "jobTitle",       "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "website",        "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "mailTip",        "in": "body", "required": false, "type": "string",  "confidence": "high" }
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "Template display name; also used as 'name' key internally"
+    },
+    {
+      "name": "firstName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "lastName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "email",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "hidefromGAL",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high",
+      "description": "Hide from Global Address List"
+    },
+    {
+      "name": "streetAddress",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "postalCode",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "city",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "state",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "country",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Country code (2-letter ISO code extracted from autocomplete object by formatter)"
+    },
+    {
+      "name": "companyName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "mobilePhone",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "businessPhone",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "jobTitle",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "website",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "mailTip",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    }
   ],
   "remove_params": [],
   "trust_level": "verified",
   "tested_version": null,
-  "notes": "customDataformatter maps form field names to the API body almost 1:1. The only difference: 'country' autocomplete object is unwrapped to its .value (2-letter code) before POST. PS1 reads all listed fields directly from $Request.body. No camelCase/PascalCase renaming happens here — these are template-store fields stored as-is in Azure Table Storage.",
+  "notes": "customDataformatter maps form field names to the API body almost 1:1. The only difference: 'country' autocomplete object is unwrapped to its .value (2-letter code) before POST. PS1 reads all listed fields directly from $Request.body. No camelCase/PascalCase renaming happens here \u2014 these are template-store fields stored as-is in Azure Table Storage.",
   "x_cipp_warnings": [
     "customDataformatter is present on the CippFormPage for this endpoint. Form field names and/or types may be renamed or restructured before POST. Verify the transformer function in the frontend page file and correct param names/types accordingly."
   ]

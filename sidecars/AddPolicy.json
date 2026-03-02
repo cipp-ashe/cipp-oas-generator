@@ -1,9 +1,6 @@
 {
-  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
-  "trust_level": "inferred",
-  "remove_params": [
-    "TemplateList"
-  ],
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred. | Enriched 2026-03-02",
   "add_params": [
     {
       "name": "TemplateId",
@@ -12,7 +9,137 @@
       "type": "string",
       "confidence": "medium",
       "description": "(auto) API uses 'TemplateId', frontend sends 'TemplateList' \u2014 likely the same field (similarity=0.82). Verify and correct type."
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: displayName"
+    },
+    {
+      "name": "Description",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: Description"
+    },
+    {
+      "name": "AssignTo",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AssignTo"
+    },
+    {
+      "name": "excludeGroup",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: excludeGroup"
+    },
+    {
+      "name": "AssignmentFilterName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AssignmentFilterName"
+    },
+    {
+      "name": "assignmentFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: assignmentFilter"
+    },
+    {
+      "name": "AssignmentFilterType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AssignmentFilterType"
+    },
+    {
+      "name": "assignmentFilterType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: assignmentFilterType"
+    },
+    {
+      "name": "customGroup",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: customGroup"
+    },
+    {
+      "name": "RAWJson",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: RAWJson"
+    },
+    {
+      "name": "replacemap",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: replacemap"
+    },
+    {
+      "name": "ReusableSettings",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ReusableSettings"
+    },
+    {
+      "name": "reusableSettings",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: reusableSettings"
+    },
+    {
+      "name": "TemplateID",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: TemplateID"
+    },
+    {
+      "name": "TemplateGuid",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: TemplateGuid"
+    },
+    {
+      "name": "TemplateGUID",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: TemplateGUID"
+    },
+    {
+      "name": "TemplateType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: TemplateType"
+    },
+    {
+      "name": "Count",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: Count"
     }
+  ],
+  "trust_level": "inferred",
+  "remove_params": [
+    "TemplateList"
   ],
   "notes": "Naming divergence: 1 param(s) where API and frontend use different names for the same field. Auto-matched by name similarity. Verify each pair before publishing."
 }

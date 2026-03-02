@@ -1,0 +1,96 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 11 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "ApplicationName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "ApplicationName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "AssignTo",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "AssignTo parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "customArguments",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "customArguments parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "CustomGroup",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "CustomGroup parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "customrepo",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "customrepo parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "description",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "description parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "DisableRestart",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "DisableRestart parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "InstallAsSystem",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "InstallAsSystem parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "InstallationIntent",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "InstallationIntent parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "PackageName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "PackageName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "selectedTenants",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "selectedTenants parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api. Verified and promoted to high confidence."
+}

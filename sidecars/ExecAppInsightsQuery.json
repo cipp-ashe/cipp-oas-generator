@@ -1,5 +1,22 @@
 {
-  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred. | Enriched 2026-03-02",
+  "parameters": [
+    {
+      "name": "query",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: query"
+    },
+    {
+      "name": "query",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: query"
+    }
+  ],
   "trust_level": "inferred",
   "notes": "BLIND endpoint \u2014 API reads $Request.Body as a blob with no direct field access. No frontend params found. Endpoint may be backend-only or frontend call not detected by scanner."
 }

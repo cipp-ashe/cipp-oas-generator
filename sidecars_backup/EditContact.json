@@ -1,0 +1,26 @@
+{
+  "add_params": [
+    { "name": "tenantID",       "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Tenant domain/ID. Formatter reads from useSettings().currentTenant and sends as 'tenantID'." },
+    { "name": "ContactID",      "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Graph contact id; read from API response. PS1 uses as Identity for Set-Contact/Set-MailContact." },
+    { "name": "displayName",    "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Sent as lowercase 'displayName'; PS1 maps to 'DisplayName' parameter of Set-Contact." },
+    { "name": "hidefromGAL",    "in": "body", "required": false, "type": "boolean", "confidence": "high", "description": "PS1 uses as HiddenFromAddressListsEnabled on Set-MailContact." },
+    { "name": "email",          "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "PS1 maps to WindowsEmailAddress on Set-Contact." },
+    { "name": "firstName",      "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "PS1 maps to FirstName." },
+    { "name": "LastName",       "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "NOTE: formatter sends form field 'lastName' as-is but PS1 reads $contactInfo.LastName (capital L). Matches because object property access is case-insensitive in PS." },
+    { "name": "Title",          "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Formatter maps form 'jobTitle' → body field 'Title'. PS1 reads $contactInfo.Title." },
+    { "name": "StreetAddress",  "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Formatter maps 'streetAddress' → 'StreetAddress'. PS1 reads $contactInfo.StreetAddress." },
+    { "name": "PostalCode",     "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Formatter maps 'postalCode' → 'PostalCode'." },
+    { "name": "City",           "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Formatter maps 'city' → 'City'." },
+    { "name": "State",          "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Formatter maps 'state' → 'State'. PS1 maps to StateOrProvince." },
+    { "name": "CountryOrRegion","in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Formatter maps 'country' autocomplete → 'CountryOrRegion' (unwraps .value)." },
+    { "name": "Company",        "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Formatter maps 'companyName' → 'Company'." },
+    { "name": "mobilePhone",    "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "PS1 maps to MobilePhone." },
+    { "name": "phone",          "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Formatter maps 'businessPhone' → 'phone'. PS1 maps to Phone." },
+    { "name": "website",        "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "PS1 maps to WebPage." },
+    { "name": "mailTip",        "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "PS1 maps to MailTip on Set-MailContact." }
+  ],
+  "remove_params": ["companyName", "jobTitle", "country", "businessPhone", "streetAddress", "postalCode", "city", "state", "lastName", "firstName"],
+  "trust_level": "verified",
+  "tested_version": null,
+  "notes": "customDataformatter does significant field renaming: form fields 'jobTitle'→'Title', 'streetAddress'→'StreetAddress', 'postalCode'→'PostalCode', 'city'→'City', 'state'→'State', 'country' (autocomplete object)→'CountryOrRegion' (string value), 'companyName'→'Company', 'businessPhone'→'phone'. Also adds 'tenantID' from ambient tenant and 'ContactID' from the loaded contact object. PS1 verifies all field names match."
+}

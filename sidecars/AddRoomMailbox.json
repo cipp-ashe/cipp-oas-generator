@@ -1,0 +1,63 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 6 params | Enriched 2026-03-02",
+  "add_params": [
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "displayName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "domain",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "domain parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "ResourceCapacity",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "ResourceCapacity parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "tenantid",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "tenantid parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "username",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "username parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "userPrincipalName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "userPrincipalName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "DisplayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: DisplayName"
+    }
+  ],
+  "trust_level": "verified",
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

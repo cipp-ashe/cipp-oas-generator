@@ -1,0 +1,40 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 4 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "description",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "description parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "DevicesTests",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "DevicesTests parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "IdentityTests",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "IdentityTests parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "name",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "name parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

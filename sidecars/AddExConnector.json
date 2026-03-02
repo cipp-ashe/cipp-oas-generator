@@ -1,0 +1,39 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 3 params | Enriched 2026-03-02",
+  "add_params": [
+    {
+      "name": "PowerShellCommand",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "PowerShellCommand parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "selectedTenants",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "selectedTenants parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "TemplateList",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "TemplateList parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "comment",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: comment"
+    }
+  ],
+  "trust_level": "verified",
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

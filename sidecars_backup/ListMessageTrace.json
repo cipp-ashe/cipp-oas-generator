@@ -1,0 +1,118 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 13 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "dateFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "dateFilter parameter",
+      "confidence": "high",
+      "enum": [
+        "relative",
+        "startEnd"
+      ]
+    },
+    {
+      "name": "days",
+      "in": "body",
+      "required": false,
+      "type": "number",
+      "description": "days parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "endDate",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "endDate parameter",
+      "confidence": "high",
+      "format": "date-time"
+    },
+    {
+      "name": "fromIP",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "fromIP parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "ID",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "ID parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "messageId",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "messageId parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "recipient",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "description": "recipient parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "sender",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "description": "sender parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "startDate",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "startDate parameter",
+      "confidence": "high",
+      "format": "date-time"
+    },
+    {
+      "name": "status",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "description": "status parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "tenantFilter parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "toIP",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "toIP parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "traceDetail",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "traceDetail parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

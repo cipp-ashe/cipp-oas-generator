@@ -1,0 +1,19 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
+  "trust_level": "inferred",
+  "remove_params": [
+    "presetName"
+  ],
+  "add_params": [
+    {
+      "name": "name",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) API uses 'name', frontend sends 'presetName' \u2014 likely the same field (similarity=0.57). Verify and correct type."
+    }
+  ],
+  "notes": "Naming divergence: 1 param(s) where API and frontend use different names for the same field. Auto-matched by name similarity. Verify each pair before publishing."
+}

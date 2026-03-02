@@ -1,12 +1,50 @@
 {
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
   "add_params": [
-    { "name": "tenantID",      "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Tenant domain/ID. Formatter reads from useSettings().currentTenant and sends as 'tenantID' (not tenantFilter)." },
-    { "name": "displayName",   "in": "body", "required": true,  "type": "string",  "confidence": "high" },
-    { "name": "username",      "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Mailbox alias (local part of email; combined with domain server-side as username@domain)" },
-    { "name": "domain",        "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Domain extracted from autocomplete object .value by formatter" },
-    { "name": "addedAliases",  "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Newline-separated aliases; PS1 splits on \\n. Not sent by default form but accepted." }
+    {
+      "name": "tenantID",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "Tenant domain/ID. Formatter reads from useSettings().currentTenant and sends as 'tenantID' (not tenantFilter)."
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "username",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Mailbox alias (local part of email; combined with domain server-side as username@domain)"
+    },
+    {
+      "name": "domain",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Domain extracted from autocomplete object .value by formatter"
+    },
+    {
+      "name": "addedAliases",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Newline-separated aliases; PS1 splits on \\n. Not sent by default form but accepted."
+    }
   ],
-  "remove_params": ["tenantFilter"],
+  "remove_params": [
+    "tenantFilter"
+  ],
   "trust_level": "verified",
   "tested_version": null,
   "notes": "customDataformatter renames the ambient tenantFilter (from useSettings) to 'tenantID', unwraps the domain autocomplete object to its .value string, and passes username directly. The PS1 reads $Request.Body.tenantID (not tenantFilter) and combines username + domain into the email address."

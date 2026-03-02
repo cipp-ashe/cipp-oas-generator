@@ -1,25 +1,132 @@
 {
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
   "add_params": [
-    { "name": "ContactTemplateID", "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "GUID of the template to update. PS1 uses this as the RowKey filter." },
-    { "name": "displayName",       "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Template display name; also used as 'name' key internally." },
-    { "name": "firstName",         "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "lastName",          "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "email",             "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "hidefromGAL",       "in": "body", "required": false, "type": "boolean", "confidence": "high" },
-    { "name": "streetAddress",     "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "postalCode",        "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "city",              "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "state",             "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "country",           "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "2-letter ISO code (unwrapped from autocomplete object by formatter)" },
-    { "name": "companyName",       "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "mobilePhone",       "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "businessPhone",     "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "jobTitle",          "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "website",           "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "mailTip",           "in": "body", "required": false, "type": "string",  "confidence": "high" }
+    {
+      "name": "ContactTemplateID",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "GUID of the template to update. PS1 uses this as the RowKey filter."
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "Template display name; also used as 'name' key internally."
+    },
+    {
+      "name": "firstName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "lastName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "email",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "hidefromGAL",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high"
+    },
+    {
+      "name": "streetAddress",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "postalCode",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "city",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "state",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "country",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "2-letter ISO code (unwrapped from autocomplete object by formatter)"
+    },
+    {
+      "name": "companyName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "mobilePhone",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "businessPhone",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "jobTitle",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "website",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "mailTip",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    }
   ],
   "remove_params": [],
   "trust_level": "verified",
   "tested_version": null,
-  "notes": "customDataformatter outputs ContactTemplateID (from router query id) plus the same contact fields as AddContactTemplates. The PS1 reads $Request.body.ContactTemplateID as required field, then iterates over propertiesToKeep list (displayName, firstName, lastName, email, hidefromGAL, streetAddress, postalCode, city, state, country, companyName, mobilePhone, businessPhone, jobTitle, website, mailTip) directly from $Request.body. No PascalCase renaming here — these field names are stored as-is in the template."
+  "notes": "customDataformatter outputs ContactTemplateID (from router query id) plus the same contact fields as AddContactTemplates. The PS1 reads $Request.body.ContactTemplateID as required field, then iterates over propertiesToKeep list (displayName, firstName, lastName, email, hidefromGAL, streetAddress, postalCode, city, state, country, companyName, mobilePhone, businessPhone, jobTitle, website, mailTip) directly from $Request.body. No PascalCase renaming here \u2014 these field names are stored as-is in the template."
 }

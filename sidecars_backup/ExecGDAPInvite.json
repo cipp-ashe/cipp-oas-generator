@@ -1,0 +1,64 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 7 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "Action",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Action parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Action",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Action parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "gdapTemplate",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "gdapTemplate parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "inviteCount",
+      "in": "body",
+      "required": false,
+      "type": "number",
+      "description": "inviteCount parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "InviteId",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "InviteId parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Reference",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Reference parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "roleMappings",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "roleMappings parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

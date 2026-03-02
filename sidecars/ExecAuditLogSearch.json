@@ -1,0 +1,86 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 8 params | Enriched 2026-03-02",
+  "add_params": [
+    {
+      "name": "Action",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Action parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "SearchId",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "SearchId parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "tenantFilter",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "tenantFilter parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Action",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Action parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "EndTime",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "EndTime parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "SearchId",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "SearchId parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "StartTime",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "StartTime parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "tenantFilter parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "PSObject.Properties.Name",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: PSObject.Properties.Name"
+    },
+    {
+      "name": "PSObject",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: PSObject"
+    }
+  ],
+  "trust_level": "verified",
+  "notes": "Parameters extracted from: api. Verified and promoted to high confidence."
+}

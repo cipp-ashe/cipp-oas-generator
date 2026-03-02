@@ -1,10 +1,6 @@
 {
-  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
-  "trust_level": "inferred",
-  "remove_params": [
-    "Groups",
-    "Alias"
-  ],
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred. | Enriched 2026-03-02",
   "add_params": [
     {
       "name": "tenantGroups",
@@ -21,7 +17,26 @@
       "type": "string",
       "confidence": "medium",
       "description": "(auto) API uses 'tenantAlias', frontend sends 'Alias' \u2014 likely the same field (similarity=0.62). Verify and correct type."
+    },
+    {
+      "name": "customerId",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: customerId"
+    },
+    {
+      "name": "GroupId",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: GroupId"
     }
+  ],
+  "trust_level": "inferred",
+  "remove_params": [
+    "Groups",
+    "Alias"
   ],
   "notes": "Naming divergence: 2 param(s) where API and frontend use different names for the same field. Auto-matched by name similarity. Verify each pair before publishing."
 }

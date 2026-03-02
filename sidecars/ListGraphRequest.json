@@ -1,7 +1,134 @@
 {
-  "_comment": "Auto-generated from: CippIntunePolicy (6 fields), CippWizardOffboarding (29 fields)",
+  "override_confidence": "high",
+  "_comment": "Auto-generated from: CippIntunePolicy (6 fields), CippWizardOffboarding (29 fields) | Enriched 2026-03-02",
   "override_method": "POST",
   "parameters": [
+    {
+      "name": "Endpoint",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: Endpoint"
+    },
+    {
+      "name": "graphFilter",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: graphFilter"
+    },
+    {
+      "name": "expand",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: expand"
+    },
+    {
+      "name": "TenantFilter",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: TenantFilter"
+    },
+    {
+      "name": "QueueId",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: QueueId"
+    },
+    {
+      "name": "Version",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: Version"
+    },
+    {
+      "name": "NoPagination",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: NoPagination"
+    },
+    {
+      "name": "manualPagination",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: manualPagination"
+    },
+    {
+      "name": "nextLink",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: nextLink"
+    },
+    {
+      "name": "CountOnly",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: CountOnly"
+    },
+    {
+      "name": "QueueNameOverride",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: QueueNameOverride"
+    },
+    {
+      "name": "ReverseTenantLookup",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: ReverseTenantLookup"
+    },
+    {
+      "name": "ReverseTenantLookupProperty",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: ReverseTenantLookupProperty"
+    },
+    {
+      "name": "SkipCache",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: SkipCache"
+    },
+    {
+      "name": "ListProperties",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: ListProperties"
+    },
+    {
+      "name": "AsApp",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: AsApp"
+    },
+    {
+      "name": "IgnoreErrors",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: IgnoreErrors"
+    },
+    {
+      "name": "Sort",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: Sort"
+    },
     {
       "name": "TemplateList",
       "in": "body",

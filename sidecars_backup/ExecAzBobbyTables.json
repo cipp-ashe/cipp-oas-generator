@@ -1,0 +1,40 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 4 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "FunctionName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "FunctionName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "OffloadFunctions",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "description": "OffloadFunctions parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Parameters",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Parameters parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "TableName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "TableName parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

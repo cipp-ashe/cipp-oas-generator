@@ -1,0 +1,120 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 14 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "Action",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Action parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Branch",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Branch parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Description",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Description parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "FullName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "FullName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "GUID",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "GUID parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Id",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Id parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "includeforks",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "description": "includeforks parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Message",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Message parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "orgName",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "orgName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Path",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Path parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "policySource",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "policySource parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "Private",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "description": "Private parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "repoName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "repoName parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "searchTerm",
+      "in": "body",
+      "required": false,
+      "type": "LabelValue",
+      "description": "searchTerm parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

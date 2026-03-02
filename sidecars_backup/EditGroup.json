@@ -1,0 +1,162 @@
+{
+  "override_confidence": "high",
+  "add_params": [
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "Tenant domain. PS1 reads $UserObj.tenantFilter and falls back to $UserObj.tenantId."
+    },
+    {
+      "name": "groupId",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "Group ID string. PS1 reads $UserObj.groupId.value ?? $UserObj.groupId."
+    },
+    {
+      "name": "groupType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Group type string e.g. 'Microsoft 365', 'Security', 'Distribution List', 'Mail-Enabled Security'. PS1 reads $UserObj.groupId.addedFields.groupType ?? $UserObj.groupType."
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "New display name. PS1 reads as groupName ?? displayName ?? groupId.addedFields.groupName."
+    },
+    {
+      "name": "description",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "mailNickname",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "membershipRules",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Dynamic membership rule expression. Only used for DynamicMembership groups."
+    },
+    {
+      "name": "securityEnabled",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high",
+      "description": "Only sent if changed from initial value (customDataformatter deletes unchanged properties)."
+    },
+    {
+      "name": "visibility",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "'Public'|'Private'. Only sent if changed from initial value."
+    },
+    {
+      "name": "allowExternal",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high",
+      "description": "Allow external senders. Only sent if changed."
+    },
+    {
+      "name": "sendCopies",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high",
+      "description": "Send copies to member inboxes (M365 groups). Only sent if changed."
+    },
+    {
+      "name": "hideFromOutlookClients",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high",
+      "description": "Hide group from Outlook (M365 groups). Only sent if changed."
+    },
+    {
+      "name": "mail",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Group email address; used for ExO DL operations."
+    },
+    {
+      "name": "AddMember",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high",
+      "description": "Array of user objects to add as members [{value: id, addedFields: {userPrincipalName, displayName, id}}]."
+    },
+    {
+      "name": "RemoveMember",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high",
+      "description": "Array of user objects to remove [{value: id, addedFields: {userPrincipalName}}]."
+    },
+    {
+      "name": "AddOwner",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high",
+      "description": "Array of user objects to add as owners."
+    },
+    {
+      "name": "RemoveOwner",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high",
+      "description": "Array of user objects to remove from owners."
+    },
+    {
+      "name": "AddContact",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high",
+      "description": "Array of contact objects to add [{value: email/guid, addedFields: {id, displayName, WindowsEmailAddress}}]."
+    },
+    {
+      "name": "RemoveContact",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high",
+      "description": "Array of contact objects to remove [{value: mail/guid, addedFields: {id}}]."
+    }
+  ],
+  "remove_params": [],
+  "trust_level": "verified",
+  "tested_version": null,
+  "notes": "customDataformatter spreads all form values into cleanedData, then deletes 5 properties (allowExternal, sendCopies, hideFromOutlookClients, securityEnabled, visibility) if they equal their initial loaded values \u2014 effectively only sending changes for those boolean/visibility fields. All other fields pass through unchanged. The formatter also processes dynamicRules: for dynamic groups, rule property/operator objects are unwrapped to their .value strings. PS1 reads all fields directly. Note: PS1 reads groupId.value ?? groupId and groupId.addedFields.groupType ?? groupType, so either nested or flat format is accepted.",
+  "x_cipp_warnings": [
+    "customDataformatter is present on the CippFormPage for this endpoint. Form field names and/or types may be renamed or restructured before POST. Verify the transformer function in the frontend page file and correct param names/types accordingly."
+  ]
+}

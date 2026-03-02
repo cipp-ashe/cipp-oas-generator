@@ -1,5 +1,6 @@
 {
-  "_comment": "Auto-generated from: CippIntunePolicy (6 fields)",
+  "override_confidence": "high",
+  "_comment": "Auto-generated from: CippIntunePolicy (6 fields) | Enriched 2026-03-02",
   "override_method": "POST",
   "parameters": [
     {
@@ -43,6 +44,69 @@
       "required": false,
       "type": "string",
       "description": "Assignment Filter Mode"
+    },
+    {
+      "name": "ID",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ID"
+    },
+    {
+      "name": "Type",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: Type"
+    },
+    {
+      "name": "platformType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: platformType"
+    },
+    {
+      "name": "excludeGroup",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: excludeGroup"
+    },
+    {
+      "name": "GroupIds",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: GroupIds"
+    },
+    {
+      "name": "GroupNames",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: GroupNames"
+    },
+    {
+      "name": "assignmentMode",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: assignmentMode"
+    },
+    {
+      "name": "AssignmentFilterName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AssignmentFilterName"
+    },
+    {
+      "name": "AssignmentFilterType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AssignmentFilterType"
     }
   ]
 }

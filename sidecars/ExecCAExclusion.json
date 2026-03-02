@@ -1,16 +1,126 @@
 {
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
   "add_params": [
-    { "name": "tenantFilter", "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Formatter unwraps tenantFilter?.value || tenantFilter." },
-    { "name": "Users",        "in": "body", "required": true,  "type": "array",   "confidence": "high", "description": "Array of user objects from CippFormUserSelector with addedFields {userPrincipalName, displayName}. PS1 reads Users.value and Users.addedFields.userPrincipalName." },
-    { "name": "PolicyId",     "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "CA policy ID. Formatter unwraps autocomplete .value." },
-    { "name": "StartDate",    "in": "body", "required": true,  "type": "integer", "confidence": "high", "description": "Unix timestamp (seconds) for start date/time. Formatter sends as 'StartDate' mapping form field 'startDate'." },
-    { "name": "EndDate",      "in": "body", "required": true,  "type": "integer", "confidence": "high", "description": "Unix timestamp (seconds) for end date/time. Formatter sends as 'EndDate' mapping form field 'endDate'." },
-    { "name": "vacation",     "in": "body", "required": false, "type": "boolean", "confidence": "high", "description": "Always set to true by this form (vacation mode path). PS1 checks if 'vacation' == 'true' (string comparison) to determine scheduling path." },
-    { "name": "postExecution","in": "body", "required": false, "type": "array",   "confidence": "medium", "description": "Post-execution action objects. Not explicitly in this form but PS1 reads $Request.Body.postExecution." },
-    { "name": "reference",    "in": "body", "required": false, "type": "string",  "confidence": "medium", "description": "Not in this form but PS1 reads $Request.Body.reference." }
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "Formatter unwraps tenantFilter?.value || tenantFilter."
+    },
+    {
+      "name": "Users",
+      "in": "body",
+      "required": true,
+      "type": "array",
+      "confidence": "high",
+      "description": "Array of user objects from CippFormUserSelector with addedFields {userPrincipalName, displayName}. PS1 reads Users.value and Users.addedFields.userPrincipalName."
+    },
+    {
+      "name": "PolicyId",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "CA policy ID. Formatter unwraps autocomplete .value."
+    },
+    {
+      "name": "StartDate",
+      "in": "body",
+      "required": true,
+      "type": "integer",
+      "confidence": "high",
+      "description": "Unix timestamp (seconds) for start date/time. Formatter sends as 'StartDate' mapping form field 'startDate'."
+    },
+    {
+      "name": "EndDate",
+      "in": "body",
+      "required": true,
+      "type": "integer",
+      "confidence": "high",
+      "description": "Unix timestamp (seconds) for end date/time. Formatter sends as 'EndDate' mapping form field 'endDate'."
+    },
+    {
+      "name": "vacation",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high",
+      "description": "Always set to true by this form (vacation mode path). PS1 checks if 'vacation' == 'true' (string comparison) to determine scheduling path."
+    },
+    {
+      "name": "postExecution",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "medium",
+      "description": "Post-execution action objects. Not explicitly in this form but PS1 reads $Request.Body.postExecution."
+    },
+    {
+      "name": "reference",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "Not in this form but PS1 reads $Request.Body.reference."
+    },
+    {
+      "name": "UserID",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: UserID"
+    },
+    {
+      "name": "Username",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: Username"
+    },
+    {
+      "name": "ExclusionType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ExclusionType"
+    },
+    {
+      "name": "excludeLocationAuditAlerts",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: excludeLocationAuditAlerts"
+    },
+    {
+      "name": "value",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: value"
+    },
+    {
+      "name": "addedFields.userPrincipalName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: addedFields.userPrincipalName"
+    },
+    {
+      "name": "addedFields",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: addedFields"
+    }
   ],
-  "remove_params": ["startDate", "endDate"],
+  "remove_params": [
+    "startDate",
+    "endDate"
+  ],
   "trust_level": "verified",
   "tested_version": null,
-  "notes": "customDataformatter: unwraps tenantFilter autocomplete .value, unwraps PolicyId autocomplete .value, renames form fields 'startDate'→'StartDate' and 'endDate'→'EndDate', hard-codes vacation=true. Users array passes through unchanged (PS1 reads $.value and $.addedFields.userPrincipalName). This form only handles the vacation mode POST path; PS1 also supports direct ExclusionType/UserID params for non-vacation use."
+  "notes": "customDataformatter: unwraps tenantFilter autocomplete .value, unwraps PolicyId autocomplete .value, renames form fields 'startDate'\u2192'StartDate' and 'endDate'\u2192'EndDate', hard-codes vacation=true. Users array passes through unchanged (PS1 reads $.value and $.addedFields.userPrincipalName). This form only handles the vacation mode POST path; PS1 also supports direct ExclusionType/UserID params for non-vacation use."
 }

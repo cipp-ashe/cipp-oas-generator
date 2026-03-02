@@ -1,13 +1,82 @@
 {
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
+  "description": "Entrypoint for tenant group management",
   "add_params": [
-    { "name": "Action",           "in": "body", "required": true,  "type": "string", "confidence": "high", "description": "Dispatch action. Formatter hard-codes 'AddEdit'. PS1 supports: AddEdit, Delete. Defaults handled by switch." },
-    { "name": "groupId",          "in": "body", "required": false, "type": "string", "confidence": "high", "description": "Group GUID. For edit form this is pre-populated from router query. PS1 auto-generates a new GUID if not provided." },
-    { "name": "groupName",        "in": "body", "required": true,  "type": "string", "confidence": "high", "description": "Display name for the tenant group." },
-    { "name": "groupDescription", "in": "body", "required": false, "type": "string", "confidence": "high" },
-    { "name": "groupType",        "in": "body", "required": false, "type": "string", "confidence": "high", "description": "Enum: 'static'|'dynamic'. PS1 defaults to 'static' if not provided.", "enum": ["static", "dynamic"] },
-    { "name": "members",          "in": "body", "required": false, "type": "array",  "confidence": "high", "description": "Array of {label, value: customerId} tenant objects. Used only for static groups." },
-    { "name": "dynamicRules",     "in": "body", "required": false, "type": "array",  "confidence": "high", "description": "Array of rule objects [{property: string, operator: string, value: any}]. Formatter unwraps property/operator from {label,value} objects. Required when groupType='dynamic'." },
-    { "name": "ruleLogic",        "in": "body", "required": false, "type": "string", "confidence": "high", "description": "Logic for combining dynamic rules. Enum: 'and'|'or'. PS1 defaults to 'and'." }
+    {
+      "name": "Action",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "Dispatch action. Formatter hard-codes 'AddEdit'. PS1 supports: AddEdit, Delete. Defaults handled by switch."
+    },
+    {
+      "name": "groupId",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Group GUID. For edit form this is pre-populated from router query. PS1 auto-generates a new GUID if not provided."
+    },
+    {
+      "name": "groupName",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "Display name for the tenant group."
+    },
+    {
+      "name": "groupDescription",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "groupType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Enum: 'static'|'dynamic'. PS1 defaults to 'static' if not provided.",
+      "enum": [
+        "static",
+        "dynamic"
+      ]
+    },
+    {
+      "name": "members",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high",
+      "description": "Array of {label, value: customerId} tenant objects. Used only for static groups."
+    },
+    {
+      "name": "dynamicRules",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high",
+      "description": "Array of rule objects [{property: string, operator: string, value: any}]. Formatter unwraps property/operator from {label,value} objects. Required when groupType='dynamic'."
+    },
+    {
+      "name": "ruleLogic",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Logic for combining dynamic rules. Enum: 'and'|'or'. PS1 defaults to 'and'."
+    },
+    {
+      "name": "value",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: value"
+    }
   ],
   "remove_params": [],
   "trust_level": "verified",

@@ -1,33 +1,207 @@
 {
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
+  "description": "This function updates an existing Safe Links policy template.",
   "add_params": [
-    { "name": "ID",                        "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Template GUID. PS1 requires this to locate and update the template in Azure Table Storage." },
-    { "name": "TemplateName",              "in": "body", "required": true,  "type": "string",  "confidence": "high" },
-    { "name": "TemplateDescription",       "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "PolicyName",               "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "AdminDisplayName",         "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "EnableSafeLinksForEmail",  "in": "body", "required": false, "type": "boolean", "confidence": "high" },
-    { "name": "EnableSafeLinksForTeams",  "in": "body", "required": false, "type": "boolean", "confidence": "high" },
-    { "name": "EnableSafeLinksForOffice", "in": "body", "required": false, "type": "boolean", "confidence": "high" },
-    { "name": "TrackClicks",              "in": "body", "required": false, "type": "boolean", "confidence": "high" },
-    { "name": "AllowClickThrough",        "in": "body", "required": false, "type": "boolean", "confidence": "high" },
-    { "name": "ScanUrls",                 "in": "body", "required": false, "type": "boolean", "confidence": "high" },
-    { "name": "EnableForInternalSenders", "in": "body", "required": false, "type": "boolean", "confidence": "high" },
-    { "name": "DeliverMessageAfterScan",  "in": "body", "required": false, "type": "boolean", "confidence": "high" },
-    { "name": "DisableUrlRewrite",        "in": "body", "required": false, "type": "boolean", "confidence": "high" },
-    { "name": "EnableOrganizationBranding","in":"body",  "required": false, "type": "boolean", "confidence": "high" },
-    { "name": "DoNotRewriteUrls",         "in": "body", "required": false, "type": "array",   "confidence": "high" },
-    { "name": "CustomNotificationText",   "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "RuleName",                 "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "Priority",                 "in": "body", "required": false, "type": "integer", "confidence": "high" },
-    { "name": "State",                    "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Formatter sends ruleValues.State ? 'Enabled' : 'Disabled' (string, not boolean) for template mode." },
-    { "name": "Comments",                 "in": "body", "required": false, "type": "string",  "confidence": "high" },
-    { "name": "SentTo",                   "in": "body", "required": false, "type": "array",   "confidence": "high" },
-    { "name": "SentToMemberOf",           "in": "body", "required": false, "type": "array",   "confidence": "high" },
-    { "name": "RecipientDomainIs",        "in": "body", "required": false, "type": "array",   "confidence": "high" },
-    { "name": "ExceptIfSentTo",           "in": "body", "required": false, "type": "array",   "confidence": "high" },
-    { "name": "ExceptIfSentToMemberOf",   "in": "body", "required": false, "type": "array",   "confidence": "high" },
-    { "name": "ExceptIfRecipientDomainIs","in": "body", "required": false, "type": "array",   "confidence": "high" },
-    { "name": "tenantFilter",             "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Not consumed by PS1 (AnyTenant endpoint) but included by formatter." }
+    {
+      "name": "ID",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high",
+      "description": "Template GUID. PS1 requires this to locate and update the template in Azure Table Storage."
+    },
+    {
+      "name": "TemplateName",
+      "in": "body",
+      "required": true,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "TemplateDescription",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "PolicyName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "AdminDisplayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "EnableSafeLinksForEmail",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high"
+    },
+    {
+      "name": "EnableSafeLinksForTeams",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high"
+    },
+    {
+      "name": "EnableSafeLinksForOffice",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high"
+    },
+    {
+      "name": "TrackClicks",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high"
+    },
+    {
+      "name": "AllowClickThrough",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high"
+    },
+    {
+      "name": "ScanUrls",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high"
+    },
+    {
+      "name": "EnableForInternalSenders",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high"
+    },
+    {
+      "name": "DeliverMessageAfterScan",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high"
+    },
+    {
+      "name": "DisableUrlRewrite",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high"
+    },
+    {
+      "name": "EnableOrganizationBranding",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "confidence": "high"
+    },
+    {
+      "name": "DoNotRewriteUrls",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high"
+    },
+    {
+      "name": "CustomNotificationText",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "RuleName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "Priority",
+      "in": "body",
+      "required": false,
+      "type": "integer",
+      "confidence": "high"
+    },
+    {
+      "name": "State",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Formatter sends ruleValues.State ? 'Enabled' : 'Disabled' (string, not boolean) for template mode."
+    },
+    {
+      "name": "Comments",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high"
+    },
+    {
+      "name": "SentTo",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high"
+    },
+    {
+      "name": "SentToMemberOf",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high"
+    },
+    {
+      "name": "RecipientDomainIs",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high"
+    },
+    {
+      "name": "ExceptIfSentTo",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high"
+    },
+    {
+      "name": "ExceptIfSentToMemberOf",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high"
+    },
+    {
+      "name": "ExceptIfRecipientDomainIs",
+      "in": "body",
+      "required": false,
+      "type": "array",
+      "confidence": "high"
+    },
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "high",
+      "description": "Not consumed by PS1 (AnyTenant endpoint) but included by formatter."
+    }
   ],
   "remove_params": [],
   "trust_level": "verified",

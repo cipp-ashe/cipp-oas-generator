@@ -1,5 +1,25 @@
 {
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
+  "parameters": [
+    {
+      "name": "type",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: type"
+    },
+    {
+      "name": "SearchString",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: SearchString"
+    }
+  ],
   "trust_level": "reversed",
-  "override_methods": ["POST"],
-  "notes": "ORPHAN — frontend calls /api/ListPotentialApps (CippApplicationDeployDrawer.jsx) but no PS1 exists. App deployment potential apps listing is frontend-only as of v10.1.x."
+  "override_methods": [
+    "POST"
+  ],
+  "notes": "ORPHAN \u2014 frontend calls /api/ListPotentialApps (CippApplicationDeployDrawer.jsx) but no PS1 exists. App deployment potential apps listing is frontend-only as of v10.1.x."
 }

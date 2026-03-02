@@ -1,7 +1,36 @@
 {
-  "_comment": "Auto-generated from: CippIntunePolicy (6 fields)",
+  "override_confidence": "high",
+  "_comment": "Auto-generated from: CippIntunePolicy (6 fields) | Enriched 2026-03-02",
   "override_method": "POST",
   "parameters": [
+    {
+      "name": "View",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: View"
+    },
+    {
+      "name": "mode",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: mode"
+    },
+    {
+      "name": "ID",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: ID"
+    },
+    {
+      "name": "id",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: id"
+    },
     {
       "name": "TemplateList",
       "in": "body",

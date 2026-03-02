@@ -1,0 +1,33 @@
+{
+  "add_params": [
+    { "name": "tenantFilter",              "in": "query", "required": true,  "type": "string",  "confidence": "high" },
+    { "name": "PolicyName",               "in": "body",  "required": true,  "type": "string",  "confidence": "high", "description": "Name for the new SafeLinksPolicy; must be unique in the tenant" },
+    { "name": "RuleName",                 "in": "body",  "required": true,  "type": "string",  "confidence": "high", "description": "Name for the new SafeLinksRule; auto-set to '{PolicyName}_Rule' by frontend; must be unique" },
+    { "name": "EnableSafeLinksForEmail",   "in": "body",  "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "EnableSafeLinksForTeams",   "in": "body",  "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "EnableSafeLinksForOffice",  "in": "body",  "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "TrackClicks",               "in": "body",  "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "AllowClickThrough",         "in": "body",  "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "ScanUrls",                  "in": "body",  "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "EnableForInternalSenders",  "in": "body",  "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "DeliverMessageAfterScan",   "in": "body",  "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "DisableUrlRewrite",         "in": "body",  "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "EnableOrganizationBranding","in": "body",  "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "AdminDisplayName",          "in": "body",  "required": false, "type": "string",  "confidence": "high", "description": "Policy description / display name" },
+    { "name": "CustomNotificationText",    "in": "body",  "required": false, "type": "string",  "confidence": "high" },
+    { "name": "DoNotRewriteUrls",          "in": "body",  "required": false, "type": "array",   "confidence": "high", "description": "Array of URL/domain/wildcard strings to exclude from rewriting" },
+    { "name": "Priority",                  "in": "body",  "required": false, "type": "integer", "confidence": "high", "description": "Rule priority (lower = higher priority)" },
+    { "name": "Comments",                  "in": "body",  "required": false, "type": "string",  "confidence": "high" },
+    { "name": "State",                     "in": "body",  "required": false, "type": "boolean", "confidence": "high", "description": "true = enable rule on creation, false = create disabled" },
+    { "name": "SentTo",                    "in": "body",  "required": false, "type": "array",   "confidence": "high", "description": "Array of recipient UPNs" },
+    { "name": "SentToMemberOf",            "in": "body",  "required": false, "type": "array",   "confidence": "high", "description": "Array of group IDs" },
+    { "name": "RecipientDomainIs",         "in": "body",  "required": false, "type": "array",   "confidence": "high", "description": "Array of domain strings" },
+    { "name": "ExceptIfSentTo",            "in": "body",  "required": false, "type": "array",   "confidence": "high", "description": "Exception: array of recipient UPNs" },
+    { "name": "ExceptIfSentToMemberOf",    "in": "body",  "required": false, "type": "array",   "confidence": "high", "description": "Exception: array of group IDs" },
+    { "name": "ExceptIfRecipientDomainIs", "in": "body",  "required": false, "type": "array",   "confidence": "high", "description": "Exception: array of domain strings" }
+  ],
+  "remove_params": [],
+  "trust_level": "verified",
+  "tested_version": null,
+  "notes": "PS1 at Security/Safe-Links-Policy/Invoke-ExecNewSafeLinksPolicy.ps1. Creates a new SafeLinksPolicy + SafeLinksRule pair. Data transform via CippSafeLinksPolicyRuleForm.jsx safeLinksDataUtils.createDataFormatter (formType='add'). All field names post-transform match PS1 body params exactly. PS1 checks for existing policy/rule by name before creating — returns error if either already exists. DoNotRewriteUrls is an array of strings. SentTo/SentToMemberOf/RecipientDomainIs and Except* variants are arrays of strings unwrapped from LabelValue/selector objects by the transformer. State is a boolean (true=Enable-SafeLinksRule, false=Disable-SafeLinksRule). RuleName is auto-generated in the frontend as '{PolicyName}_Rule' and is not user-editable."
+}

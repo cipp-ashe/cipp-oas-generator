@@ -1,9 +1,6 @@
 {
-  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
-  "trust_level": "inferred",
-  "remove_params": [
-    "searchQuery"
-  ],
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred. | Enriched 2026-03-02",
   "add_params": [
     {
       "name": "Search",
@@ -12,7 +9,18 @@
       "type": "string",
       "confidence": "medium",
       "description": "(auto) API uses 'Search', frontend sends 'searchQuery' \u2014 likely the same field (similarity=0.71). Verify and correct type."
+    },
+    {
+      "name": "Repository",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: Repository"
     }
+  ],
+  "trust_level": "inferred",
+  "remove_params": [
+    "searchQuery"
   ],
   "notes": "Naming divergence: 1 param(s) where API and frontend use different names for the same field. Auto-matched by name similarity. Verify each pair before publishing."
 }

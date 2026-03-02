@@ -1,7 +1,15 @@
 {
-  "_comment": "Auto-generated from: CippWizardAssignmentFilterTemplates (6 fields)",
+  "override_confidence": "high",
+  "_comment": "Auto-generated from: CippWizardAssignmentFilterTemplates (6 fields) | Enriched 2026-03-02",
   "override_method": "POST",
   "parameters": [
+    {
+      "name": "ID",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: ID"
+    },
     {
       "name": "TemplateList",
       "in": "body",

@@ -1,5 +1,18 @@
 {
+  "override_confidence": "high",
+  "_comment": "Enriched with PS1 data on 2026-03-02",
+  "parameters": [
+    {
+      "name": "TenantFilter",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: TenantFilter"
+    }
+  ],
   "trust_level": "reversed",
-  "override_methods": ["GET"],
-  "notes": "PROBABLE 404 — frontend calls /api/ListUsersAndGroups (CippFormUserAndGroupSelector.jsx) but no Invoke-ListUsersAndGroups.ps1 exists. PS1 is Invoke-ListDirectoryObjects in CIPP/Core. Failure mode: user+group selector shows empty results. Fix: rename PS1 or update frontend URL."
+  "override_methods": [
+    "GET"
+  ],
+  "notes": "PROBABLE 404 \u2014 frontend calls /api/ListUsersAndGroups (CippFormUserAndGroupSelector.jsx) but no Invoke-ListUsersAndGroups.ps1 exists. PS1 is Invoke-ListDirectoryObjects in CIPP/Core. Failure mode: user+group selector shows empty results. Fix: rename PS1 or update frontend URL."
 }

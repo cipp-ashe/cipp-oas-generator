@@ -1,0 +1,40 @@
+{
+  "override_confidence": "high",
+  "_comment": "AUTO-GENERATED — PARTIAL endpoint with 4 params",
+  "trust_level": "verified",
+  "add_params": [
+    {
+      "name": "IP",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "IP parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "ipAddress",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "ipAddress parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "State",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "State parameter",
+      "confidence": "high"
+    },
+    {
+      "name": "tenantfilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "tenantfilter parameter",
+      "confidence": "high"
+    }
+  ],
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+}

@@ -100,7 +100,16 @@
     }
   ],
   "orphan_delta": {
-    "new": [],
+    "new": [
+      "AddCustomDomain",
+      "AddStandardTemplate",
+      "EditTenantGroup",
+      "ListCippQueue",
+      "RecoverPolicies",
+      "RemoveAntiPhishingFilter",
+      "RemoveMalwareFilter",
+      "RemoveSafeAttachmentsFilter"
+    ],
     "resolved": []
   },
   "sidecar_candidates": [

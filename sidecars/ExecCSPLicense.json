@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["GET", "POST"],
+  "notes": "ORPHAN — frontend calls /api/ExecCSPLicense (src/pages/tenant/administration/add-subscription/index.jsx) but no PS1 exists. CSP licensing/subscription management is frontend-only as of v10.1.x."
+}

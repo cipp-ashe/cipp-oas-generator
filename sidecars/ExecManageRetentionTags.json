@@ -1,0 +1,17 @@
+{
+  "add_params": [
+    { "name": "tenantFilter",                "in": "body",  "required": true,  "type": "string",  "confidence": "high" },
+    { "name": "CreateTags",                  "in": "body",  "required": false, "type": "array",   "confidence": "high", "description": "Array of tag objects to create: [{Name, Type, Comment, RetentionAction, AgeLimitForRetention, RetentionEnabled, LocalizedComment, LocalizedRetentionPolicyTagName}]. Sent when isEdit=false." },
+    { "name": "ModifyTags",                  "in": "body",  "required": false, "type": "array",   "confidence": "high", "description": "Array of tag modification objects: [{Identity: original name, Name?, Comment?, RetentionAction?, AgeLimitForRetention?, RetentionEnabled?, LocalizedComment?, LocalizedRetentionPolicyTagName?}]. Sent when isEdit=true." },
+    { "name": "DeleteTags",                  "in": "body",  "required": false, "type": "array",   "confidence": "medium", "description": "Array of tag identity strings to delete. Not sent by this form but accepted by PS1." },
+    { "name": "tenantFilter",                "in": "query", "required": false, "type": "string",  "confidence": "high", "description": "Used for GET (list) requests." },
+    { "name": "name",                        "in": "query", "required": false, "type": "string",  "confidence": "high", "description": "Used for GET (single tag) requests." }
+  ],
+  "remove_params": ["Name", "Type", "RetentionAction", "AgeLimitForRetention", "RetentionEnabled", "LocalizedComment", "LocalizedRetentionPolicyTagName"],
+  "trust_level": "verified",
+  "tested_version": null,
+  "notes": "customDataformatter wraps form fields into CreateTags or ModifyTags array based on isEdit. For create: CreateTags[0] = {Type: unwrapped string value, Name, Comment, RetentionAction: unwrapped string, AgeLimitForRetention: parseInt(), RetentionEnabled, LocalizedComment?, LocalizedRetentionPolicyTagName?}. For edit: ModifyTags[0] = {Identity: name (from router), ...same optional fields}. Type is excluded from ModifyTags (cannot change type after creation). RetentionAction and Type autocomplete objects are unwrapped to .value strings.",
+  "x_cipp_warnings": [
+    "customDataformatter is present on the CippFormPage for this endpoint. Form field names and/or types may be renamed or restructured before POST. Verify the transformer function in the frontend page file and correct param names/types accordingly."
+  ]
+}

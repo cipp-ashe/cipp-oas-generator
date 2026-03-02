@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["GET"],
+  "notes": "ORPHAN — frontend calls /api/ExecUniversalSearch (src/components/CippCards/CippUniversalSearch.jsx) but no PS1 exists. Universal search feature is frontend-only as of v10.1.x."
+}

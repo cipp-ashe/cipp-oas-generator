@@ -1,0 +1,36 @@
+{
+  "add_params": [
+    { "name": "tenantID",                  "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Tenant domain. Formatter reads from useSettings().currentTenant." },
+    { "name": "equipmentId",               "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Equipment mailbox identity (from router query). PS1 uses for Set-Mailbox, Set-User, Set-CalendarProcessing, Set-MailboxCalendarConfiguration Identity." },
+    { "name": "displayName",               "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "hiddenFromAddressListsEnabled", "in": "body", "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "department",                "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "company",                   "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "streetAddress",             "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "PS1 Set-User param name is 'StreetAddress' but reads $MailboxObject.streetAddress (case-insensitive)" },
+    { "name": "city",                      "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "stateOrProvince",           "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "postalCode",                "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "countryOrRegion",           "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "2-letter country code; formatter unwraps autocomplete .value" },
+    { "name": "phone",                     "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "tags",                      "in": "body", "required": false, "type": "array",   "confidence": "high", "description": "Array of strings; formatter maps tag objects to .value strings" },
+    { "name": "allowConflicts",            "in": "body", "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "allowRecurringMeetings",    "in": "body", "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "bookingWindowInDays",       "in": "body", "required": false, "type": "integer", "confidence": "high" },
+    { "name": "maximumDurationInMinutes",  "in": "body", "required": false, "type": "integer", "confidence": "high" },
+    { "name": "processExternalMeetingMessages", "in": "body", "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "forwardRequestsToDelegates","in": "body", "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "scheduleOnlyDuringWorkHours","in": "body", "required": false, "type": "boolean", "confidence": "high" },
+    { "name": "automateProcessing",        "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Enum: None|AutoUpdate|AutoAccept. Formatter unwraps autocomplete .value." },
+    { "name": "workDays",                  "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Comma-separated string of work days. Formatter joins array of {value} objects." },
+    { "name": "workHoursStartTime",        "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "workHoursEndTime",          "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "workingHoursTimeZone",      "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Timezone standard name. Formatter unwraps autocomplete .value." }
+  ],
+  "remove_params": [],
+  "trust_level": "verified",
+  "tested_version": null,
+  "notes": "customDataformatter outputs all fields with the same names read by the PS1, except: (1) autocomplete objects are unwrapped to .value strings (countryOrRegion, automateProcessing, workingHoursTimeZone); (2) tags array of {label,value} objects becomes array of strings; (3) workDays array of {value} objects is joined to comma-separated string. PS1 reads $MailboxObject.* directly with the camelCase names sent by the formatter.",
+  "x_cipp_warnings": [
+    "customDataformatter is present on the CippFormPage for this endpoint. Form field names and/or types may be renamed or restructured before POST. Verify the transformer function in the frontend page file and correct param names/types accordingly."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "add_params": [
+    { "name": "Action",         "in": "body",  "required": false, "type": "string", "confidence": "high", "description": "Dispatch action. Formatter sends 'AddRoleAdvanced' when advancedMode=true, or omits Action (defaults to 'AddRoleSimple') when false. PS1 defaults to 'AddRoleSimple' if not provided. Valid: AddRoleSimple, AddRoleAdvanced, ListGroups." },
+    { "name": "gdapRoles",      "in": "body",  "required": false, "type": "array",  "confidence": "high", "description": "Array of {label, value} role objects. Used in AddRoleSimple mode. PS1 reads $Request.Body.gdapRoles." },
+    { "name": "customSuffix",   "in": "body",  "required": false, "type": "string", "confidence": "high", "description": "Optional group name suffix. Used in AddRoleSimple mode." },
+    { "name": "templateId",     "in": "body",  "required": false, "type": "string", "confidence": "high", "description": "If set, adds role mappings to this GDAP template. Used in AddRoleSimple mode." },
+    { "name": "Mappings",       "in": "body",  "required": false, "type": "array",  "confidence": "high", "description": "Array of {groupName, groupId, roleName, roleDefinitionId} objects. Used in AddRoleAdvanced mode. PS1 reads $Request.Body.mappings (lowercase). Frontend sends as 'Mappings' (capital M); PS1 property access is case-insensitive." }
+  ],
+  "remove_params": ["roleMappings", "advancedMode", "selectedGroup", "selectedRole"],
+  "trust_level": "verified",
+  "tested_version": null,
+  "notes": "customDataformatter has two branches: (1) If advancedMode=true → sends {Action:'AddRoleAdvanced', Mappings: advancedMappings} where advancedMappings is component state (not form values). (2) If advancedMode=false → passes through all form values unchanged (spreads the values object). In the simple mode, form fields gdapRoles, customSuffix, templateId reach the API directly. PS1 reads $Request.Body.mappings (note: formatter sends 'Mappings', PS1 reads via 'mappings' — case-insensitive match in PS).",
+  "x_cipp_warnings": [
+    "advancedMappings state is held in the component, not in RHF form values. In AddRoleAdvanced mode, only Action and Mappings are sent — all form field values are discarded."
+  ]
+}

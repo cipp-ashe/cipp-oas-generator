@@ -1,0 +1,44 @@
+name: Validate OpenAPI Spec
+
+on:
+  pull_request:
+    paths:
+      - 'Modules/CIPPCore/Public/Entrypoints/HTTP Functions/**'
+      - 'Tools/openapi-generator/**'
+      - 'openapi.json'
+
+jobs:
+  validate-spec:
+    name: Check openapi.json is current
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout CIPP-API
+        uses: actions/checkout@v4
+        with:
+          path: cipp-api
+
+      - name: Checkout CIPP frontend
+        uses: actions/checkout@v4
+        with:
+          repository: KelvinTegelaar/CIPP
+          path: cipp-main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run generator (validate-only mode)
+        working-directory: cipp-api/Tools/openapi-generator
+        run: python3 pipeline.py --validate-only
+        env:
+          CIPP_API_REPO: ${{ github.workspace }}/cipp-api
+          CIPP_FRONTEND_REPO: ${{ github.workspace }}/cipp-main
+
+      - name: Upload generated spec (artifact on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-openapi
+          path: cipp-api/Tools/openapi-generator/out/openapi.json

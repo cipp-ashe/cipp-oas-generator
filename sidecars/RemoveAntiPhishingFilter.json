@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["POST"],
+  "notes": "RENAMED — frontend calls /api/RemoveAntiPhishingFilter as a row action but the PS1 is Invoke-EditAntiPhishingFilter. Removal is performed via a PATCH/edit operation, not a separate delete endpoint. The frontend URL does not match the PS1 name."
+}

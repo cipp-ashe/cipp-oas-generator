@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["POST"],
+  "notes": "PROBABLE 404 — frontend POSTs to /api/AddStandardTemplate (CippPolicyImportDrawer.jsx) but no Invoke-AddStandardTemplate.ps1 exists. PS1 is Invoke-AddStandardsDeploy in Tenant/Standards. Failure mode: policy import/template save fails silently. Fix: rename PS1 or update frontend URL."
+}

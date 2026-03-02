@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["POST"],
+  "notes": "ORPHAN — frontend calls /api/AddCustomDomain (src/pages/domains.js) but no Invoke-AddCustomDomain.ps1 exists in the API repo. API not yet implemented; endpoint is frontend-only as of v10.1.x."
+}

@@ -1,0 +1,5 @@
+{
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
+  "trust_level": "inferred",
+  "notes": "BLIND endpoint \u2014 API reads $Request.Body as a blob with no direct field access. Passthrough detected \u2014 body forwarded to downstream function. No frontend params found. Endpoint may be backend-only or frontend call not detected by scanner."
+}

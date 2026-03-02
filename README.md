@@ -1,0 +1,334 @@
+# CIPP OAS Generator
+
+Generates an OpenAPI 3.1 spec for the CIPP API via static analysis of both repos —
+no runtime calls, no manual maintenance. Runs against the PowerShell API source and
+the React frontend source simultaneously.
+
+---
+
+## How it works
+
+```
+Stage 1: API Scanner      Invoke-*.ps1 files → endpoint-index.json
+Stage 2: Frontend Scanner JSX/JS call sites  → frontend-calls.json
+Stage 3: Merger           reconcile + score  → merged-params.json
+                                               mismatch-report.json
+                                               coverage-report.json
+Stage 4: OAS Emitter      merged output      → out/openapi.json
+                                               out/domain/<name>-openapi.json
+```
+
+Each stage is independently runnable and testable. Outputs are plain JSON and feed
+the next stage. Single-endpoint runs write to `out/*-EndpointName.json` and never
+touch corpus output — safe to run at any time.
+
+**Sidecars** (`sidecars/EndpointName.json`) are human-authored override files for
+endpoints where static analysis can't fully resolve the contract. They take highest
+precedence over both API and frontend sources. See `sidecars/README.md`.
+
+---
+
+## Quickstart
+
+```bash
+# Full corpus run
+./run.sh
+
+# Single endpoint (spot-check, all stages)
+./run.sh --endpoint AddUser
+
+# After a CIPP release — verify assumptions before running
+./run.sh --check-patterns
+
+# Full parameter trace for one endpoint (see every decision the pipeline made)
+./run.sh --validate-endpoint AddUser
+
+# Trace one specific parameter end-to-end
+./run.sh --validate-endpoint AddUser --param displayName
+
+# CI mode — generate and diff against committed spec
+./run.sh --validate-only
+```
+
+`run.sh` auto-resolves sibling repo paths (`../cipp-api-master`, `../cipp-main`).
+Override with env vars if your layout differs:
+
+```bash
+CIPP_API_REPO=/path/to/CIPP-API CIPP_FRONTEND_REPO=/path/to/CIPP ./run.sh
+```
+
+---
+
+## Commands
+
+### `./run.sh` (or `python3 pipeline.py`)
+
+| Flag | Description |
+|---|---|
+| _(none)_ | Full corpus run — all endpoints, all stages |
+| `--endpoint NAME` | One endpoint through all stages |
+| `--stage N` | One stage only (1–4), full corpus |
+| `--validate-only` | Generate + diff vs committed `openapi.json` (CI mode) |
+| `--check-patterns` | Validate generator assumptions against live repos |
+| `--validate-endpoint NAME` | Full parameter trace for one endpoint |
+| `--validate-endpoint NAME --param FIELD` | Trace one specific parameter |
+
+### `--check-patterns`
+
+Run this after every CIPP release before a corpus run. Checks 10 assumptions
+using the **compiled patterns from the stage scripts directly** — not a parallel
+re-implementation, so it validates the patterns actually in use:
+
+- HTTP Functions path exists and has `Invoke-*.ps1` files
+- `.FUNCTIONALITY` marker is in use (via Stage 1 `FUNCTIONALITY_RE`)
+- `$Request.Query/Body` access pattern is present (via Stage 1 `QUERY_PARAM_RE` / `BODY_DIRECT_RE`)
+- `ApiGetCall` / `ApiPostCall` / `.mutate` wrappers exist in frontend (via Stage 2 `POST_CONTEXT_RE`)
+- `CippFormComponent name=` pattern is present (via Stage 2 `FORM_NAME_STATIC_RE`)
+- Selector components (`Domain`, `License`, `User`) are present (via Stage 2 `SELECTOR_COMPONENT_RES`)
+- `/api/` static URL prefix pattern is in use (via Stage 2 `STATIC_URL_RE`)
+- `.mutate({ url: ... })` pattern is present (via Stage 2 `MUTATE_URL_RE`)
+- `CippFormPage postUrl=` pattern is present (via Stage 2 `CIPP_FORM_PAGE_URL_RE`)
+
+Exits 0 if all pass, 1 with a list of what drifted. If it fails, update the
+relevant regex in the stage scripts before running the corpus — otherwise output
+degrades silently.
+
+### `--validate-endpoint`
+
+Shows every decision the pipeline made for each parameter:
+
+```
+┌─ displayName  [body]  confidence=high  sources=['sidecar']
+│ Stage 1: ✓ found — source=ast_blob (blob alias: ['UserObj'])  confidence=medium
+│ Stage 2: — not scanned (sidecar-only param)
+│ Stage 3: sidecar addition — bypasses merge logic
+│ Sidecar: ✓ add_params entry: {'name': 'displayName', 'in': 'body', ...}
+│ Stage 4: schema from sidecar type='string'
+└─ final: in=body  conf=high  sources=['sidecar']
+```
+
+Also shows:
+- Active filter sets (PS_NOISE, FRONTEND_NOISE, PARAM_NOISE) and what they suppressed
+- Which params were dropped and why
+- Known static analysis gaps for the endpoint
+- Call sites found by Stage 2
+
+Use `--param FIELD` when a parameter is **absent** from output to trace exactly
+which filter suppressed it or why the scanner missed it.
+
+---
+
+## Coverage tiers
+
+Every endpoint is assigned a coverage tier in the output:
+
+| Tier | Meaning |
+|---|---|
+| `FULL` | Both API and frontend sources present; all params high confidence |
+| `PARTIAL` | One source only, or mixed confidence, or blob-access params |
+| `BLIND` | API function found but zero params extracted — pure blob passthrough |
+| `ORPHAN` | Frontend calls endpoint but no `Invoke-*.ps1` found |
+| `STUB` | Neither source found — sidecar-only documentation |
+
+`BLIND` endpoints need sidecar files. The corpus run produces `out/coverage-report.json`
+with the full list of BLIND endpoints sorted by name.
+
+---
+
+## Configuration (`config.py`)
+
+Single source of truth for all tunable constants. Nothing is hardcoded in stage scripts.
+
+| Constant | Purpose |
+|---|---|
+| `API_REPO` / `FRONTEND_REPO` | Repo paths (env var overrides) |
+| `SHARED_PARAM_REFS` | Params that become `$ref` in OAS (e.g. `tenantFilter`) |
+| `FRONTEND_NOISE` | UI-only fields that are never sent to the API |
+| `PS_NOISE` | PowerShell auto-members and LabelValue sub-fields to suppress |
+| `PARAM_NOISE` | Call-option keys that appear in data objects but aren't params |
+| `DOWNSTREAM_PATTERNS` | Regex patterns for detecting downstream service usage |
+| `TYPE_HINTS` | Field name → OAS schema fragment (richer than default `string`) |
+| `ALWAYS_REQUIRED_BODY/QUERY` | Params that are required on every endpoint |
+| `DYNAMIC_EXTENSION_PARENTS` | Dotted paths that collapse to `DynamicExtensionFields $ref` |
+| `KNOWN_FRONTEND_GAPS` | Documented static analysis limits (in output, never silent) |
+| `COVERAGE_TIERS` | Tier definitions (in output) |
+
+---
+
+## What Stage 1 detects
+
+Stage 1 (`stage1_api_scanner.py`) walks all `Invoke-*.ps1` HTTP entrypoints and extracts:
+
+| Pattern | Source tag | Confidence |
+|---|---|---|
+| `$Request.Query.Name` | `ast_direct` | high |
+| `$Request.Body.Name` | `ast_direct` | high |
+| `$Alias = $Request.Body` then `$Alias.Name` | `ast_blob` | medium |
+| `foreach ($x in $Request.Body.array)` then `$x.Field` | `ast_blob` | medium |
+| `foreach` array container param | `ast_foreach_array` | high |
+
+Also flags:
+- `has_scheduled_branch` — body branches on `Scheduled.enabled`
+- `has_dynamic_options` — `Select-Object * -ExcludeProperty` passthrough
+- `dynamic_fields` — `$x.defaultAttributes` / `$x.customData` access
+- `is_passthrough` — function delegates entirely to another CIPP function
+- `downstream` — which services the endpoint touches (Graph, EXO, Scheduler, etc.)
+- HTTP method inference from access pattern and explicit Graph call type hints
+
+Non-entrypoints (Activity Triggers, helpers) are filtered via `.FUNCTIONALITY Entrypoint`.
+Files without a `.FUNCTIONALITY` block are included with a warning in output.
+
+## What Stage 2 detects
+
+Stage 2 (`stage2_frontend_scanner.py`) scans all `.jsx`/`.js` files and extracts:
+
+| Pattern | Method | Notes |
+|---|---|---|
+| `ApiGetCall({ url: "/api/Name", data: {...} })` | GET | Inline data keys = query params |
+| `ApiPostCall({ url: "/api/Name" })` | POST | Form fields from same file |
+| `ApiPostCall({ urlFromData: true })` + `.mutate({ url: "/api/Name" })` | POST | `MUTATE_URL_RE` |
+| `` url: `/api/Name?key=${val}` `` | GET | Template param extraction |
+| `<CippFormPage postUrl="/api/Name" />` | POST | `CIPP_FORM_PAGE_URL_RE`; inline fields captured; external child components flagged, not followed |
+| `<CippFormComponent name="field" />` | — | Form field → body param |
+| `<CippFormDomainSelector name="field" />` | — | LabelValue shape |
+| `<CippFormLicenseSelector name="field" />` | — | Array of SKU IDs |
+| `<CippFormUserSelector name="field" />` | — | LabelValue shape |
+
+**Call record flags** (preserved through `consolidate()` into Stage 3 output):
+
+| Flag | Meaning | Action |
+|---|---|---|
+| `has_external_form_component` | Fields live in a child component; not extracted | Add sidecar |
+| `has_data_transform` | `customDataformatter` present; field names/types may differ | Add sidecar |
+| `has_constructed_body` | Submit handler builds its own data object | Add sidecar |
+| `url_patterns` | Set of scan methods that found this endpoint | Informational |
+
+**Known static analysis gaps** (documented in output, never silent):
+
+1. Shared form components (e.g. `CippAddEditUser`) render different fields based on
+   `formType`. All fields are attributed to all endpoints using the component.
+   Sidecar resolves this.
+2. CippFormPage with an external child form component: the child import is not followed.
+   Endpoint is discovered and flagged `has_external_form_component=true`; add a sidecar.
+3. `customDataformatter` on CippFormPage rewrites field names/types before POST.
+   Endpoint is flagged `has_data_transform=true`; add a sidecar.
+4. Handler-constructed POST bodies: submit handler builds its own object rather than
+   submitting form values directly. Endpoint is flagged `has_constructed_body=true`; add sidecar.
+5. New `*Selector` components not in `SELECTOR_COMPONENT_RES` are invisible until added.
+6. New wrapper functions (`ApiPatchCall`, etc.) classify as GET unless added to
+   `POST_CONTEXT_RE`.
+7. Direct `axios`/`fetch` calls not wrapped in `ApiGetCall`/`ApiPostCall`.
+8. Computed endpoint names (`` url: `/api/${name}` ``).
+
+## What Stage 3 does
+
+Stage 3 (`stage3_merger.py`) reconciles Stage 1 + Stage 2 + sidecar:
+
+- Params in both sources → `confidence=high`, API name casing wins
+- API only → param's own confidence, `api_only` mismatch note
+- Frontend only → `confidence=medium`, `frontend_only` mismatch note
+- Location conflict (API says query, frontend says body) → mismatch note, API wins
+- Sidecar additions → replace existing if same name, append if new
+- Sidecar `remove_params` → case-insensitive, silently ignored if not present
+
+Sidecar validation runs before merge. Fatal errors (missing required fields, bad types)
+skip the endpoint and log it as an error — they don't abort the full run.
+
+## What Stage 4 emits
+
+Stage 4 (`stage4_emitter.py`) produces OAS 3.1 JSON:
+
+- `out/openapi.json` — unified spec, all endpoints
+- `out/domain/<name>-openapi.json` — per-domain specs (Identity, Email-Exchange, etc.)
+- Single-endpoint mode prints the OAS path snippet to stdout, writes nothing
+
+OAS 3.1 correctness enforced:
+- `$ref` is never combined with sibling keys — wrapped in `allOf` when extensions needed
+- `required[]` only lists names present in `properties{}`
+- `x-cipp-*` extensions are always legal in OAS 3.1
+
+Extensions added per operation:
+
+| Extension | When present |
+|---|---|
+| `x-cipp-role` | RBAC role required |
+| `x-cipp-confidence` | When not `high` |
+| `x-cipp-coverage-tier` | When not `FULL` |
+| `x-cipp-downstream` | Services touched (graph, exo, scheduler, etc.) |
+| `x-cipp-scheduled-branch` | Endpoint branches on `Scheduled.enabled` |
+| `x-cipp-dynamic-options` | `Select-Object *` passthrough detected |
+| `x-cipp-trust-level` | Sidecar provenance (`reversed`/`tested`/`inferred`) |
+| `x-cipp-tested-version` | CIPP version sidecar was validated against |
+| `x-cipp-raw-body` | `true` when `raw_request_body` sidecar escape hatch used |
+| `x-cipp-warnings` | Consumer warnings (destructive ops, silent queuing, etc.) |
+| `x-cipp-analysis-version` | Generator version (in `info`) |
+
+---
+
+## Outputs
+
+| File | Stage | Description |
+|---|---|---|
+| `out/endpoint-index.json` | 1 | All API endpoints with AST params |
+| `out/endpoint-index-{Name}.json` | 1 | Single-endpoint run (never overwrites corpus) |
+| `out/frontend-calls.json` | 2 | All frontend call sites |
+| `out/frontend-calls-{Name}.json` | 2 | Single-endpoint |
+| `out/merged-params.json` | 3 | Reconciled, confidence-scored |
+| `out/merged-params-{Name}.json` | 3 | Single-endpoint |
+| `out/mismatch-report.json` | 3 | Frontend/backend drift per endpoint |
+| `out/coverage-report.json` | 3 | Coverage tier breakdown + BLIND endpoint list |
+| `out/openapi.json` | 4 | Unified OAS 3.1 spec |
+| `out/domain/` | 4 | Per-domain specs |
+
+---
+
+## Adding a sidecar for a BLIND endpoint
+
+```bash
+# 1. Check the coverage report
+cat out/coverage-report.json | python3 -m json.tool | grep blind_endpoints -A 50
+
+# 2. Create a sidecar
+cp sidecars/_template.json sidecars/MyEndpoint.json
+
+# 3. Edit it — see sidecars/README.md for full schema including raw_request_body
+#    for complex nested schemas, trust_level/tested_version for provenance,
+#    and x_cipp_warnings for consumer safety notes
+
+# 4. Validate it against the endpoint
+./run.sh --validate-endpoint MyEndpoint
+
+# 5. Verify the OAS snippet looks right
+python3 stage4_emitter.py --endpoint MyEndpoint
+```
+
+---
+
+## Evergreen operation
+
+Re-run after any commit touching:
+- `Modules/CIPPCore/Public/Entrypoints/HTTP Functions/**` (API repo)
+- `src/components/**`, `src/pages/**`, `src/api/**` (frontend repo)
+
+After a CIPP release: run `--check-patterns` first. If any check fails, update the
+relevant regex in the stage scripts before running the corpus.
+
+CI: `.github/workflows/validate-openapi.yml` runs `--validate-only` on every PR.
+
+---
+
+## Known limits
+
+This tool uses regex-based static analysis, not a real AST parser. It handles the
+patterns CIPP actually uses. Patterns it cannot resolve:
+
+- Params consumed only inside downstream functions (e.g. `New-CIPPUserTask` internals)
+- Fields rendered conditionally by shared form components without `postUrl` tracing
+- Dynamic computed endpoint URLs
+- Direct `axios`/`fetch` calls not using CIPP's wrapper functions
+
+For all of these: write a sidecar. The `raw_request_body` escape hatch handles cases
+where the param structure is too complex for `add_params`.
+
+Future enhancement: `@babel/parser` AST for JSX would eliminate the shared-form
+attribution gap by tracing `<CippFormPage postUrl="/api/Name">` to its exact field tree.

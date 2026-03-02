@@ -1,0 +1,35 @@
+{
+  "trust_level": "verified",
+  "remove_params": [
+    "companyName",
+    "jobTitle",
+    "businessPhone"
+  ],
+  "add_params": [
+    {
+      "name": "Company",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) API uses 'Company', frontend sends 'companyName' \u2014 likely the same field (similarity=0.78). Verify and correct type."
+    },
+    {
+      "name": "Title",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) API uses 'Title', frontend sends 'jobTitle' \u2014 likely the same field (similarity=0.77). Verify and correct type."
+    },
+    {
+      "name": "phone",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) API uses 'phone', frontend sends 'businessPhone' \u2014 likely the same field (similarity=0.56). Verify and correct type."
+    }
+  ],
+  "notes": "Naming divergence: 3 param(s) where API and frontend use different names for the same field. Auto-matched by name similarity. Verify each pair before publishing."
+}

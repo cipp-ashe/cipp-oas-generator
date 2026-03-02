@@ -1,0 +1,67 @@
+{
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
+  "trust_level": "inferred",
+  "notes": "External form component \u2014 fields from child component(s), not inline. Resolved: CippAddAssignmentFilterForm (CippAddAssignmentFilterForm.jsx). 6 param(s) still defaulting to string \u2014 verify types.",
+  "add_params": [
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddAssignmentFilterForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "description",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddAssignmentFilterForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "assignmentFilterManagementType",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddAssignmentFilterForm.jsx",
+      "type": "string",
+      "enum": [
+        "devices",
+        "apps"
+      ]
+    },
+    {
+      "name": "platform",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddAssignmentFilterForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "rule",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddAssignmentFilterForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "filterId",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    },
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) from API scan"
+    }
+  ]
+}

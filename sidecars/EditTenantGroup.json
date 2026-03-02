@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["POST"],
+  "notes": "PROBABLE 404 — frontend POSTs to /api/EditTenantGroup (tenants/groups/add.js) but no Invoke-EditTenantGroup.ps1 exists. PS1 is Invoke-ExecTenantGroup in CIPP/Settings. Failure mode: tenant group add/edit form submission fails. Fix: rename PS1 or update frontend URL."
+}

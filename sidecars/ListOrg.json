@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["GET"],
+  "notes": "ORPHAN — frontend calls /api/ListOrg (ExecutiveReportButton.js, 3 call sites) but no PS1 exists. Executive report org listing is frontend-only as of v10.1.x."
+}

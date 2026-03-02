@@ -1,0 +1,18 @@
+{
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
+  "trust_level": "inferred",
+  "remove_params": [
+    "TemplateList"
+  ],
+  "add_params": [
+    {
+      "name": "TemplateId",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) API uses 'TemplateId', frontend sends 'TemplateList' \u2014 likely the same field (similarity=0.82). Verify and correct type."
+    }
+  ],
+  "notes": "Naming divergence: 1 param(s) where API and frontend use different names for the same field. Auto-matched by name similarity. Verify each pair before publishing."
+}

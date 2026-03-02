@@ -1,0 +1,23 @@
+{
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
+  "trust_level": "inferred",
+  "notes": "BLIND endpoint \u2014 API reads $Request.Body as a blob with no direct field access. 2 param(s) inferred from frontend. 2 defaulting to string \u2014 verify types.",
+  "add_params": [
+    {
+      "name": "name",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) detected in frontend form/call"
+    },
+    {
+      "name": "description",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "confidence": "medium",
+      "description": "(auto) detected in frontend form/call"
+    }
+  ]
+}

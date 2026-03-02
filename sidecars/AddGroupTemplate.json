@@ -1,0 +1,80 @@
+{
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
+  "trust_level": "inferred",
+  "notes": "External form component \u2014 fields from child component(s), not inline. Resolved: CippAddGroupTemplateForm (CippAddGroupTemplateForm.jsx). 5 param(s) still defaulting to string \u2014 verify types.",
+  "add_params": [
+    {
+      "name": "GUID",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddGroupTemplateForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddGroupTemplateForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "description",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddGroupTemplateForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "username",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddGroupTemplateForm.jsx",
+      "type": "string"
+    },
+    {
+      "name": "groupType",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddGroupTemplateForm.jsx",
+      "type": "string",
+      "enum": [
+        "azurerole",
+        "generic",
+        "m365",
+        "dynamic",
+        "dynamicDistribution",
+        "distribution",
+        "security"
+      ]
+    },
+    {
+      "name": "allowExternal",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddGroupTemplateForm.jsx",
+      "type": "boolean"
+    },
+    {
+      "name": "subscribeMembers",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddGroupTemplateForm.jsx",
+      "type": "boolean"
+    },
+    {
+      "name": "membershipRules",
+      "in": "body",
+      "required": false,
+      "confidence": "medium",
+      "description": "(auto) from CippAddGroupTemplateForm.jsx",
+      "type": "string"
+    }
+  ]
+}

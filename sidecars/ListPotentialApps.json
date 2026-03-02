@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["POST"],
+  "notes": "ORPHAN — frontend calls /api/ListPotentialApps (CippApplicationDeployDrawer.jsx) but no PS1 exists. App deployment potential apps listing is frontend-only as of v10.1.x."
+}

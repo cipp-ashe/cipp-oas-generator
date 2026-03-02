@@ -1,0 +1,13 @@
+{
+  "add_params": [
+    { "name": "tenantID",    "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Tenant domain/ID. Formatter reads from useSettings().currentTenant and sends as 'tenantID'. PS1 reads as $TeamObj.tenantid (case-insensitive)." },
+    { "name": "displayName", "in": "body", "required": true,  "type": "string",  "confidence": "high" },
+    { "name": "description", "in": "body", "required": false, "type": "string",  "confidence": "high" },
+    { "name": "owner",       "in": "body", "required": true,  "type": "string",  "confidence": "high", "description": "Owner UPN extracted from user selector .value by formatter. PS1 passes as member@odata.bind with role 'owner'." },
+    { "name": "visibility",  "in": "body", "required": false, "type": "string",  "confidence": "high", "description": "Enum: 'public' | 'private'. Default 'public'." }
+  ],
+  "remove_params": [],
+  "trust_level": "verified",
+  "tested_version": null,
+  "notes": "customDataformatter renames the ambient currentTenant to 'tenantID', unwraps the owner user-selector object to its .value (UPN string), and passes displayName, description, visibility directly. PS1 reads $TeamObj.tenantid (lowercase 'id'), $TeamObj.owner, $TeamObj.displayName, $TeamObj.description, $TeamObj.visibility."
+}

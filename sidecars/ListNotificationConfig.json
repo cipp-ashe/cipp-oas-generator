@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["GET"],
+  "notes": "PROBABLE 404 — frontend GETs /api/ListNotificationConfig (CippNotificationForm.jsx) to populate notification settings form, but no Invoke-ListNotificationConfig.ps1 exists. PS1 is Invoke-ExecNotificationConfig which handles both GET and POST. Failure mode: notification settings form loads empty. Fix: rename PS1 or update frontend GET URL."
+}

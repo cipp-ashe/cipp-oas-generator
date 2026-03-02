@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["GET"],
+  "notes": "PROBABLE 404 — frontend GETs /api/ListExtensionsConfig (20 call sites across integrations, email, security, tenant, tools pages) but no Invoke-ListExtensionsConfig.ps1 exists. The PS1 is Invoke-ExecExtensionsConfig. CIPP's router constructs 'Invoke-ListExtensionsConfig' → 404 at runtime. POSTs correctly target /api/ExecExtensionsConfig (CippIntegrationSettings.jsx postUrl). Failure mode: integration settings load empty on cold cache — masked by React Query shared queryKey='Integrations' across all 20 sites so most users never see the failure explicitly. Fix options: (1) rename PS1 to Invoke-ListExtensionsConfig, or (2) update all 20 GET call sites to /api/ExecExtensionsConfig."
+}

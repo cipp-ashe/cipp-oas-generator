@@ -1,0 +1,5 @@
+{
+  "trust_level": "reversed",
+  "override_methods": ["POST"],
+  "notes": "ORPHAN — frontend calls /api/ExecUserSettings (CippSettingsSideBar.jsx) but no PS1 exists. User settings persistence is frontend-only as of v10.1.x."
+}

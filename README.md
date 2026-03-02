@@ -93,6 +93,13 @@ Exits 0 if all pass, 1 with a list of what drifted. If it fails, update the
 relevant regex in the stage scripts before running the corpus — otherwise output
 degrades silently.
 
+> **Note:** The `.mutate({ url: ... })` and `CippFormPage postUrl=` checks sample the
+> first 50 JSX files alphabetically. These files are all in `CippComponents/` and do not
+> contain those patterns — causing false-positive failures. **This is a known sampling
+> artifact, not real pattern drift.** Both patterns are confirmed present in the frontend
+> (e.g. `CippFormPage.jsx`, `domains.js`). Verify against the full corpus before updating
+> any regex.
+
 ### `--validate-endpoint`
 
 Shows every decision the pipeline made for each parameter:
@@ -132,6 +139,10 @@ Every endpoint is assigned a coverage tier in the output:
 
 `BLIND` endpoints need sidecar files. The corpus run produces `out/coverage-report.json`
 with the full list of BLIND endpoints sorted by name.
+
+`coverage-report.json` also includes a `type_inference_coverage` block tracking the
+percentage of params with a non-default type (`string`). Use this as a quality metric
+over time — it increases as sidecars and `TYPE_HINTS` improve type fidelity.
 
 ---
 
@@ -234,6 +245,10 @@ Stage 3 (`stage3_merger.py`) reconciles Stage 1 + Stage 2 + sidecar:
 Sidecar validation runs before merge. Fatal errors (missing required fields, bad types)
 skip the endpoint and log it as an error — they don't abort the full run.
 
+**`trust_level` validation:** If a sidecar sets `trust_level: "tested"`, a warning is
+emitted when `tested_version` is absent or null. Set `tested_version` to the CIPP release
+the sidecar was validated against (e.g. `"v10.1.0"`) to enable regression tracking.
+
 ## What Stage 4 emits
 
 Stage 4 (`stage4_emitter.py`) produces OAS 3.1 JSON:
@@ -326,6 +341,9 @@ patterns CIPP actually uses. Patterns it cannot resolve:
 - Fields rendered conditionally by shared form components without `postUrl` tracing
 - Dynamic computed endpoint URLs
 - Direct `axios`/`fetch` calls not using CIPP's wrapper functions
+- PS1 parameter default values (not extracted)
+- Response body structure (auto-detected only where sidecars exist; blind elsewhere)
+- Usage examples (not generated — add manually via sidecar `add_responses`)
 
 For all of these: write a sidecar. The `raw_request_body` escape hatch handles cases
 where the param structure is too complex for `add_params`.

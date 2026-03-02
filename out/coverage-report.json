@@ -1,9 +1,9 @@
 {
   "summary": {
-    "PARTIAL": 159,
-    "FULL": 252,
-    "ORPHAN": 26,
-    "BLIND": 33,
+    "PARTIAL": 179,
+    "FULL": 264,
+    "ORPHAN": 8,
+    "BLIND": 43,
     "ARRAY_BODY": 2
   },
   "tier_definitions": {
@@ -14,34 +14,23 @@
     "ORPHAN": "Frontend calls endpoint but no Invoke-*.ps1 found",
     "STUB": "No sources at all \u2014 sidecar-only documentation"
   },
-  "blind_endpoints": [],
+  "blind_endpoints": [
+    "CIPPDBTestsRun",
+    "ExecExtensionNinjaOneQueue",
+    "ExecSchedulerBillingRun",
+    "ListGenericTestFunction",
+    "ListHaloClients",
+    "ListPendingWebhooks"
+  ],
   "orphan_endpoints": [
     "AddCustomDomain",
     "AddStandardTemplate",
     "EditTenantGroup",
-    "ExecBreachSearch",
-    "ExecCSPLicense",
-    "ExecListAppId",
-    "ExecUniversalSearch",
-    "ExecUniversalSearchV2",
-    "ExecUserSettings",
-    "ListBreachesAccount",
-    "ListCSPsku",
     "ListCippQueue",
-    "ListExtensionsConfig",
-    "ListExternalTenantInfo",
-    "ListGraphExplorerPresets",
-    "ListIPWhitelist",
-    "ListNotificationConfig",
-    "ListOrg",
-    "ListPotentialApps",
-    "ListUsersAndGroups",
-    "Listlogs",
     "RecoverPolicies",
     "RemoveAntiPhishingFilter",
     "RemoveMalwareFilter",
-    "RemoveSafeAttachmentsFilter",
-    "RemoveTenantAllowBlockList"
+    "RemoveSafeAttachmentsFilter"
   ],
   "probable_404s": [
     {
@@ -72,83 +61,6 @@
       "note": "Frontend calls this URL but no Invoke-EditTenantGroup.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
     },
     {
-      "endpoint": "ExecBreachSearch",
-      "call_sites": [
-        "src/components/CippComponents/BreachSearchDialog.jsx"
-      ],
-      "call_count": 1,
-      "deprecated": true,
-      "note": "Frontend calls this URL but no Invoke-ExecBreachSearch.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ExecCSPLicense",
-      "call_sites": [
-        "src/pages/tenant/administration/add-subscription/index.jsx",
-        "src/pages/tenant/reports/list-csp-licenses/index.jsx"
-      ],
-      "call_count": 2,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ExecCSPLicense.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ExecListAppId",
-      "call_sites": [
-        "src/components/CippComponents/CIPPDeviceCodeButton.js",
-        "src/components/CippComponents/CIPPM365OAuthButton.jsx",
-        "src/components/CippWizard/CIPPDeploymentUpdateTokens.jsx",
-        "src/components/CippWizard/CippTenantModeDeploy.jsx"
-      ],
-      "call_count": 4,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ExecListAppId.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ExecUniversalSearch",
-      "call_sites": [
-        "src/components/CippCards/CippUniversalSearch.jsx"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ExecUniversalSearch.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ExecUniversalSearchV2",
-      "call_sites": [
-        "src/components/CippCards/CippUniversalSearchV2.jsx"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ExecUniversalSearchV2.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ExecUserSettings",
-      "call_sites": [
-        "src/components/CippComponents/CippSettingsSideBar.jsx"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ExecUserSettings.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListBreachesAccount",
-      "call_sites": [
-        "src/pages/tools/breachlookup/index.js"
-      ],
-      "call_count": 1,
-      "deprecated": true,
-      "note": "Frontend calls this URL but no Invoke-ListBreachesAccount.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListCSPsku",
-      "call_sites": [
-        "src/components/CippFormPages/CippAddEditUser.jsx",
-        "src/pages/tenant/administration/add-subscription/index.jsx"
-      ],
-      "call_count": 2,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ListCSPsku.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
       "endpoint": "ListCippQueue",
       "call_sites": [
         "src/components/CippTable/CippQueueTracker.js"
@@ -156,111 +68,6 @@
       "call_count": 1,
       "deprecated": false,
       "note": "Frontend calls this URL but no Invoke-ListCippQueue.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListExtensionsConfig",
-      "call_sites": [
-        "src/components/CippFormPages/CippAddEditUser.jsx",
-        "src/components/CippIntegrations/CippIntegrationSettings.jsx",
-        "src/pages/cipp/integrations/configure.js",
-        "src/pages/cipp/integrations/index.js",
-        "src/pages/email/administration/contacts-template/index.jsx",
-        "src/pages/email/spamfilter/list-connectionfilter-templates/index.js",
-        "src/pages/email/spamfilter/list-templates/index.js",
-        "src/pages/email/transport/list-connector-templates/index.js",
-        "src/pages/email/transport/list-templates/index.js",
-        "src/pages/endpoint/MEM/assignment-filter-templates/index.js",
-        "src/pages/endpoint/MEM/list-templates/index.js",
-        "src/pages/endpoint/MEM/reusable-settings-templates/index.js",
-        "src/pages/identity/administration/group-templates/index.js",
-        "src/pages/identity/administration/jit-admin-templates/index.js",
-        "src/pages/security/safelinks/safelinks-template/index.jsx",
-        "src/pages/tenant/administration/applications/templates/index.js",
-        "src/pages/tenant/conditional/list-template/index.js",
-        "src/pages/tenant/standards/bpa-report/index.js",
-        "src/pages/tenant/standards/templates/index.js",
-        "src/pages/tools/community-repos/index.js"
-      ],
-      "call_count": 20,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ListExtensionsConfig.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListExternalTenantInfo",
-      "call_sites": [
-        "src/components/CippComponents/CippTenantLookup.jsx"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ListExternalTenantInfo.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListGraphExplorerPresets",
-      "call_sites": [
-        "src/components/CippTable/CIPPTableToptoolbar.js",
-        "src/components/CippTable/CippGraphExplorerFilter.js",
-        "src/components/CippTable/CippGraphExplorerSimpleFilter.js"
-      ],
-      "call_count": 3,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ListGraphExplorerPresets.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListIPWhitelist",
-      "call_sites": [
-        "src/pages/tenant/tools/geoiplookup/index.js"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ListIPWhitelist.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListNotificationConfig",
-      "call_sites": [
-        "src/components/CippComponents/CippNotificationForm.jsx"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ListNotificationConfig.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListOrg",
-      "call_sites": [
-        "src/components/ExecutiveReportButton.js",
-        "src/pages/dashboardv1.js",
-        "src/pages/dashboardv2/index.js"
-      ],
-      "call_count": 3,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ListOrg.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListPotentialApps",
-      "call_sites": [
-        "src/components/CippComponents/CippApplicationDeployDrawer.jsx"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ListPotentialApps.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListUsersAndGroups",
-      "call_sites": [
-        "src/components/CippComponents/CippFormUserAndGroupSelector.jsx"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ListUsersAndGroups.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "Listlogs",
-      "call_sites": [
-        "src/pages/cipp/logs/logentry.js",
-        "src/pages/tenant/manage/history.js"
-      ],
-      "call_count": 2,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-Listlogs.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
     },
     {
       "endpoint": "RecoverPolicies",
@@ -297,32 +104,56 @@
       "call_count": 1,
       "deprecated": false,
       "note": "Frontend calls this URL but no Invoke-RemoveSafeAttachmentsFilter.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "RemoveTenantAllowBlockList",
-      "call_sites": [
-        "src/pages/email/administration/tenant-allow-block-lists/index.js"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-RemoveTenantAllowBlockList.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
     }
   ],
   "orphan_delta": {
     "new": [],
-    "resolved": []
+    "resolved": [
+      "ExecBreachSearch",
+      "ExecCSPLicense",
+      "ExecListAppId",
+      "ExecUniversalSearch",
+      "ExecUniversalSearchV2",
+      "ExecUserSettings",
+      "ListBreachesAccount",
+      "ListCSPsku",
+      "ListExtensionsConfig",
+      "ListExternalTenantInfo",
+      "ListGraphExplorerPresets",
+      "ListIPWhitelist",
+      "ListNotificationConfig",
+      "ListOrg",
+      "ListPotentialApps",
+      "ListUsersAndGroups",
+      "Listlogs",
+      "RemoveTenantAllowBlockList"
+    ]
   },
-  "sidecar_candidates": [],
+  "sidecar_candidates": [
+    "CIPPDBTestsRun",
+    "ExecExtensionNinjaOneQueue",
+    "ExecSchedulerBillingRun",
+    "ListGenericTestFunction",
+    "ListHaloClients",
+    "ListPendingWebhooks"
+  ],
   "sidecar_candidates_by_reason": {
-    "blind": [],
+    "blind": [
+      "CIPPDBTestsRun",
+      "ExecExtensionNinjaOneQueue",
+      "ExecSchedulerBillingRun",
+      "ListGenericTestFunction",
+      "ListHaloClients",
+      "ListPendingWebhooks"
+    ],
     "external_form_component": [],
     "data_transform": [],
     "constructed_body": []
   },
   "type_inference_coverage": {
-    "total_params": 2482,
+    "total_params": 2557,
     "non_string_params": 506,
-    "pct_typed": 20.4
+    "pct_typed": 19.8
   },
   "note": "blind_endpoints: API function found but zero params extracted. probable_404s: ORPHAN endpoints with active call sites \u2014 genuine runtime 404s in CIPP. orphan_delta.new: endpoints that became ORPHAN since last run \u2014 investigate immediately. sidecar_candidates = all endpoints without a sidecar that need one. type_inference_coverage.pct_typed: % params with a richer type than default 'string' \u2014 increases as sidecars and TYPE_HINTS improve."
 }

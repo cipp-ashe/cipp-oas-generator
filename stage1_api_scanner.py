@@ -123,8 +123,18 @@ def file_hash(path: Path) -> str:
 
 
 def folder_to_tag(path: Path) -> list[str]:
-    """HTTP Functions/Identity/Administration/Users/Invoke-X.ps1 → ['Identity','Administration','Users']"""
+    """
+    HTTP Functions/Identity/Administration/Users/Invoke-X.ps1 → ['Identity','Administration','Users']
+    Identity/Administration/Users/Invoke-X.ps1 → ['Identity','Administration','Users']
+    Invoke-X.ps1 (root level) → []
+    
+    Strips "HTTP Functions" from the path since some endpoints live in Entrypoints
+    root and others in Entrypoints/HTTP Functions subdirectory.
+    """
     parts = path.relative_to(HTTP_FUNCTIONS_ROOT).parts
+    # Strip "HTTP Functions" if present (for subdirectory files)
+    if parts and parts[0] == "HTTP Functions":
+        parts = parts[1:]
     return list(parts[:-1]) if len(parts) > 1 else []
 
 

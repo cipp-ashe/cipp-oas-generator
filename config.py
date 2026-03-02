@@ -25,7 +25,7 @@ _fe_repo_default = _fe_candidate_a if _fe_candidate_a.exists() else _fe_candidat
 API_REPO      = Path(os.environ.get("CIPP_API_REPO",      str(_api_repo_default)))
 FRONTEND_REPO = Path(os.environ.get("CIPP_FRONTEND_REPO", str(_fe_repo_default)))
 
-HTTP_FUNCTIONS_ROOT = API_REPO / "Modules/CIPPCore/Public/Entrypoints/HTTP Functions"
+HTTP_FUNCTIONS_ROOT = API_REPO / "Modules/CIPPCore/Public/Entrypoints"
 FRONTEND_SRC_ROOT   = FRONTEND_REPO / "src"
 
 # ── Output / sidecar paths ────────────────────────────────────────────────────

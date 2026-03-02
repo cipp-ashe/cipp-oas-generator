@@ -5167,6 +5167,44 @@
         "x-cipp-role": "Tenant.BestPracticeAnalyser.Read"
       }
     },
+    "/api/CIPPDBTestsRun": {
+      "get": {
+        "summary": "CIPPDBTestsRun",
+        "tags": [
+          "Activity Triggers > Tests"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Tenant.Tests.Read"
+      }
+    },
     "/api/CIPPOffboardingJob": {
       "get": {
         "summary": "CIPPOffboardingJob",
@@ -10161,7 +10199,26 @@
             "description": "Internal server error"
           }
         },
-        "deprecated": true
+        "deprecated": true,
+        "x-cipp-role": "CIPP.Core.Read",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tenantFilter": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "tenantFilter"
+                ]
+              }
+            }
+          }
+        }
       }
     },
     "/api/ExecBulkLicense": {
@@ -10610,6 +10667,158 @@
           }
         },
         "x-cipp-role": "CIPP.Core.ReadWrite"
+      }
+    },
+    "/api/ExecCSPLicense": {
+      "get": {
+        "summary": "ExecCSPLicense",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Tenant.Directory.ReadWrite",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Action": {
+                    "type": "string"
+                  },
+                  "Add": {
+                    "type": "string"
+                  },
+                  "iagree": {
+                    "type": "boolean"
+                  },
+                  "Quantity": {
+                    "type": "number"
+                  },
+                  "Remove": {
+                    "type": "string"
+                  },
+                  "SKU": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "SubscriptionIds": {
+                    "type": "string"
+                  },
+                  "tenantFilter": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "tenantFilter"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "ExecCSPLicense",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Tenant.Directory.ReadWrite",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Action": {
+                    "type": "string"
+                  },
+                  "Add": {
+                    "type": "string"
+                  },
+                  "iagree": {
+                    "type": "boolean"
+                  },
+                  "Quantity": {
+                    "type": "number"
+                  },
+                  "Remove": {
+                    "type": "string"
+                  },
+                  "SKU": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "SubscriptionIds": {
+                    "type": "string"
+                  },
+                  "tenantFilter": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "tenantFilter"
+                ]
+              }
+            }
+          }
+        }
       }
     },
     "/api/ExecCippFunction": {
@@ -13496,6 +13705,44 @@
         ]
       }
     },
+    "/api/ExecExtensionNinjaOneQueue": {
+      "get": {
+        "summary": "ExecExtensionNinjaOneQueue",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Extension.ReadWrite"
+      }
+    },
     "/api/ExecExtensionSync": {
       "get": {
         "summary": "ExecExtensionSync",
@@ -15137,6 +15384,80 @@
             }
           }
         }
+      }
+    },
+    "/api/ExecListAppId": {
+      "get": {
+        "summary": "ExecListAppId",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.ReadWrite"
+      },
+      "post": {
+        "summary": "ExecListAppId",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.ReadWrite"
       }
     },
     "/api/ExecListBackup": {
@@ -18450,6 +18771,119 @@
         }
       }
     },
+    "/api/ExecSchedulerBillingRun": {
+      "get": {
+        "summary": "ExecSchedulerBillingRun",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Scheduler.Billing.ReadWrite"
+      }
+    },
+    "/api/ExecSendOrgMessage": {
+      "get": {
+        "summary": "ExecSendOrgMessage",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Tenant.Directory.ReadWrite",
+        "parameters": [
+          {
+            "name": "freq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ID",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "URL",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
     "/api/ExecSendPush": {
       "post": {
         "summary": "ExecSendPush",
@@ -20795,6 +21229,118 @@
         }
       }
     },
+    "/api/ExecUniversalSearch": {
+      "get": {
+        "summary": "ExecUniversalSearch",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/ExecUniversalSearchV2": {
+      "get": {
+        "summary": "ExecUniversalSearchV2",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "searchTerms",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
     "/api/ExecUpdateDriftDeviation": {
       "post": {
         "summary": "ExecUpdateDriftDeviation",
@@ -20978,6 +21524,63 @@
                 "required": [
                   "TenantFilter"
                 ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ExecUserSettings": {
+      "post": {
+        "summary": "ExecUserSettings",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.ReadWrite",
+        "x-cipp-dynamic-options": true,
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "currentSettings": {
+                    "type": "string"
+                  },
+                  "user": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  }
+                }
               }
             }
           }
@@ -21296,6 +21899,49 @@
         }
       }
     },
+    "/api/ListAllTenantDeviceCompliance": {
+      "get": {
+        "summary": "ListAllTenantDeviceCompliance",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Tenant.DeviceCompliance.Read",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
     "/api/ListAntiPhishingFilters": {
       "get": {
         "summary": "ListAntiPhishingFilters",
@@ -21511,6 +22157,57 @@
         },
         "x-cipp-role": "Endpoint.MEM.Read",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
+    "/api/ListAppStatus": {
+      "get": {
+        "summary": "ListAppStatus",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Endpoint.Device.Read",
+        "parameters": [
+          {
+            "name": "AppFilter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "$ref": "#/components/parameters/tenantFilter"
           }
@@ -22395,7 +23092,61 @@
             "description": "Internal server error"
           }
         },
-        "deprecated": true
+        "deprecated": true,
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "name": "account",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/ListBreachesTenant": {
+      "get": {
+        "summary": "ListBreachesTenant",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
       }
     },
     "/api/ListCAtemplates": {
@@ -22450,6 +23201,100 @@
             "schema": {
               "type": "string"
             }
+          }
+        ]
+      }
+    },
+    "/api/ListCSPLicenses": {
+      "get": {
+        "summary": "ListCSPLicenses",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Tenant.Directory.Read",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
+    "/api/ListCSPsku": {
+      "get": {
+        "summary": "ListCSPsku",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Tenant.Directory.Read",
+        "parameters": [
+          {
+            "name": "currentSkuOnly",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/tenantFilter"
           }
         ]
       }
@@ -22517,6 +23362,49 @@
             "schema": {
               "type": "string"
             }
+          }
+        ]
+      }
+    },
+    "/api/ListCheckExtAlerts": {
+      "get": {
+        "summary": "ListCheckExtAlerts",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
           }
         ]
       }
@@ -23301,6 +24189,183 @@
         ]
       }
     },
+    "/api/ListDetectedAppDevices": {
+      "get": {
+        "summary": "ListDetectedAppDevices",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Identity.Device.Read",
+        "parameters": [
+          {
+            "name": "AppID",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
+    "/api/ListDetectedApps": {
+      "get": {
+        "summary": "ListDetectedApps",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Identity.Device.Read",
+        "parameters": [
+          {
+            "name": "DeviceID",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "includeDevices",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
+    "/api/ListDeviceDetails": {
+      "get": {
+        "summary": "ListDeviceDetails",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Identity.Device.Read",
+        "parameters": [
+          {
+            "name": "DeviceID",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DeviceName",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DeviceSerial",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
     "/api/ListDevices": {
       "get": {
         "summary": "ListDevices",
@@ -23992,6 +25057,122 @@
         "x-cipp-role": "CIPP.Extension.Read"
       }
     },
+    "/api/ListExtensionsConfig": {
+      "get": {
+        "summary": "ListExtensionsConfig",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Extension.Read",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Description": {
+                    "type": "string"
+                  },
+                  "includeforks": {
+                    "type": "boolean"
+                  },
+                  "orgName": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "Private": {
+                    "type": "boolean"
+                  },
+                  "repoName": {
+                    "type": "string"
+                  },
+                  "searchTerm": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ListExternalTenantInfo": {
+      "get": {
+        "summary": "ListExternalTenantInfo",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "name": "tenant",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
     "/api/ListFeatureFlags": {
       "get": {
         "summary": "ListFeatureFlags",
@@ -24028,6 +25209,137 @@
           }
         },
         "x-cipp-role": "CIPP.Core.Read"
+      }
+    },
+    "/api/ListFunctionParameters": {
+      "get": {
+        "summary": "ListFunctionParameters",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "name": "Compliance",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Function",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Module",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/api/ListFunctionStats": {
+      "get": {
+        "summary": "ListFunctionStats",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "name": "FunctionType",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Interval",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          },
+          {
+            "name": "Time",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     },
     "/api/ListGDAPAccessAssignments": {
@@ -24162,6 +25474,44 @@
           }
         },
         "x-cipp-role": "Tenant.Relationship.Read"
+      }
+    },
+    "/api/ListGenericTestFunction": {
+      "get": {
+        "summary": "ListGenericTestFunction",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read"
       }
     },
     "/api/ListGitHubReleaseNotes": {
@@ -24327,6 +25677,54 @@
             }
           }
         }
+      }
+    },
+    "/api/ListGraphExplorerPresets": {
+      "get": {
+        "summary": "ListGraphExplorerPresets",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "name": "Endpoint",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     },
     "/api/ListGraphRequest": {
@@ -24782,6 +26180,83 @@
         ]
       }
     },
+    "/api/ListHaloClients": {
+      "get": {
+        "summary": "ListHaloClients",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Extension.Read",
+        "x-cipp-dynamic-options": true
+      }
+    },
+    "/api/ListIPWhitelist": {
+      "get": {
+        "summary": "ListIPWhitelist",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read"
+      }
+    },
     "/api/ListInactiveAccounts": {
       "get": {
         "summary": "ListInactiveAccounts",
@@ -24827,6 +26302,49 @@
               "type": "string"
             }
           },
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
+    "/api/ListIntuneIntents": {
+      "get": {
+        "summary": "ListIntuneIntents",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Endpoint.MEM.Read",
+        "parameters": [
           {
             "$ref": "#/components/parameters/tenantFilter"
           }
@@ -25216,6 +26734,49 @@
         }
       }
     },
+    "/api/ListKnownIPDb": {
+      "get": {
+        "summary": "ListKnownIPDb",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
     "/api/ListLicenses": {
       "get": {
         "summary": "ListLicenses",
@@ -25255,6 +26816,142 @@
         "parameters": [
           {
             "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
+    "/api/ListLogs": {
+      "get": {
+        "summary": "ListLogs",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "name": "API",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "DateFilter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "EndDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Filter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ListLogs",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "logentryid",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ScheduledTaskId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Severity",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "StandardTemplateId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "StartDate",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Tenant",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "User",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
           }
         ]
       }
@@ -25825,6 +27522,49 @@
         }
       }
     },
+    "/api/ListNamedLocations": {
+      "get": {
+        "summary": "ListNamedLocations",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Tenant.ConditionalAccess.Read",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
     "/api/ListNewUserDefaults": {
       "post": {
         "summary": "ListNewUserDefaults",
@@ -25897,6 +27637,45 @@
             }
           }
         }
+      }
+    },
+    "/api/ListNotificationConfig": {
+      "get": {
+        "summary": "ListNotificationConfig",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.AppSettings.Read",
+        "x-cipp-dynamic-options": true
       }
     },
     "/api/ListOAuthApps": {
@@ -25993,6 +27772,130 @@
         ]
       }
     },
+    "/api/ListOrg": {
+      "get": {
+        "summary": "ListOrg",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Core.Read",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
+    "/api/ListPartnerRelationships": {
+      "get": {
+        "summary": "ListPartnerRelationships",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Tenant.Relationship.Read",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
+    "/api/ListPendingWebhooks": {
+      "get": {
+        "summary": "ListPendingWebhooks",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "CIPP.Alert.Read"
+      }
+    },
     "/api/ListPerUserMFA": {
       "get": {
         "summary": "ListPerUserMFA",
@@ -26050,6 +27953,179 @@
             }
           }
         ]
+      }
+    },
+    "/api/ListPotentialApps": {
+      "post": {
+        "summary": "ListPotentialApps",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Endpoint.Application.Read",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "AcceptLicense": {
+                    "type": "boolean"
+                  },
+                  "applicationName": {
+                    "type": "string"
+                  },
+                  "appType": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "arch": {
+                    "type": "boolean"
+                  },
+                  "AssignTo": {
+                    "type": "string",
+                    "enum": [
+                      "On",
+                      "allLicensedUsers",
+                      "AllDevices",
+                      "AllDevicesAndUsers",
+                      "customGroup"
+                    ]
+                  },
+                  "customArguments": {
+                    "type": "string"
+                  },
+                  "customGroup": {
+                    "type": "string"
+                  },
+                  "customRepo": {
+                    "type": "string"
+                  },
+                  "customXml": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "detectionFile": {
+                    "type": "string"
+                  },
+                  "detectionPath": {
+                    "type": "string"
+                  },
+                  "DisableRestart": {
+                    "type": "boolean"
+                  },
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "enforceSignatureCheck": {
+                    "type": "boolean"
+                  },
+                  "excludedApps": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/LabelValue"
+                    }
+                  },
+                  "InstallAsSystem": {
+                    "type": "boolean"
+                  },
+                  "InstallationIntent": {
+                    "type": "boolean"
+                  },
+                  "installScript": {
+                    "type": "string"
+                  },
+                  "languages": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "packagename": {
+                    "type": "string"
+                  },
+                  "packageSearch": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "params": {
+                    "type": "object",
+                    "properties": {
+                      "AccountKey": {
+                        "type": "string"
+                      },
+                      "dattoUrl": {
+                        "type": "string"
+                      },
+                      "Server": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "publisher": {
+                    "type": "string"
+                  },
+                  "RemoveVersions": {
+                    "type": "boolean"
+                  },
+                  "rmmname": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "runAs32Bit": {
+                    "type": "boolean"
+                  },
+                  "searchQuery": {
+                    "type": "string"
+                  },
+                  "SearchString": {
+                    "type": "string"
+                  },
+                  "SharedComputerActivation": {
+                    "type": "boolean"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "uninstallScript": {
+                    "type": "string"
+                  },
+                  "updateChannel": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "useCustomXml": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/ListQuarantinePolicy": {
@@ -26158,6 +28234,49 @@
         },
         "description": "Lists users from the restricted senders list in Exchange Online.\n    #>\n    [CmdletBinding()]\n    param($Request, $TriggerMetadata)\n    # Interact with query parameters or the body of the request.\n    $TenantFilter = $Request.Query.tenantFilter",
         "x-cipp-role": "Exchange.Mailbox.Read",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
+    "/api/ListRoles": {
+      "get": {
+        "summary": "ListRoles",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Identity.Role.Read",
         "parameters": [
           {
             "$ref": "#/components/parameters/tenantFilter"
@@ -27588,6 +29707,49 @@
         "x-cipp-role": "Tenant.Standards.Read"
       }
     },
+    "/api/ListTenantAllowBlockList": {
+      "get": {
+        "summary": "ListTenantAllowBlockList",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Exchange.SpamFilter.Read",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
     "/api/ListTenantDetails": {
       "get": {
         "summary": "ListTenantDetails",
@@ -28697,6 +30859,49 @@
         ]
       }
     },
+    "/api/ListUsersAndGroups": {
+      "get": {
+        "summary": "ListUsersAndGroups",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Tenant.Directory.Read",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/tenantFilter"
+          }
+        ]
+      }
+    },
     "/api/ListWebhookAlert": {
       "get": {
         "summary": "ListWebhookAlert",
@@ -28881,6 +31086,89 @@
                   }
                 ],
                 "description": "Accepts a single object or an array of objects. Each object must include the required fields."
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/PublicPhishingCheck": {
+      "post": {
+        "summary": "PublicPhishingCheck",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Public",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "AlertMessage": {
+                    "type": "string"
+                  },
+                  "Cloned": {
+                    "type": "string"
+                  },
+                  "reason": {
+                    "type": "string"
+                  },
+                  "score": {
+                    "type": "string"
+                  },
+                  "source": {
+                    "type": "string"
+                  },
+                  "TenantId": {
+                    "type": "string"
+                  },
+                  "threshold": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  },
+                  "userDisplayName": {
+                    "type": "string"
+                  },
+                  "userEmail": {
+                    "type": "string"
+                  }
+                }
               }
             }
           }
@@ -30952,6 +33240,68 @@
                     "type": "string"
                   }
                 }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/RemoveTenantAllowBlockList": {
+      "post": {
+        "summary": "RemoveTenantAllowBlockList",
+        "tags": [
+          "Uncategorized"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StandardResults"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request \u2014 missing required field or invalid input"
+          },
+          "401": {
+            "description": "Unauthorized \u2014 invalid or missing bearer token"
+          },
+          "403": {
+            "description": "Forbidden \u2014 caller lacks the required RBAC role"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "x-cipp-role": "Exchange.SpamFilter.ReadWrite",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Entries": {
+                    "type": "string"
+                  },
+                  "ListType": {
+                    "type": "string"
+                  },
+                  "tenantFilter": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "tenantFilter"
+                ]
               }
             }
           }

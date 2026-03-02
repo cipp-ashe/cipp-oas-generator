@@ -1,0 +1,48 @@
+{
+  "_comment": "Auto-generated from: CippWizardAssignmentFilterTemplates (6 fields)",
+  "override_method": "POST",
+  "parameters": [
+    {
+      "name": "TemplateList",
+      "in": "body",
+      "required": false,
+      "type": "object",
+      "description": "Choose a Template"
+    },
+    {
+      "name": "assignmentFilterManagementType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Filter Type"
+    },
+    {
+      "name": "platform",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Platform"
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Filter Display Name"
+    },
+    {
+      "name": "description",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Filter Description"
+    },
+    {
+      "name": "rule",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Filter Rule"
+    }
+  ]
+}

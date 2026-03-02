@@ -1,5 +1,41 @@
 {
-  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
-  "trust_level": "inferred",
-  "notes": "BLIND endpoint \u2014 API reads $Request.Body as a blob with no direct field access. Downstream services: lancedb. No frontend params found. Endpoint may be backend-only or frontend call not detected by scanner."
+  "_comment": "Auto-generated from: CippWizardAppApproval (5 fields)",
+  "override_method": "POST",
+  "parameters": [
+    {
+      "name": "configMode",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Application Configuration Mode"
+    },
+    {
+      "name": "selectedTemplate",
+      "in": "body",
+      "required": false,
+      "type": "object",
+      "description": "Select App Template"
+    },
+    {
+      "name": "AppId",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Application ID"
+    },
+    {
+      "name": "CopyPermissions",
+      "in": "body",
+      "required": false,
+      "type": "boolean",
+      "description": "Copy permissions from the existing application. This app must have been added to the partner tenant first."
+    },
+    {
+      "name": "permissions",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Select your permissions"
+    }
+  ]
 }

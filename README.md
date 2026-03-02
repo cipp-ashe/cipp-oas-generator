@@ -1,5 +1,9 @@
 # CIPP OAS Generator
 
+**📄 [OpenAPI Spec (JSON)](https://raw.githubusercontent.com/KelvinTegelaar/CIPP-API/master/openapi.json)** | **📚 [Interactive Documentation](https://cipp-ashe.github.io/cipp-oas-generator/)**
+
+---
+
 Generates an OpenAPI 3.1 spec for the CIPP API via static analysis of both repos —
 no runtime calls, no manual maintenance. Runs against the PowerShell API source and
 the React frontend source simultaneously.
@@ -179,10 +183,34 @@ Example output:
   ✗ AddAPDevice (CippWizardAutopilotOptions) — needs sidecar
 ```
 
-When the check fails, create sidecars for missing endpoints:
+**Auto-generate missing sidecars:**
+
+Instead of manually creating sidecars, use the auto-generation script to extract fields from wizard components:
+
+```bash
+# Generate all missing wizard sidecars
+./generate_wizard_sidecars.py
+
+# Preview without writing files
+./generate_wizard_sidecars.py --dry-run
+
+# Regenerate specific sidecar (force overwrite)
+./generate_wizard_sidecars.py --endpoint AddAPDevice --force
+```
+
+The script:
+1. Detects which wizard components each endpoint uses (from Stage 2 output)
+2. Locates the wizard component JSX files in the frontend repo
+3. Extracts form fields using brace-aware parsing (handles nested API props)
+4. Infers OpenAPI types from `type=` attributes (switch→boolean, autoComplete→object, etc.)
+5. Generates properly formatted sidecar JSON files
+
+Auto-generated sidecars include a `_comment` field documenting the source wizard components and field counts.
+
+**Manual creation (if auto-generation fails):**
 ```bash
 cp sidecars/_template.json sidecars/AddAPDevice.json
-# Edit to add all wizard fields
+# Edit to add all wizard fields manually
 ```
 
 Run this after CIPP releases to catch new wizard pages before they reach production.

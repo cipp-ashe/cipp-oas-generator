@@ -3,26 +3,38 @@ name: Validate OpenAPI Spec
 on:
   pull_request:
     paths:
-      - 'Modules/CIPPCore/Public/Entrypoints/HTTP Functions/**'
-      - 'Tools/openapi-generator/**'
-      - 'openapi.json'
+      - 'sidecars/**'
+      - '*.py'
+      - 'out/openapi.json'
+  push:
+    branches: [main]
+    paths:
+      - 'sidecars/**'
+      - '*.py'
+  workflow_dispatch:
 
 jobs:
   validate-spec:
-    name: Check openapi.json is current
+    name: Generate, validate, and check staleness
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout generator repo
+        uses: actions/checkout@v4
+
       - name: Checkout CIPP-API
         uses: actions/checkout@v4
         with:
+          repository: KelvinTegelaar/CIPP-API
           path: cipp-api
+          fetch-depth: 1
 
       - name: Checkout CIPP frontend
         uses: actions/checkout@v4
         with:
           repository: KelvinTegelaar/CIPP
           path: cipp-main
+          fetch-depth: 1
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -30,19 +42,34 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        working-directory: cipp-api/Tools/openapi-generator
         run: pip install -r requirements.txt
 
-      - name: Run generator (validate-only mode)
-        working-directory: cipp-api/Tools/openapi-generator
+      - name: Run generator (validate OAS correctness + sidecar coverage)
         run: python3 pipeline.py --validate-only
         env:
           CIPP_API_REPO: ${{ github.workspace }}/cipp-api
           CIPP_FRONTEND_REPO: ${{ github.workspace }}/cipp-main
+
+      - name: Check spec is not stale
+        # The pipeline overwrites out/openapi.json in place.
+        # git diff detects whether the regenerated output differs from the committed version.
+        # Exits 1 (fails the job) if out/openapi.json was changed by the pipeline run.
+        run: |
+          if ! git diff --exit-code out/openapi.json; then
+            echo ""
+            echo "❌ out/openapi.json is STALE — the generated spec differs from what is committed."
+            echo ""
+            echo "  Regenerate locally and commit the updated spec:"
+            echo "    ./run.sh --fetch"
+            echo "    git add out/openapi.json"
+            echo "    git commit -m 'Regenerate openapi.json'"
+            exit 1
+          fi
+          echo "✓ out/openapi.json is current"
 
       - name: Upload generated spec (artifact on failure)
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: generated-openapi
-          path: cipp-api/Tools/openapi-generator/out/openapi.json
+          path: out/openapi.json

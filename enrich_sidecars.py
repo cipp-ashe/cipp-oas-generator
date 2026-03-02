@@ -165,20 +165,30 @@ def load_sidecar(endpoint: str) -> Dict | None:
         return json.load(f)
 
 def save_sidecar(endpoint: str, sidecar: Dict) -> None:
-    """Save sidecar with proper formatting."""
+    """Save sidecar with proper formatting.
+    
+    Key ordering matches canonical sidecar schema:
+      override_* fields first (intent/metadata), then add_params/remove_params
+      (content), then trust/notes (provenance).
+    'parameters' is NOT a valid sidecar key — only 'add_params' is used.
+    """
     sidecar_path = SIDECARS_DIR / f"{endpoint}.json"
     
-    # Order fields for readability
+    # Canonical field ordering for readability
     ordered = {}
-    for key in ['override_confidence', '_comment', 'description', 'override_method']:
+    for key in [
+        'override_confidence', 'override_synopsis', 'override_description',
+        'override_methods', 'override_role',
+        '_comment', 'notes',
+        'add_params', 'remove_params', 'add_responses',
+        'raw_request_body', 'raw_response_body',
+        'trust_level', 'tested_version',
+        'deprecated', 'x_cipp_warnings',
+    ]:
         if key in sidecar:
             ordered[key] = sidecar[key]
     
-    for key in ['parameters', 'add_params']:
-        if key in sidecar:
-            ordered[key] = sidecar[key]
-    
-    # Add remaining fields
+    # Add any remaining fields not in the canonical list
     for key, value in sidecar.items():
         if key not in ordered:
             ordered[key] = value
@@ -241,48 +251,37 @@ def enrich_sidecar(endpoint: str, sidecar: Dict, ps1_data: Dict, ps1_exists: boo
         if ps1_data.get('function_description'):
             enriched['description'] = ps1_data['function_description'][:200]  # Truncate if too long
     
-    # Get existing params (check both 'parameters' and 'add_params')
-    if 'parameters' in enriched:
-        existing_query = [p for p in enriched['parameters'] if p.get('in') == 'query']
-        existing_body = [p for p in enriched['parameters'] if p.get('in') == 'body']
-        
-        # Merge with PS1 params
-        merged_query = merge_params(existing_query, ps1_data['query'], 'query')
-        merged_body = merge_params(existing_body, ps1_data['body'], 'body')
-        
-        enriched['parameters'] = merged_query + merged_body
-    
-    elif 'add_params' in enriched:
-        existing_query = [p for p in enriched['add_params'] if p.get('in') == 'query']
-        existing_body = [p for p in enriched['add_params'] if p.get('in') == 'body']
-        
-        # Merge with PS1 params
-        merged_query = merge_params(existing_query, ps1_data['query'], 'query')
-        merged_body = merge_params(existing_body, ps1_data['body'], 'body')
-        
+    # Canonical sidecar schema uses 'add_params' exclusively.
+    # All three branches write to 'add_params' — never 'parameters'.
+    existing_add_params = enriched.get('add_params', [])
+    existing_query = [p for p in existing_add_params if p.get('in') == 'query']
+    existing_body  = [p for p in existing_add_params if p.get('in') == 'body']
+
+    merged_query = merge_params(existing_query, ps1_data['query'], 'query')
+    merged_body  = merge_params(existing_body,  ps1_data['body'],  'body')
+
+    if merged_query or merged_body:
         enriched['add_params'] = merged_query + merged_body
-    
-    else:
-        # No params in sidecar yet, add all from PS1
-        if ps1_data['query'] or ps1_data['body']:
-            all_params = []
-            for q in ps1_data['query']:
-                all_params.append({
-                    'name': q['name'],
-                    'in': 'query',
-                    'required': False,
-                    'type': 'string',
-                    'description': q['description']
-                })
-            for b in ps1_data['body']:
-                all_params.append({
-                    'name': b['name'],
-                    'in': 'body',
-                    'required': False,
-                    'type': 'string',
-                    'description': b['description']
-                })
-            enriched['parameters'] = all_params
+    elif not existing_add_params and (ps1_data['query'] or ps1_data['body']):
+        # No existing params and PS1 has data — build from scratch
+        all_params = []
+        for q in ps1_data['query']:
+            all_params.append({
+                'name': q['name'],
+                'in': 'query',
+                'required': False,
+                'type': 'string',
+                'description': q['description']
+            })
+        for b in ps1_data['body']:
+            all_params.append({
+                'name': b['name'],
+                'in': 'body',
+                'required': False,
+                'type': 'string',
+                'description': b['description']
+            })
+        enriched['add_params'] = all_params
     
     # Add enrichment comment
     if '_comment' not in enriched:
@@ -357,9 +356,9 @@ def run_enrichment(dry_run: bool = True):
         # Enrich sidecar
         enriched = enrich_sidecar(endpoint, sidecar, ps1_data, ps1_exists=True)
         
-        # Count changes
-        original_param_count = len(sidecar.get('parameters', []) or sidecar.get('add_params', []))
-        new_param_count = len(enriched.get('parameters', []) or enriched.get('add_params', []))
+        # Count changes — canonical schema uses add_params only
+        original_param_count = len(sidecar.get('add_params', []))
+        new_param_count = len(enriched.get('add_params', []))
         params_added = new_param_count - original_param_count
         
         if params_added > 0 or 'override_confidence' not in sidecar or sidecar.get('deprecated'):

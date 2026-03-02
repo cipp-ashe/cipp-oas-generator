@@ -44,7 +44,13 @@ BLOB_ACCESS_RE = re.compile(r'\$(\w+)\.(\w+)', re.IGNORECASE)
 # ── Load pipeline data ────────────────────────────────────────────────────────
 
 def load_pipeline_data():
-    """Load all pipeline outputs for cross-reference."""
+    """Load all pipeline outputs for cross-reference.
+    
+    Stage 2 output shape: {"stage": ..., "endpoints": {name: {...}}, ...}
+    Stage 1 output shape: {"stage": ..., "endpoints": {name: {...}}, ...}
+    Stage 3 output shape: {"stage": ..., "endpoints": {name: {...}}, ...}
+    All three are stored as the full output dict — callers must unwrap ['endpoints'].
+    """
     data = {}
     
     with open(ENDPOINT_INDEX) as f:
@@ -124,23 +130,27 @@ def analyze_sidecar_quality(endpoint: str, sidecar: Dict, pipeline_data: Dict) -
     issues = []
     severity = "good"  # good, warning, error
     
-    # Get merged params from pipeline
-    merged = pipeline_data['stage3']['endpoints'].get(endpoint, {})
-    stage1 = pipeline_data['stage1']['endpoints'].get(endpoint, {})
+    # Get merged params from pipeline (all stage outputs have top-level 'endpoints' key)
+    merged = pipeline_data['stage3'].get('endpoints', {}).get(endpoint, {})
+    stage1 = pipeline_data['stage1'].get('endpoints', {}).get(endpoint, {})
     
     # Check 1: Generic descriptions
-    if 'parameters' in sidecar:
+    # Canonical sidecar schema uses add_params (not parameters)
+    sidecar_add_params = sidecar.get('add_params', [])
+    if sidecar_add_params:
         generic_descriptions = []
-        for param in sidecar['parameters']:
+        for param in sidecar_add_params:
             desc = param.get('description', '')
             name = param.get('name', '')
-            # Check for lazy descriptions like "Body parameter: Foo"
+            # Check for lazy descriptions like "Body parameter: Foo" or "(auto) ..."
             if desc.lower() in [
                 f"query parameter: {name.lower()}",
                 f"body parameter: {name.lower()}",
+                f"query parameter from ps1: {name.lower()}",
+                f"body parameter from ps1: {name.lower()}",
                 name.lower(),
                 ''
-            ]:
+            ] or desc.startswith('(auto)'):
                 generic_descriptions.append(name)
         
         if generic_descriptions:
@@ -153,11 +163,7 @@ def analyze_sidecar_quality(endpoint: str, sidecar: Dict, pipeline_data: Dict) -
             severity = "warning"
     
     # Check 2: Missing parameters (stage1 found more than sidecar documents)
-    sidecar_params = set()
-    if 'parameters' in sidecar:
-        sidecar_params = {p['name'] for p in sidecar['parameters']}
-    elif 'add_params' in sidecar:
-        sidecar_params = {p['name'] for p in sidecar['add_params']}
+    sidecar_params = {p['name'] for p in sidecar.get('add_params', [])}
     
     stage1_query = {p['name'] for p in stage1.get('query_params', [])}
     stage1_body = {p['name'] for p in stage1.get('body_params', [])}
@@ -180,12 +186,14 @@ def analyze_sidecar_quality(endpoint: str, sidecar: Dict, pipeline_data: Dict) -
     extra_in_sidecar = sidecar_params - stage1_all
     if extra_in_sidecar:
         # This might be okay if frontend provides them, check stage2
-        frontend_data = pipeline_data['stage2'].get(endpoint, {})
+        # Note: stage2 output has top-level 'endpoints' key — must unwrap
+        fe_endpoint_data = pipeline_data['stage2'].get('endpoints', {}).get(endpoint, {})
         frontend_params = set()
-        if frontend_data:
-            for call in frontend_data.get('call_sites', []):
-                for param in call.get('static_params', []):
-                    frontend_params.add(param['name'])
+        if fe_endpoint_data:
+            for p in fe_endpoint_data.get('body_params', []):
+                frontend_params.add(p['name'])
+            for p in fe_endpoint_data.get('query_params', []):
+                frontend_params.add(p['name'])
         
         # Only flag if not in frontend either
         truly_extra = extra_in_sidecar - frontend_params
@@ -229,26 +237,17 @@ def analyze_sidecar_quality(endpoint: str, sidecar: Dict, pipeline_data: Dict) -
                 'message': f"{len(type_mismatches)} parameters might have incorrect types"
             })
     
-    # Check 5: Stub detector - very few params or no override_confidence
-    param_count = len(sidecar.get('parameters', []) or sidecar.get('add_params', []))
-    has_override = 'override_confidence' in sidecar
+    # Check 5: Stub detector - sidecar has no params but PS1 has data
+    # override_confidence is optional — not flagged as missing
+    param_count = len(sidecar.get('add_params', []))
     
     if param_count == 0 and stage1_all:
         issues.append({
             'type': 'stub_sidecar',
             'severity': 'error',
-            'message': "Sidecar has no parameters but PS1 has data"
+            'message': "Sidecar has no add_params but PS1 has data"
         })
         severity = "error"
-    
-    if not has_override:
-        issues.append({
-            'type': 'missing_override_confidence',
-            'severity': 'warning',
-            'message': "Sidecar missing override_confidence field"
-        })
-        if severity == "good":
-            severity = "warning"
     
     # Check 6: Read PS1 directly for comprehensive comparison
     ps1_path = find_ps1_file(endpoint, pipeline_data)
@@ -292,9 +291,9 @@ def run_audit():
     # Load pipeline data
     print("Loading pipeline data...")
     pipeline_data = load_pipeline_data()
-    print(f"  ✓ Stage 1: {len(pipeline_data['stage1']['endpoints'])} endpoints")
-    print(f"  ✓ Stage 2: {len(pipeline_data['stage2'])} frontend calls")
-    print(f"  ✓ Stage 3: {len(pipeline_data['stage3']['endpoints'])} merged endpoints")
+    print(f"  ✓ Stage 1: {len(pipeline_data['stage1'].get('endpoints', {}))} endpoints")
+    print(f"  ✓ Stage 2: {len(pipeline_data['stage2'].get('endpoints', {}))} frontend calls")
+    print(f"  ✓ Stage 3: {len(pipeline_data['stage3'].get('endpoints', {}))} merged endpoints")
     print()
     
     # Get all sidecars

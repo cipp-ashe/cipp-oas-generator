@@ -295,6 +295,9 @@
                   },
                   "tenantFilter": {
                     "type": "string"
+                  },
+                  "count": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -427,12 +430,6 @@
                   "GUID": {
                     "type": "string"
                   },
-                  "displayName": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
                   "assignmentFilterManagementType": {
                     "type": "string",
                     "enum": [
@@ -444,6 +441,12 @@
                     "type": "string"
                   },
                   "rule": {
+                    "type": "string"
+                  },
+                  "displayname": {
+                    "type": "string"
+                  },
+                  "Description": {
                     "type": "string"
                   }
                 }
@@ -810,9 +813,6 @@
                   "CustomGroup": {
                     "type": "string"
                   },
-                  "customrepo": {
-                    "type": "string"
-                  },
                   "description": {
                     "type": "string"
                   },
@@ -829,6 +829,9 @@
                     "type": "string"
                   },
                   "selectedTenants": {
+                    "type": "string"
+                  },
+                  "CustomRepo": {
                     "type": "string"
                   }
                 }
@@ -996,48 +999,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "City": {
-                    "type": "string"
-                  },
-                  "CountryOrRegion": {
-                    "type": "string"
-                  },
-                  "displayName": {
-                    "type": "string"
-                  },
-                  "email": {
-                    "type": "string"
-                  },
-                  "firstName": {
-                    "type": "string"
-                  },
-                  "hidefromGAL": {
-                    "type": "boolean"
-                  },
-                  "lastName": {
-                    "type": "string"
-                  },
-                  "mailTip": {
-                    "type": "string"
-                  },
-                  "mobilePhone": {
-                    "type": "string"
-                  },
-                  "PostalCode": {
-                    "type": "string"
-                  },
-                  "State": {
-                    "type": "string"
-                  },
-                  "StreetAddress": {
-                    "type": "string"
-                  },
-                  "tenantid": {
-                    "type": "string"
-                  },
-                  "website": {
-                    "type": "string"
-                  },
                   "Company": {
                     "type": "string"
                   },
@@ -1045,6 +1006,48 @@
                     "type": "string"
                   },
                   "phone": {
+                    "type": "string"
+                  },
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "State": {
+                    "type": "string"
+                  },
+                  "tenantid": {
+                    "type": "string"
+                  },
+                  "lastName": {
+                    "type": "string"
+                  },
+                  "PostalCode": {
+                    "type": "string"
+                  },
+                  "StreetAddress": {
+                    "type": "string"
+                  },
+                  "mobilePhone": {
+                    "type": "string"
+                  },
+                  "firstName": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "mailTip": {
+                    "type": "string"
+                  },
+                  "website": {
+                    "type": "string"
+                  },
+                  "City": {
+                    "type": "string"
+                  },
+                  "hidefromGAL": {
+                    "type": "string"
+                  },
+                  "CountryOrRegion": {
                     "type": "string"
                   }
                 }
@@ -1452,6 +1455,45 @@
                   },
                   "showExclusionPolicy": {
                     "type": "boolean"
+                  },
+                  "appSync": {
+                    "type": "string"
+                  },
+                  "ConnectIos": {
+                    "type": "string"
+                  },
+                  "ConnectAndroid": {
+                    "type": "string"
+                  },
+                  "ConnectIosCompliance": {
+                    "type": "string"
+                  },
+                  "BlockunsupportedOS": {
+                    "type": "string"
+                  },
+                  "ConnectMac": {
+                    "type": "string"
+                  },
+                  "Connectwindows": {
+                    "type": "string"
+                  },
+                  "ConnectAndroidCompliance": {
+                    "type": "string"
+                  },
+                  "AssignTo": {
+                    "type": "string"
+                  },
+                  "excludedExtensions": {
+                    "type": "string"
+                  },
+                  "excludedProcesses": {
+                    "type": "string"
+                  },
+                  "excludedPaths": {
+                    "type": "string"
+                  },
+                  "Mode": {
+                    "type": "string"
                   }
                 }
               }
@@ -1912,6 +1954,12 @@
                   },
                   "WithImportance": {
                     "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "Count": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -2119,6 +2167,9 @@
                   },
                   "TemplateList": {
                     "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "comment": {
+                    "type": "string"
                   }
                 }
               }
@@ -2392,12 +2443,6 @@
                   "GUID": {
                     "type": "string"
                   },
-                  "displayName": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
                   "username": {
                     "type": "string"
                   },
@@ -2420,6 +2465,12 @@
                     "type": "boolean"
                   },
                   "membershipRules": {
+                    "type": "string"
+                  },
+                  "displayname": {
+                    "type": "string"
+                  },
+                  "Description": {
                     "type": "string"
                   }
                 }
@@ -2555,15 +2606,15 @@
         "x-cipp-role": "Endpoint.MEM.ReadWrite",
         "parameters": [
           {
+            "$ref": "#/components/parameters/tenantFilter"
+          },
+          {
             "name": "TemplateId",
             "in": "query",
             "required": false,
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "$ref": "#/components/parameters/tenantFilter"
           }
         ],
         "requestBody": {
@@ -2589,6 +2640,9 @@
                     "type": "string"
                   },
                   "rawJSON": {
+                    "type": "string"
+                  },
+                  "TemplateList": {
                     "type": "string"
                   }
                 },
@@ -2660,6 +2714,21 @@
                     "type": "string"
                   },
                   "package": {
+                    "type": "string"
+                  },
+                  "DisplayName": {
+                    "type": "string"
+                  },
+                  "displayname": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "RawJSON": {
+                    "type": "string"
+                  },
+                  "json": {
                     "type": "string"
                   }
                 },
@@ -2941,7 +3010,13 @@
                     "type": "string"
                   },
                   "RMMName": {
-                    "$ref": "#/components/schemas/LabelValue"
+                    "$ref": "#/components/schemas/LabelValue",
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "selectedTenants": {
                     "type": "string"
@@ -3160,35 +3235,31 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "assignmentFilter": {
-                    "$ref": "#/components/schemas/LabelValue"
-                  },
-                  "AssignmentFilterName": {
-                    "type": "string"
-                  },
-                  "assignmentFilterType": {
-                    "type": "string"
-                  },
-                  "AssignTo": {
-                    "type": "string",
-                    "enum": [
-                      "On",
-                      "allLicensedUsers",
-                      "AllDevices",
-                      "AllDevicesAndUsers",
-                      "customGroup"
-                    ]
-                  },
-                  "customGroup": {
-                    "type": "string"
-                  },
-                  "Description": {
+                  "tenantFilter": {
                     "type": "string"
                   },
                   "displayName": {
                     "type": "string"
                   },
+                  "Description": {
+                    "type": "string"
+                  },
+                  "AssignTo": {
+                    "type": "string"
+                  },
                   "excludeGroup": {
+                    "type": "string"
+                  },
+                  "AssignmentFilterName": {
+                    "type": "string"
+                  },
+                  "assignmentFilter": {
+                    "type": "string"
+                  },
+                  "assignmentFilterType": {
+                    "type": "string"
+                  },
+                  "customGroup": {
                     "type": "string"
                   },
                   "RAWJson": {
@@ -3200,16 +3271,16 @@
                   "reusableSettings": {
                     "type": "string"
                   },
-                  "TemplateGuid": {
+                  "TemplateID": {
+                    "type": "string"
+                  },
+                  "TemplateGUID": {
                     "type": "string"
                   },
                   "TemplateType": {
                     "type": "string"
                   },
-                  "tenantFilter": {
-                    "type": "string"
-                  },
-                  "TemplateId": {
+                  "Count": {
                     "type": "string"
                   }
                 },
@@ -3413,9 +3484,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "displayName": {
-                    "type": "string"
-                  },
                   "domain": {
                     "$ref": "#/components/schemas/LabelValue"
                   },
@@ -3429,6 +3497,9 @@
                     "type": "string"
                   },
                   "userPrincipalName": {
+                    "type": "string"
+                  },
+                  "DisplayName": {
                     "type": "string"
                   }
                 }
@@ -3607,7 +3678,7 @@
         ],
         "parameters": [
           {
-            "name": "DisallowDuplicateName",
+            "name": "hidden",
             "in": "query",
             "required": false,
             "schema": {
@@ -3615,7 +3686,7 @@
             }
           },
           {
-            "name": "hidden",
+            "name": "DisallowDuplicateName",
             "in": "query",
             "required": false,
             "schema": {
@@ -3854,16 +3925,34 @@
                     "type": "string"
                   },
                   "siteDesign": {
-                    "$ref": "#/components/schemas/LabelValue"
+                    "$ref": "#/components/schemas/LabelValue",
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "siteName": {
                     "type": "string"
                   },
                   "siteOwner": {
-                    "$ref": "#/components/schemas/LabelValue"
+                    "$ref": "#/components/schemas/LabelValue",
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "templateName": {
-                    "$ref": "#/components/schemas/LabelValue"
+                    "$ref": "#/components/schemas/LabelValue",
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "tenantFilter": {
                     "type": "string"
@@ -4009,6 +4098,9 @@
                   },
                   "TemplateList": {
                     "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "name": {
+                    "type": "string"
                   }
                 }
               }
@@ -4305,9 +4397,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "tenantID": {
-                    "type": "string"
-                  },
                   "displayName": {
                     "type": "string"
                   },
@@ -4318,6 +4407,9 @@
                     "type": "string"
                   },
                   "visibility": {
+                    "type": "string"
+                  },
+                  "tenantid": {
                     "type": "string"
                   }
                 }
@@ -4618,6 +4710,12 @@
                   },
                   "TemplateList": {
                     "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "PSObject": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
                   }
                 }
               }
@@ -4727,16 +4825,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "mailNickname": {
-                    "type": "string"
-                  },
-                  "Scheduled": {
-                    "$ref": "#/components/schemas/ScheduledTask"
-                  },
                   "tenantFilter": {
-                    "type": "string"
-                  },
-                  "displayName": {
                     "type": "string"
                   },
                   "givenName": {
@@ -4747,9 +4836,6 @@
                   },
                   "username": {
                     "type": "string"
-                  },
-                  "primDomain": {
-                    "$ref": "#/components/schemas/LabelValue"
                   },
                   "password": {
                     "type": "string"
@@ -4805,10 +4891,36 @@
                   "userTemplate": {
                     "$ref": "#/components/schemas/LabelValue"
                   },
-                  "postExecution": {
-                    "$ref": "#/components/schemas/PostExecution"
+                  "Scheduled": {
+                    "$ref": "#/components/schemas/ScheduledTask",
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "string"
+                      },
+                      "Enabled": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "reference": {
+                    "type": "string"
+                  },
+                  "PostExecution": {
+                    "type": "string"
+                  },
+                  "mailNickname": {
+                    "type": "string"
+                  },
+                  "PrimDomain": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "DisplayName": {
                     "type": "string"
                   }
                 },
@@ -4881,6 +4993,12 @@
                   },
                   "usageLocation": {
                     "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -5077,9 +5195,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "ApplicationName": {
-                    "type": "string"
-                  },
                   "AssignTo": {
                     "type": "string"
                   },
@@ -5120,6 +5235,9 @@
                     "type": "string"
                   },
                   "uninstallScript": {
+                    "type": "string"
+                  },
+                  "applicationName": {
                     "type": "string"
                   }
                 }
@@ -6119,16 +6237,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userPrincipalName": {
-                    "type": "string"
-                  },
                   "tenantID": {
                     "type": "string"
                   },
                   "equipmentId": {
-                    "type": "string"
-                  },
-                  "displayName": {
                     "type": "string"
                   },
                   "hiddenFromAddressListsEnabled": {
@@ -6198,6 +6310,12 @@
                     "type": "string"
                   },
                   "workingHoursTimeZone": {
+                    "type": "string"
+                  },
+                  "userPrincipalName": {
+                    "type": "string"
+                  },
+                  "DisplayName": {
                     "type": "string"
                   }
                 }
@@ -6347,17 +6465,22 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "groupId": {
-                    "type": "string"
-                  },
-                  "groupName": {
-                    "type": "string"
-                  },
-                  "tenantId": {
-                    "type": "string"
-                  },
                   "tenantFilter": {
                     "type": "string"
+                  },
+                  "groupId": {
+                    "type": "object",
+                    "properties": {
+                      "addedFields.groupName": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "string"
+                      },
+                      "addedFields.groupType": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "groupType": {
                     "type": "string"
@@ -6427,6 +6550,12 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "groupName": {
+                    "type": "string"
+                  },
+                  "tenantId": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -7114,16 +7243,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "userPrincipalName": {
-                    "type": "string"
-                  },
                   "tenantID": {
                     "type": "string"
                   },
                   "roomId": {
-                    "type": "string"
-                  },
-                  "displayName": {
                     "type": "string"
                   },
                   "hiddenFromAddressListsEnabled": {
@@ -7223,6 +7346,12 @@
                     "type": "string"
                   },
                   "WorkingHoursTimeZone": {
+                    "type": "string"
+                  },
+                  "userPrincipalName": {
+                    "type": "string"
+                  },
+                  "DisplayName": {
                     "type": "string"
                   }
                 }
@@ -7354,6 +7483,9 @@
         "x-cipp-role": "Exchange.SpamFilter.ReadWrite",
         "parameters": [
           {
+            "$ref": "#/components/parameters/tenantFilter"
+          },
+          {
             "name": "PolicyName",
             "in": "query",
             "required": false,
@@ -7368,9 +7500,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "$ref": "#/components/parameters/tenantFilter"
           }
         ],
         "requestBody": {
@@ -7757,13 +7886,16 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "customerId": {
-                    "type": "string"
-                  },
                   "tenantGroups": {
                     "type": "string"
                   },
                   "tenantAlias": {
+                    "type": "string"
+                  },
+                  "customerId": {
+                    "type": "string"
+                  },
+                  "GroupId": {
                     "type": "string"
                   }
                 }
@@ -7973,12 +8105,6 @@
                   "surname": {
                     "type": "string"
                   },
-                  "displayName": {
-                    "type": "string"
-                  },
-                  "addedAliases": {
-                    "type": "string"
-                  },
                   "Autopassword": {
                     "type": "boolean"
                   },
@@ -7990,7 +8116,13 @@
                     "type": "boolean"
                   },
                   "usageLocation": {
-                    "$ref": "#/components/schemas/LabelValue"
+                    "$ref": "#/components/schemas/LabelValue",
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "sherweb": {
                     "type": "boolean"
@@ -8073,7 +8205,13 @@
                     "type": "string"
                   },
                   "primDomain": {
-                    "$ref": "#/components/schemas/LabelValue"
+                    "$ref": "#/components/schemas/LabelValue",
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "licenses": {
                     "type": "array",
@@ -8085,9 +8223,6 @@
                     "$ref": "#/components/schemas/LabelValue"
                   },
                   "setSponsor": {
-                    "$ref": "#/components/schemas/LabelValue"
-                  },
-                  "copyFrom": {
                     "$ref": "#/components/schemas/LabelValue"
                   },
                   "PostExecution": {
@@ -8115,9 +8250,23 @@
                     "type": "string"
                   },
                   "sherwebLicense": {
-                    "type": "string"
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "userPrincipalName": {
+                    "type": "string"
+                  },
+                  "CopyFrom": {
+                    "type": "string"
+                  },
+                  "DisplayName": {
+                    "type": "string"
+                  },
+                  "AddedAliases": {
                     "type": "string"
                   }
                 },
@@ -8467,11 +8616,11 @@
                   "templateId": {
                     "type": "string"
                   },
-                  "Mappings": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
+                  "mappings": {
+                    "type": "string"
+                  },
+                  "replace": {
+                    "type": "string"
                   }
                 }
               }
@@ -9658,6 +9807,9 @@
                   },
                   "tenantFilter": {
                     "type": "string"
+                  },
+                  "PSObject": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -10198,7 +10350,6 @@
             "description": "Internal server error"
           }
         },
-        "deprecated": true,
         "x-cipp-role": "CIPP.Core.Read",
         "requestBody": {
           "required": true,
@@ -10381,18 +10532,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "excludeLocationAuditAlerts": {
-                    "type": "boolean"
-                  },
-                  "ExclusionType": {
-                    "type": "string"
-                  },
-                  "UserID": {
-                    "type": "string"
-                  },
-                  "Username": {
-                    "type": "string"
-                  },
                   "tenantFilter": {
                     "type": "string"
                   },
@@ -10421,6 +10560,24 @@
                     }
                   },
                   "reference": {
+                    "type": "string"
+                  },
+                  "UserID": {
+                    "type": "string"
+                  },
+                  "Username": {
+                    "type": "string"
+                  },
+                  "ExclusionType": {
+                    "type": "string"
+                  },
+                  "excludeLocationAuditAlerts": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
+                  },
+                  "addedFields": {
                     "type": "string"
                   }
                 },
@@ -12426,6 +12583,12 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "queryPreset": {
+                    "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
                   "action": {
                     "type": "string"
                   },
@@ -12433,12 +12596,6 @@
                     "type": "string"
                   },
                   "query": {
-                    "type": "string"
-                  },
-                  "queryPreset": {
-                    "$ref": "#/components/schemas/LabelValue"
-                  },
-                  "name": {
                     "type": "string"
                   }
                 }
@@ -13891,23 +14048,13 @@
                 "type": "object",
                 "properties": {
                   "Hudu": {
-                    "type": "object",
-                    "properties": {
-                      "NextSync": {
-                        "type": "string"
-                      }
-                    }
+                    "type": "string"
                   },
                   "NinjaOne": {
-                    "type": "object",
-                    "properties": {
-                      "Enabled": {
-                        "type": "string"
-                      },
-                      "Instance": {
-                        "type": "string"
-                      }
-                    }
+                    "type": "string"
+                  },
+                  "PSObject": {
+                    "type": "string"
                   }
                 }
               }
@@ -14122,6 +14269,9 @@
                   },
                   "roleMappings": {
                     "$ref": "#/components/schemas/LabelValue"
+                  },
+                  "roleDefinitionId": {
+                    "type": "string"
                   }
                 }
               }
@@ -15286,9 +15436,6 @@
                       "type": "string"
                     }
                   },
-                  "reason": {
-                    "type": "string"
-                  },
                   "StartDate": {
                     "type": "string",
                     "format": "date-time"
@@ -15303,11 +15450,14 @@
                       "select"
                     ]
                   },
-                  "username": {
-                    "type": "string"
-                  },
                   "UseTAP": {
                     "type": "boolean"
+                  },
+                  "Username": {
+                    "type": "string"
+                  },
+                  "Reason": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -15784,12 +15934,6 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "Action": {
-                    "type": "string"
-                  },
-                  "Identity": {
-                    "type": "string"
-                  },
                   "TenantFilter": {
                     "type": "string"
                   },
@@ -15852,6 +15996,12 @@
                   },
                   "TargetIsArchive": {
                     "type": "boolean"
+                  },
+                  "Action": {
+                    "type": "string"
+                  },
+                  "Identity": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -16602,6 +16752,9 @@
                     "items": {
                       "type": "string"
                     }
+                  },
+                  "Count": {
+                    "type": "string"
                   }
                 },
                 "required": [
@@ -21044,6 +21197,9 @@
                   },
                   "ruleLogic": {
                     "type": "string"
+                  },
+                  "value": {
+                    "type": "string"
                   }
                 }
               }
@@ -22433,9 +22589,6 @@
                   "RemoveVersions": {
                     "type": "boolean"
                   },
-                  "Repository": {
-                    "type": "string"
-                  },
                   "rmmname": {
                     "$ref": "#/components/schemas/LabelValue"
                   },
@@ -22455,6 +22608,9 @@
                     "type": "boolean"
                   },
                   "Search": {
+                    "type": "string"
+                  },
+                  "Repository": {
                     "type": "string"
                   }
                 }
@@ -23091,7 +23247,6 @@
             "description": "Internal server error"
           }
         },
-        "deprecated": true,
         "x-cipp-role": "CIPP.Core.Read",
         "parameters": [
           {
@@ -23194,7 +23349,7 @@
             }
           },
           {
-            "name": "id",
+            "name": "ID",
             "in": "query",
             "required": false,
             "schema": {
@@ -27477,9 +27632,6 @@
                   "ID": {
                     "type": "string"
                   },
-                  "messageId": {
-                    "type": "string"
-                  },
                   "recipient": {
                     "type": "array",
                     "items": {
@@ -27509,6 +27661,9 @@
                     "type": "string"
                   },
                   "traceDetail": {
+                    "type": "string"
+                  },
+                  "MessageId": {
                     "type": "string"
                   }
                 },
@@ -30025,15 +30180,15 @@
             }
           },
           {
-            "$ref": "#/components/parameters/tenantFilter"
-          },
-          {
             "name": "TriggerRefresh",
             "in": "query",
             "required": false,
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "$ref": "#/components/parameters/tenantFilter"
           }
         ],
         "requestBody": {

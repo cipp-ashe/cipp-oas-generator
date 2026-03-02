@@ -45,7 +45,11 @@ from stage2_frontend_scanner import (
     MUTATE_URL_RE           as _S2_MUTATE_URL_RE,
 )
 
-COMMITTED_SPEC = API_REPO / "openapi.json"
+# The committed spec lives in this repo at out/openapi.json (whitelisted in .gitignore).
+# Staleness detection is handled by CI via `git diff --exit-code out/openapi.json`
+# after the pipeline runs — not by Python comparison (which would diff a file against itself).
+_SCRIPT_DIR = Path(__file__).parent
+COMMITTED_SPEC = _SCRIPT_DIR / "out" / "openapi.json"
 
 
 # ── Pattern health check ──────────────────────────────────────────────────────
@@ -708,9 +712,19 @@ def validate_sidecar_coverage(merged_params_path: Path | None = None) -> int:
 
 def validate_only(verbose: bool = False) -> int:
     """
-    Run full pipeline, validate spec correctness, then diff against committed openapi.json.
-    Exits 0 if valid and current, 1 if validation fails or spec is stale.
-    CI always runs clean mode (no verbose) so the committed spec stays clean.
+    Run full pipeline, validate OAS 3.1 structural correctness, and check sidecar coverage.
+
+    Exits 0 if the generated spec is structurally valid and all wizard endpoints have sidecars.
+    Exits 1 if validation fails or sidecar coverage is incomplete.
+
+    Staleness detection (is the committed out/openapi.json current?) is intentionally
+    delegated to git in CI:
+        git diff --exit-code out/openapi.json
+    Running that check in Python would diff out/openapi.json against itself (the pipeline
+    overwrites the same file it would read as the "committed" version). Git has the
+    pre-run committed state in its index — Python does not.
+
+    CI always runs clean mode (no --verbose) so committed spec stays consumer-clean.
     """
     run_pipeline(verbose=verbose)
 
@@ -719,61 +733,33 @@ def validate_only(verbose: bool = False) -> int:
         print("ERROR: No generated spec found after pipeline run.")
         return 1
 
-    # Validate OpenAPI spec structure before checking diff
+    # ── OAS 3.1 structural validation ────────────────────────────────────────
     print("\n── Validating OpenAPI spec ──")
-    import subprocess
     validation_script = Path(__file__).parent / "validate_spec.py"
     result = subprocess.run(
         [sys.executable, str(validation_script), "--quiet", str(generated_path)],
         capture_output=True,
         text=True
     )
-    
+
     if result.returncode != 0:
         print("✗ OpenAPI spec validation failed:")
         print(result.stderr, end="")
         print("\nFix validation errors before committing.")
         return 1
-    
+
     print("✓ OpenAPI spec is structurally valid")
-    
-    # Check sidecar coverage for wizard endpoints
+
+    # ── Sidecar coverage check ────────────────────────────────────────────────
     sidecar_result = validate_sidecar_coverage()
     if sidecar_result != 0:
         print("\nFix missing sidecars before committing.")
         return 1
 
-    if not COMMITTED_SPEC.exists():
-        print(f"No committed spec at {COMMITTED_SPEC} — treating as first run.")
-        print(f"Commit: cp {generated_path} {COMMITTED_SPEC}")
-        return 1
-
-    generated = json.loads(generated_path.read_text())
-    committed  = json.loads(COMMITTED_SPEC.read_text())
-
-    gen_paths = generated.get("paths", {})
-    com_paths = committed.get("paths", {})
-
-    added   = sorted(set(gen_paths) - set(com_paths))
-    removed = sorted(set(com_paths) - set(gen_paths))
-    changed = sorted(
-        p for p in gen_paths
-        if p in com_paths and gen_paths[p] != com_paths[p]
-    )
-
-    if not added and not removed and not changed:
-        print("\n✓ Spec is current — committed openapi.json matches generated output.")
-        return 0
-
-    print("\n❌ Spec is STALE")
-    if added:
-        print(f"  New endpoints ({len(added)}):     {added[:5]}{'...' if len(added)>5 else ''}")
-    if removed:
-        print(f"  Removed endpoints ({len(removed)}): {removed[:5]}{'...' if len(removed)>5 else ''}")
-    if changed:
-        print(f"  Changed endpoints ({len(changed)}): {changed[:5]}{'...' if len(changed)>5 else ''}")
-    print(f"\n  Update with: cp {generated_path} {COMMITTED_SPEC}")
-    return 1
+    print("\n✓ Validation passed — spec is structurally correct and sidecar coverage is complete.")
+    print("  Staleness check: run `git diff --exit-code out/openapi.json` to verify")
+    print("  the generated spec matches what is committed.")
+    return 0
 
 
 # ── Entry point ───────────────────────────────────────────────────────────────

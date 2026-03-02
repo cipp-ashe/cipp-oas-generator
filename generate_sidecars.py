@@ -49,7 +49,8 @@ from stage2_frontend_scanner import (
     ARRAY_INDEX_RE,
     _DATA_NOISE,
     normalise_field_name,
-    make_static_field,
+    # make_static_field intentionally not imported — _extract_fields_from_component
+    # builds field dicts directly to preserve type/enum/format metadata inline.
 )
 
 _AUTO_COMMENT = "AUTO-GENERATED — review before publishing. trust_level=inferred."

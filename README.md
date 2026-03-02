@@ -107,7 +107,7 @@ CIPP_FRONTEND_BRANCH=dev \
 | _(none)_ | Full corpus run — all endpoints, all stages |
 | `--endpoint NAME` | One endpoint through all stages |
 | `--stage N` | One stage only (1–4), full corpus |
-| `--validate-only` | Generate + diff vs committed `openapi.json` (CI mode) |
+| `--validate-only` | Generate + validate OAS correctness + sidecar coverage (CI mode) |
 | `--check-patterns` | Validate generator assumptions against live repos |
 | `--check-sidecars` | Check for wizard endpoints needing sidecars |
 | `--validate-endpoint NAME` | Full parameter trace for one endpoint |
@@ -165,55 +165,57 @@ which filter suppressed it or why the scanner missed it.
 
 ### `--check-sidecars`
 
-Identifies endpoints that use wizard components with potentially undocumented parameters:
+Identifies wizard-component endpoints that lack sidecars. Wizard components
+(`CippWizardOffboarding`, `CippWizardAutopilotOptions`, etc.) render multi-step forms
+whose fields are invisible to static analysis — sidecars are required to document them.
 
 ```bash
 ./run.sh --fetch --check-sidecars
 ```
 
-Checks:
-- **Wizard endpoints** — Finds endpoints using `CippWizard*` components (e.g., `CippWizardOffboarding`) that hide fields from static analysis
-- **Sparse parameters** — Flags POST endpoints with < 5 parameters that may need review
-- **Sidecar coverage** — Reports which wizard endpoints lack sidecars
+Runs Stage 2 to detect wizard usage, then reports which wizard-backed endpoints are
+missing sidecars:
 
-Example output:
 ```
-1. Wizard-based endpoints:
-  ✓ ExecOffboardUser (CippWizardOffboarding) — has sidecar
-  ✗ AddAPDevice (CippWizardAutopilotOptions) — needs sidecar
+── Sidecar Coverage: Checking 12 wizard endpoints ──
+  ✓ ExecOffboardUser        (CippWizardOffboarding)
+  ✗ AddAPDevice             (CippWizardAutopilotOptions)
+
+✗ 1 wizard endpoints need sidecars:
+    AddAPDevice
 ```
 
-**Auto-generate missing sidecars:**
+**Generating a missing sidecar:**
 
-Instead of manually creating sidecars, use the auto-generation script to extract fields from wizard components:
+Use `generate_sidecars.py` — it's reason-aware and produces sidecars with proper
+type inference, PS1 type hints, and correct `trust_level: "inferred"` marking:
 
 ```bash
-# Generate all missing wizard sidecars
-./generate_wizard_sidecars.py
+# List all endpoints that need sidecars, with reasons
+python3 generate_sidecars.py --list
 
-# Preview without writing files
-./generate_wizard_sidecars.py --dry-run
+# Preview what would be generated for wizard endpoints
+python3 generate_sidecars.py --reason external_form_component --dry-run
 
-# Regenerate specific sidecar (force overwrite)
-./generate_wizard_sidecars.py --endpoint AddAPDevice --force
+# Generate for a specific endpoint
+python3 generate_sidecars.py --endpoint AddAPDevice
+
+# Generate all missing sidecars across all reason categories
+python3 generate_sidecars.py
 ```
 
-The script:
-1. Detects which wizard components each endpoint uses (from Stage 2 output)
-2. Locates the wizard component JSX files in the frontend repo
-3. Extracts form fields using brace-aware parsing (handles nested API props)
-4. Infers OpenAPI types from `type=` attributes (switch→boolean, autoComplete→object, etc.)
-5. Generates properly formatted sidecar JSON files
+Sidecar reasons: `blind` | `external_form_component` | `data_transform` | `naming_divergence`
 
-Auto-generated sidecars include a `_comment` field documenting the source wizard components and field counts.
+All auto-generated sidecars are marked `trust_level: "inferred"` and include a
+`_comment` flagging them for human review before publishing. Existing sidecars are
+never overwritten.
 
-**Manual creation (if auto-generation fails):**
+**Manual creation:**
 ```bash
 cp sidecars/_template.json sidecars/AddAPDevice.json
-# Edit to add all wizard fields manually
+# Edit — see sidecars/README.md for full schema
+./run.sh --fetch --validate-endpoint AddAPDevice
 ```
-
-Run this after CIPP releases to catch new wizard pages before they reach production.
 
 ---
 
@@ -234,8 +236,10 @@ python3 validate_spec.py out/domain/*.json
 python3 validate_spec.py --quiet out/openapi.json
 ```
 
-The `--validate-only` mode (CI) automatically validates before diffing against the
-committed spec. Validation failures block the pipeline.
+The `--validate-only` mode (CI) runs the full pipeline, validates OAS 3.1 correctness,
+and checks sidecar coverage. Structural validation failures block the pipeline.
+Staleness detection (is the committed spec current?) is handled by CI via
+`git diff --exit-code out/openapi.json` after the pipeline run — see the workflow.
 
 Exit codes:
 - `0` — All specs are valid
@@ -539,17 +543,15 @@ python3 enrich_sidecars.py --apply
 The enrichment tool:
 1. Extracts ALL parameters from PowerShell source (including nested properties like `$UserObj.Scheduled.Enabled`)
 2. Tracks variable aliases (`$UserObj = $Request.Body` → `$UserObj.field` accesses)
-3. **Preserves** all existing sidecar params (may be from wizards/frontend)
+3. **Preserves** all existing `add_params` (may be from wizards/frontend — never removed)
 4. **Adds** missing PS1 parameters that aren't documented
-5. **Enriches** generic descriptions with PS1 comments
-6. **Adds** `override_confidence: high` where missing
-7. **Removes** incorrect `deprecated` flags when PS1 file exists
+5. **Enriches** generic descriptions with PS1 comments where available
 
 **Features:**
 - Nested property extraction: `$Body.groupId.addedFields.groupName` → `groupId.addedFields.groupName` parameter
 - Variable alias tracking: `$UserObj = $Request.Body` followed by `$UserObj.Scheduled.Enabled`
 - TenantFilter-only handling: Keeps `TenantFilter` param even if it's the sole parameter
-- Backup creation: Automatically backs up sidecars before modification
+- Backup creation: Automatically backs up `sidecars/` to `sidecars_backup/` before modifying (local only, not committed)
 
 **Example output:**
 ```
@@ -562,9 +564,8 @@ SUMMARY
 
 ✓ AddUser: +4 params (displayName, username, Scheduled.Enabled, Scheduled.date)
 ✓ EditGroup: +2 params (groupId.addedFields.groupName, groupId.addedFields.groupType)
-✓ ExecBreachSearch: deprecated flag removed, +1 params (TenantFilter)
 
-Backup created: sidecars_backup/
+Backup saved at: sidecars_backup/
 ```
 
 **Recommended workflow:**
@@ -602,9 +603,21 @@ Re-run after any commit touching:
 - `src/components/**`, `src/pages/**`, `src/api/**` (frontend repo)
 
 After a CIPP release: run `--check-patterns` first. If any check fails, update the
-relevant regex in the stage scripts before running the corpus.
+relevant regex in the stage scripts before running the corpus — otherwise output
+degrades silently.
 
-CI: `.github/workflows/validate-openapi.yml` runs `--validate-only` on every PR.
+**CI** (`.github/workflows/validate-openapi.yml`): runs on PRs and pushes that touch
+`sidecars/`, `*.py`, or `out/openapi.json`. It:
+1. Fetches the latest CIPP-API and CIPP frontend from GitHub
+2. Runs `--validate-only` (OAS correctness + sidecar coverage)
+3. Runs `git diff --exit-code out/openapi.json` to catch stale committed specs
+
+If the committed `out/openapi.json` is stale, regenerate locally and commit it:
+```bash
+./run.sh --fetch
+git add out/openapi.json
+git commit -m "Regenerate openapi.json"
+```
 
 ---
 

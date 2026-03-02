@@ -42,3 +42,10 @@ Thumbs.db
 # Temporary files
 *.tmp
 .cache/
+
+# Local backup artifacts (created by enrich_sidecars.py --apply before modifying sidecars/)
+# Not useful to commit — git history already provides version control for sidecar changes
+sidecars_backup/
+
+# Sidecar templates staging area (created by scripts during development — not canonical)
+sidecar_templates/

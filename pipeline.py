@@ -633,6 +633,77 @@ def _print_corpus_summary() -> None:
         print(f"  Output:    {unified_path}")
 
 
+# ── Sidecar coverage validation ──────────────────────────────────────────────
+
+def validate_sidecar_coverage(merged_params_path: Path | None = None) -> int:
+    """
+    Validate that all wizard endpoints have sidecars.
+    
+    This validation runs after Stage 2 has completed and wizard components have been
+    detected. Wizard endpoints require manual sidecars because their form fields
+    are hidden from static analysis.
+    
+    Returns 0 if all wizard endpoints have sidecars, 1 if any are missing.
+    """
+    # Load merged params if available (preferred), otherwise load frontend-calls
+    frontend_calls_path = OUT_DIR / "frontend-calls.json"
+    merged_path = merged_params_path or (OUT_DIR / "merged-params.json")
+    
+    # Find existing sidecars
+    sidecars_dir = Path(__file__).parent / "sidecars"
+    existing_sidecars = {
+        f.stem for f in sidecars_dir.glob('*.json')
+        if f.name != '_template.json'
+    }
+    
+    # Check wizard endpoints from merged params if available
+    wizard_endpoints = {}
+    if merged_path.exists():
+        merged = json.loads(merged_path.read_text())
+        # Look for wizard info in merged params (may have been propagated from stage2)
+        for endpoint, data in merged.items():
+            if not isinstance(data, dict):
+                continue
+            # Check if this endpoint has wizard components
+            wizard_comps = data.get('wizard_components', [])
+            if wizard_comps:
+                wizard_endpoints[endpoint] = wizard_comps
+    
+    # Fall back to frontend-calls if merged params don't have wizard info
+    if not wizard_endpoints and frontend_calls_path.exists():
+        frontend = json.loads(frontend_calls_path.read_text())
+        endpoints = frontend.get('endpoints', {})
+        for endpoint, data in endpoints.items():
+            wizard_comps = data.get('wizard_components', [])
+            if wizard_comps:
+                wizard_endpoints[endpoint] = wizard_comps
+    
+    if not wizard_endpoints:
+        print("\n── Sidecar Coverage: No wizard endpoints detected ──")
+        return 0
+    
+    print(f"\n── Sidecar Coverage: Checking {len(wizard_endpoints)} wizard endpoints ──")
+    
+    missing = []
+    for endpoint in sorted(wizard_endpoints.keys()):
+        has_sidecar = endpoint in existing_sidecars
+        status = '✓' if has_sidecar else '✗'
+        wizard_names = ', '.join(wizard_endpoints[endpoint])
+        print(f"  {status} {endpoint:30} ({wizard_names})")
+        if not has_sidecar:
+            missing.append(endpoint)
+    
+    if missing:
+        print(f"\n✗ {len(missing)} wizard endpoints need sidecars:")
+        for ep in missing:
+            print(f"    {ep}")
+        print(f"\nCreate sidecars using: cp sidecars/_template.json sidecars/<EndpointName>.json")
+        return 1
+    else:
+        print("\n✓ All wizard endpoints have sidecars")
+        return 0
+
+
 # ── Validate-only (CI mode) ───────────────────────────────────────────────────
 
 def validate_only(verbose: bool = False) -> int:
@@ -665,6 +736,12 @@ def validate_only(verbose: bool = False) -> int:
         return 1
     
     print("✓ OpenAPI spec is structurally valid")
+    
+    # Check sidecar coverage for wizard endpoints
+    sidecar_result = validate_sidecar_coverage()
+    if sidecar_result != 0:
+        print("\nFix missing sidecars before committing.")
+        return 1
 
     if not COMMITTED_SPEC.exists():
         print(f"No committed spec at {COMMITTED_SPEC} — treating as first run.")
@@ -744,9 +821,9 @@ Examples:
     elif args.check_patterns:
         sys.exit(check_patterns())
     elif args.check_sidecars:
-        # Run check_sidecars.py script
-        result = subprocess.run([sys.executable, Path(__file__).parent / "check_sidecars.py"])
-        sys.exit(result.returncode)
+        # Full pipeline to stage 2 (to get wizard detection), then validate coverage
+        run_pipeline(only_stage=2)
+        sys.exit(validate_sidecar_coverage())
     elif args.validate_endpoint:
         sys.exit(validate_endpoint(args.validate_endpoint, param_filter=args.param))
     else:

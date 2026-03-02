@@ -81,6 +81,36 @@ EXTERNAL_FORM_COMPONENT_RE = re.compile(
     r'<(Cipp(?:Add|Edit|[A-Z]\w*Form)\w*)\b'
 )
 
+# Wizard components that encapsulate complex multi-step forms with hidden parameters.
+# Static analysis cannot extract field names from these — manual sidecars required.
+WIZARD_COMPONENTS: frozenset[str] = frozenset([
+    'CippWizardOffboarding',
+    'CippWizardBulkOptions',
+    'CippWizardAutopilotOptions',
+    'CippWizardAutopilotImport',
+    'CippWizardGroupTemplates',
+    'CippWizardAssignmentFilterTemplates',
+    'CippWizardAppApproval',
+    'CippIntunePolicy',
+    'CippAlertsStep',
+    'CippBaselinesStep',
+    'CippNotificationsStep',
+    'CippPSASyncOptions',
+])
+
+# Detect wizard component usage — matches import or JSX tag (with or without closing bracket).
+# The scan_file function checks for any wizard component presence in the file content.
+def detect_wizard_components(content: str) -> list[str]:
+    """
+    Detect wizard components in JSX file content.
+    Returns list of wizard component names found.
+    """
+    found = []
+    for wizard in WIZARD_COMPONENTS:
+        if wizard in content:
+            found.append(wizard)
+    return sorted(found)
+
 # Template literal query param extraction: key=${expr}
 TEMPLATE_PARAM_RE = re.compile(r'([A-Za-z][A-Za-z0-9_]*)=\$\{[^}]+\}')
 
@@ -478,6 +508,10 @@ def scan_file(jsx_path: Path) -> list[dict]:
     site in the same file. For CippFormPage with external child components the
     fields cannot be extracted — the call record carries has_external_form_component
     instead, and Stage 3 emits an explicit mismatch note directing to a sidecar.
+    
+    Wizard component detection is also file-scoped — if any wizard component is
+    detected in the file, the endpoint likely requires a manual sidecar to document
+    the wizard's hidden parameters.
     """
     content  = jsx_path.read_text(encoding="utf-8", errors="ignore")
     rel_path = str(jsx_path.relative_to(FRONTEND_REPO))
@@ -486,6 +520,10 @@ def scan_file(jsx_path: Path) -> list[dict]:
 
     static_fields, dynamic_fields = extract_form_fields(content)
     has_dynamic = bool(dynamic_fields)
+    
+    # Detect wizard components in this file
+    wizard_components = detect_wizard_components(content)
+    has_wizard = bool(wizard_components)
 
     # ── Static URL ────────────────────────────────────────────────────────
     for m in STATIC_URL_RE.finditer(content):
@@ -509,6 +547,8 @@ def scan_file(jsx_path: Path) -> list[dict]:
             "has_constructed_body":  False,
             "has_external_form_component": False,
             "external_form_components":    [],
+            "has_wizard_component":  has_wizard,
+            "wizard_components":     wizard_components,
             "file":                  rel_path,
             "file_hash":             fhash,
         })
@@ -530,6 +570,8 @@ def scan_file(jsx_path: Path) -> list[dict]:
             "has_constructed_body":  constructed,
             "has_external_form_component": False,
             "external_form_components":    [],
+            "has_wizard_component":  has_wizard,
+            "wizard_components":     wizard_components,
             "file":                  rel_path,
             "file_hash":             fhash,
         })
@@ -551,6 +593,8 @@ def scan_file(jsx_path: Path) -> list[dict]:
             "has_constructed_body":  False,
             "has_external_form_component": False,
             "external_form_components":    [],
+            "has_wizard_component":  has_wizard,
+            "wizard_components":     wizard_components,
             "file":                  rel_path,
             "file_hash":             fhash,
         })
@@ -588,6 +632,8 @@ def scan_file(jsx_path: Path) -> list[dict]:
             "has_constructed_body":  False,
             "has_external_form_component": has_external,
             "external_form_components":    child_components,
+            "has_wizard_component":  has_wizard,
+            "wizard_components":     wizard_components,
             "file":                  rel_path,
             "file_hash":             fhash,
         })
@@ -656,7 +702,9 @@ def consolidate(calls_by_endpoint: dict[str, list[dict]]) -> dict[str, dict]:
         has_data_transform   = False
         has_constructed_body = False
         has_external_form    = False
+        has_wizard           = False
         external_components: set[str] = set()
+        wizard_components:   set[str] = set()
 
         for call in calls:
             methods.add(call["method"])
@@ -666,7 +714,9 @@ def consolidate(calls_by_endpoint: dict[str, list[dict]]) -> dict[str, dict]:
             has_data_transform   = has_data_transform   or call.get("has_data_transform",    False)
             has_constructed_body = has_constructed_body or call.get("has_constructed_body",  False)
             has_external_form    = has_external_form    or call.get("has_external_form_component", False)
+            has_wizard           = has_wizard           or call.get("has_wizard_component",  False)
             external_components.update(call.get("external_form_components", []))
+            wizard_components.update(call.get("wizard_components", []))
 
             for qp in call.get("query_params", []):
                 key = qp["name"].lower()
@@ -708,6 +758,8 @@ def consolidate(calls_by_endpoint: dict[str, list[dict]]) -> dict[str, dict]:
             "has_constructed_body":        has_constructed_body,
             "has_external_form_component": has_external_form,
             "external_form_components":    sorted(external_components),
+            "has_wizard_component":        has_wizard,
+            "wizard_components":           sorted(wizard_components),
             "_source":                     "stage2_frontend_scanner",
         }
 
@@ -779,12 +831,14 @@ def run(endpoint_filter: str | None = None) -> dict:
         print(f"[Stage 2] ⚠ {len(scan_errors)} scan errors")
 
     # Summary of new flag counts — useful for auditing sidecar backlog
-    n_transform  = sum(1 for v in consolidated.values() if v.get("has_data_transform"))
-    n_external   = sum(1 for v in consolidated.values() if v.get("has_external_form_component"))
+    n_transform   = sum(1 for v in consolidated.values() if v.get("has_data_transform"))
+    n_external    = sum(1 for v in consolidated.values() if v.get("has_external_form_component"))
     n_constructed = sum(1 for v in consolidated.values() if v.get("has_constructed_body"))
-    if n_external or n_transform or n_constructed:
+    n_wizard      = sum(1 for v in consolidated.values() if v.get("has_wizard_component"))
+    if n_external or n_transform or n_constructed or n_wizard:
         print(
             f"[Stage 2]   Sidecar candidates: "
+            f"{n_wizard} wizard-component, "
             f"{n_external} external-form-component, "
             f"{n_transform} data-transform, "
             f"{n_constructed} constructed-body"

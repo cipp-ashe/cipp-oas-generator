@@ -6,7 +6,6 @@ on:
     branches: [main]
     paths:
       - 'out/openapi.json'
-      - 'redocly.yaml'
       - '.github/workflows/deploy-docs.yml'
   
   # Allow manual trigger
@@ -57,7 +56,21 @@ jobs:
           mkdir -p out/docs
           npx --yes @redocly/cli build-docs out/openapi.json \
             --output out/docs/index.html \
-            --config redocly.yaml
+            --title "CIPP API Documentation" \
+            --disableGoogleFont \
+            --theme.openapi.theme.colors.primary.main='#F77F00' \
+            --theme.openapi.theme.sidebar.backgroundColor='#003049' \
+            --theme.openapi.theme.sidebar.textColor='#E8F0F5' \
+            --theme.openapi.theme.sidebar.activeTextColor='#F77F00' \
+            --theme.openapi.theme.colors.http.get='#10B981' \
+            --theme.openapi.theme.colors.http.post='#F77F00' \
+            --theme.openapi.theme.colors.http.put='#0EA5E9' \
+            --theme.openapi.theme.colors.http.patch='#8B5CF6' \
+            --theme.openapi.theme.colors.http.delete='#EF4444' \
+            --theme.openapi.theme.rightPanel.backgroundColor='#1E293B' \
+            --theme.openapi.theme.typography.fontSize='16px' \
+            --theme.openapi.requiredPropsFirst=true \
+            --theme.openapi.expandResponses='200,201'
 
       - name: Create docs index page
         run: |

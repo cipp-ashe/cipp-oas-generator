@@ -57,18 +57,42 @@ jobs:
           npx --yes @redocly/cli build-docs out/openapi.json \
             --output out/docs/index.html \
             --title "CIPP API Documentation" \
+            --template docs-template.hbs \
             --disableGoogleFont \
+            --theme.openapi.theme.typography.fontFamily="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" \
+            --theme.openapi.theme.typography.fontSize='16px' \
+            --theme.openapi.theme.typography.lineHeight='1.6' \
+            --theme.openapi.theme.typography.headings.fontFamily="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" \
+            --theme.openapi.theme.typography.headings.fontWeight='600' \
             --theme.openapi.theme.colors.primary.main='#F77F00' \
+            --theme.openapi.theme.colors.primary.light='#FF9933' \
+            --theme.openapi.theme.colors.primary.dark='#D66D00' \
+            --theme.openapi.theme.colors.success.main='#10B981' \
+            --theme.openapi.theme.colors.success.light='#3FC79A' \
+            --theme.openapi.theme.colors.warning.main='#F79009' \
+            --theme.openapi.theme.colors.error.main='#F04438' \
+            --theme.openapi.theme.colors.error.light='#FEE4E2' \
+            --theme.openapi.theme.colors.text.primary='#101828' \
+            --theme.openapi.theme.colors.text.secondary='#667085' \
             --theme.openapi.theme.sidebar.backgroundColor='#003049' \
-            --theme.openapi.theme.sidebar.textColor='#E8F0F5' \
+            --theme.openapi.theme.sidebar.textColor='#FFFFFF' \
             --theme.openapi.theme.sidebar.activeTextColor='#F77F00' \
+            --theme.openapi.theme.sidebar.groupItems.activeBackgroundColor='rgba(247, 127, 0, 0.15)' \
+            --theme.openapi.theme.sidebar.groupItems.activeTextColor='#F77F00' \
             --theme.openapi.theme.colors.http.get='#10B981' \
             --theme.openapi.theme.colors.http.post='#F77F00' \
-            --theme.openapi.theme.colors.http.put='#0EA5E9' \
-            --theme.openapi.theme.colors.http.patch='#8B5CF6' \
-            --theme.openapi.theme.colors.http.delete='#EF4444' \
-            --theme.openapi.theme.rightPanel.backgroundColor='#1E293B' \
-            --theme.openapi.theme.typography.fontSize='16px' \
+            --theme.openapi.theme.colors.http.put='#06AED4' \
+            --theme.openapi.theme.colors.http.patch='#9E77ED' \
+            --theme.openapi.theme.colors.http.delete='#F04438' \
+            --theme.openapi.theme.rightPanel.backgroundColor='#101826' \
+            --theme.openapi.theme.rightPanel.textColor='#FFFFFF' \
+            --theme.openapi.theme.codeBlock.backgroundColor='#F9FAFB' \
+            --theme.openapi.theme.schema.nestedBackground='#FAFBFC' \
+            --theme.openapi.theme.schema.typeNameColor='#F77F00' \
+            --theme.openapi.theme.schema.typeTitleColor='#101828' \
+            --theme.openapi.theme.spacing.unit='5' \
+            --theme.openapi.theme.spacing.sectionHorizontal='40' \
+            --theme.openapi.theme.spacing.sectionVertical='40' \
             --theme.openapi.requiredPropsFirst=true \
             --theme.openapi.expandResponses='200,201'
 

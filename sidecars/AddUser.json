@@ -1,5 +1,6 @@
 {
-  "override_synopsis": "Create a new user in a tenant, optionally scheduled",
+  "override_synopsis": "AddUser",
+  "override_description": "Create a new user in a tenant, optionally scheduled",
   "override_confidence": "high",
   "add_params": [
     {"name": "tenantFilter",  "in": "body", "required": true,  "type": "string",  "description": "Target tenant domain"},

@@ -4684,7 +4684,7 @@
     },
     "/api/AddUser": {
       "post": {
-        "summary": "Create a new user in a tenant, optionally scheduled",
+        "summary": "AddUser",
         "tags": [
           "Identity > Administration > Users"
         ],
@@ -4717,6 +4717,7 @@
             "description": "Internal server error"
           }
         },
+        "description": "Create a new user in a tenant, optionally scheduled",
         "x-cipp-role": "Identity.User.ReadWrite",
         "x-cipp-scheduled-branch": true,
         "requestBody": {

@@ -54,7 +54,7 @@ TEMPLATE_URL_RE = re.compile(
 # urlFromData pattern — URL passed at mutate() call time, not hook instantiation:
 #   createSomething.mutate({ url: "/api/EndpointName", data: formData })
 MUTATE_URL_RE = re.compile(
-    r'\.mutate\s*\(\s*\{[^}]*?url\s*:\s*["\' `/]api/(?P<ep>[A-Za-z][A-Za-z0-9_]*)["\' `]',
+    r'\.mutate\s*\(\s*\{[^}]*?url\s*:\s*["\' `]\/api/(?P<ep>[A-Za-z][A-Za-z0-9_]*)["\' `]',
     re.DOTALL,
 )
 

@@ -59,15 +59,15 @@ def check_patterns() -> int:
     Validate that the generator's core assumptions still hold against the live repos.
     Run this after a CIPP release to detect pattern drift before it silently degrades output.
 
-    Checks:
-      1. HTTP Functions root exists and has Invoke-*.ps1 files
-      2. .FUNCTIONALITY marker is present in a sample of entrypoint files
-      3. $Request.Query / $Request.Body access pattern is present in API files
-      4. Frontend src root exists and has .jsx files
-      5. ApiGetCall / ApiPostCall wrappers are present in the frontend
-      6. CippFormComponent name= pattern is present
-      7. Selector components (Domain/License/User) are present in frontend
-      8. Route registration pattern (CIPPEndpoint) still uses /api/ prefix routing
+    Performs 15 checks across API and frontend repos:
+    - HTTP Functions directory structure and Invoke-*.ps1 files
+    - .FUNCTIONALITY markers in entrypoint files
+    - $Request.Query/Body access patterns in PowerShell
+    - Frontend src structure and JSX/JS files
+    - API wrapper functions (ApiGetCall, ApiPostCall, .mutate)
+    - Form component patterns (CippFormComponent, CippFormPage)
+    - Selector components (Domain, License, User)
+    - URL patterns and routing conventions
 
     Returns 0 if all checks pass, 1 if any fail.
     """
@@ -121,13 +121,33 @@ def check_patterns() -> int:
     # 4. Frontend src root
     jsx_files = []
     if FRONTEND_SRC_ROOT.exists():
+        # Include both .jsx and .js files for pattern validation
         jsx_files = [f for f in FRONTEND_SRC_ROOT.rglob("*.jsx") if "node_modules" not in f.parts]
+        jsx_files += [f for f in FRONTEND_SRC_ROOT.rglob("*.js") if "node_modules" not in f.parts]
     check("Frontend src root exists", FRONTEND_SRC_ROOT.exists())
     check("JSX files found", len(jsx_files) > 0, f"{len(jsx_files)} files")
 
     if jsx_files:
-        # Sample frontend files
-        fe_sample_texts = [f.read_text(encoding="utf-8", errors="ignore") for f in jsx_files[:50]]
+        # Stratified sampling: include files from pages/, components/, and other directories
+        # to ensure representative coverage. Previously used [:50] which only got components/
+        # alphabetically, missing patterns in pages/ directory.
+        # Uses random sampling within each stratum to avoid alphabetical bias.
+        import random
+        random.seed(42)  # Deterministic sampling for reproducible checks
+        pages_dir = FRONTEND_SRC_ROOT / "pages"
+        components_dir = FRONTEND_SRC_ROOT / "components"
+        
+        pages_files = [f for f in jsx_files if pages_dir in f.parents] if pages_dir.exists() else []
+        components_files = [f for f in jsx_files if components_dir in f.parents] if components_dir.exists() else []
+        other_files = [f for f in jsx_files if f not in pages_files and f not in components_files]
+        
+        # Random sample from each bucket (total ~50 files) to avoid alphabetical bias
+        sample_pages = random.sample(pages_files, min(20, len(pages_files))) if pages_files else []
+        sample_components = random.sample(components_files, min(20, len(components_files))) if components_files else []
+        sample_other = random.sample(other_files, min(10, len(other_files))) if other_files else []
+        
+        sampled_files = sample_pages + sample_components + sample_other
+        fe_sample_texts = [f.read_text(encoding="utf-8", errors="ignore") for f in sampled_files]
         combined = "\n".join(fe_sample_texts)
 
         # 5. ApiGetCall / ApiPostCall wrappers — validated via Stage 2's POST_CONTEXT_RE

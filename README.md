@@ -115,7 +115,7 @@ CIPP_FRONTEND_BRANCH=dev \
 
 ### `--check-patterns`
 
-Run this after every CIPP release before a corpus run. Checks 10 assumptions
+Run this after every CIPP release before a corpus run. Checks 15 assumptions
 using the **compiled patterns from the stage scripts directly** — not a parallel
 re-implementation, so it validates the patterns actually in use:
 
@@ -133,12 +133,10 @@ Exits 0 if all pass, 1 with a list of what drifted. If it fails, update the
 relevant regex in the stage scripts before running the corpus — otherwise output
 degrades silently.
 
-> **Note:** The `.mutate({ url: ... })` and `CippFormPage postUrl=` checks sample the
-> first 50 JSX files alphabetically. These files are all in `CippComponents/` and do not
-> contain those patterns — causing false-positive failures. **This is a known sampling
-> artifact, not real pattern drift.** Both patterns are confirmed present in the frontend
-> (e.g. `CippFormPage.jsx`, `domains.js`). Verify against the full corpus before updating
-> any regex.
+**Sampling Strategy:** Uses stratified random sampling (seed=42 for reproducibility)
+across three directories: `pages/` (20 files), `components/` (20 files), and other
+(10 files). Includes both `.jsx` and `.js` files since mutate patterns appear in
+index.js page files. This ensures representative coverage without alphabetical bias.
 
 ### `--validate-endpoint`
 
@@ -300,6 +298,7 @@ Every endpoint is assigned a coverage tier in the output:
 | `FULL` | Both API and frontend sources present; all params high confidence |
 | `PARTIAL` | One source only, or mixed confidence, or blob-access params |
 | `BLIND` | API function found but zero params extracted — pure blob passthrough |
+| `ARRAY_BODY` | Body is an array of objects; required element fields detected, rest is open schema |
 | `ORPHAN` | Frontend calls endpoint but no `Invoke-*.ps1` found |
 | `STUB` | Neither source found — sidecar-only documentation |
 
@@ -385,17 +384,22 @@ Stage 2 (`stage2_frontend_scanner.py`) scans all `.jsx`/`.js` files and extracts
 1. Shared form components (e.g. `CippAddEditUser`) render different fields based on
    `formType`. All fields are attributed to all endpoints using the component.
    Sidecar resolves this.
-2. CippFormPage with an external child form component: the child import is not followed.
+2. `CippFormUserSelector` returns LabelValue shape but is documented as user ID string
+   in some contexts — type inference may be incorrect without sidecar override.
+3. Dynamic extension fields (`$x.defaultAttributes`, `$x.customData`) are tenant-specific
+   and cannot be enumerated statically — emitted as `DynamicExtensionFields` reference.
+4. Direct `axios.get` / `axios.post` calls not wrapped in CIPP's API helpers.
+5. Direct `fetch()` calls bypass pattern detection entirely.
+6. Computed endpoint names (`` url: `/api/${endpointName}` ``) cannot be resolved statically.
+7. Specialized selector components not in `SELECTOR_COMPONENT_RES` are invisible until added.
+8. HTTP method classification for new wrapper functions (e.g. `ApiPatchCall`) defaults to GET
+   unless the wrapper is added to `POST_CONTEXT_RE`.
+9. CippFormPage with an external child form component: the child import is not followed.
    Endpoint is discovered and flagged `has_external_form_component=true`; add a sidecar.
-3. `customDataformatter` on CippFormPage rewrites field names/types before POST.
-   Endpoint is flagged `has_data_transform=true`; add a sidecar.
-4. Handler-constructed POST bodies: submit handler builds its own object rather than
-   submitting form values directly. Endpoint is flagged `has_constructed_body=true`; add sidecar.
-5. New `*Selector` components not in `SELECTOR_COMPONENT_RES` are invisible until added.
-6. New wrapper functions (`ApiPatchCall`, etc.) classify as GET unless added to
-   `POST_CONTEXT_RE`.
-7. Direct `axios`/`fetch` calls not wrapped in `ApiGetCall`/`ApiPostCall`.
-8. Computed endpoint names (`` url: `/api/${name}` ``).
+10. `customDataformatter` on CippFormPage rewrites field names/types before POST.
+    Endpoint is flagged `has_data_transform=true`; add a sidecar.
+11. Handler-constructed POST bodies: submit handler builds its own object rather than
+    submitting form values directly. Endpoint is flagged `has_constructed_body=true`; add sidecar.
 
 ## What Stage 3 does
 
@@ -430,19 +434,24 @@ OAS 3.1 correctness enforced:
 
 Extensions added per operation:
 
-| Extension | When present |
-|---|---|
-| `x-cipp-role` | RBAC role required |
-| `x-cipp-confidence` | When not `high` |
-| `x-cipp-coverage-tier` | When not `FULL` |
-| `x-cipp-downstream` | Services touched (graph, exo, scheduler, etc.) |
-| `x-cipp-scheduled-branch` | Endpoint branches on `Scheduled.enabled` |
-| `x-cipp-dynamic-options` | `Select-Object *` passthrough detected |
-| `x-cipp-trust-level` | Sidecar provenance (`reversed`/`tested`/`inferred`) |
-| `x-cipp-tested-version` | CIPP version sidecar was validated against |
-| `x-cipp-raw-body` | `true` when `raw_request_body` sidecar escape hatch used |
-| `x-cipp-warnings` | Consumer warnings (destructive ops, silent queuing, etc.) |
-| `x-cipp-analysis-version` | Generator version (in `info`) |
+| Extension | When present | Verbose Only |
+|---|---|---|
+| `x-cipp-role` | RBAC role required | No |
+| `x-cipp-confidence` | When not `high` | Yes |
+| `x-cipp-coverage-tier` | When not `FULL` | Yes |
+| `x-cipp-downstream` | Services touched (graph, exo, scheduler, etc.) | Yes |
+| `x-cipp-scheduled-branch` | Endpoint branches on `Scheduled.enabled` | No |
+| `x-cipp-dynamic-options` | `Select-Object *` passthrough detected | No |
+| `x-cipp-trust-level` | Sidecar provenance (`reversed`/`tested`/`inferred`) | Yes |
+| `x-cipp-tested-version` | CIPP version sidecar was validated against | Yes |
+| `x-cipp-raw-body` | `true` when `raw_request_body` sidecar escape hatch used | Yes |
+| `x-cipp-data-transform` | `customDataformatter` present on form | Yes |
+| `x-cipp-constructed-body` | Handler builds POST body dynamically | Yes |
+| `x-cipp-external-form-components` | List of external form components referenced | Yes |
+| `x-cipp-warnings` | Consumer warnings (destructive ops, silent queuing, etc.) | No |
+| `x-generated-by` | Generator script name (in `info` section) | Yes |
+
+**Note:** "Verbose Only" extensions are only emitted when running with `--verbose` flag.
 
 ---
 

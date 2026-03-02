@@ -103,12 +103,24 @@
     "new": [],
     "resolved": []
   },
-  "sidecar_candidates": [],
+  "sidecar_candidates": [
+    "AddRoomList",
+    "AddTenantAllowBlockList",
+    "ExecAddTenant",
+    "ExecUpdateRefreshToken",
+    "PatchUser"
+  ],
   "sidecar_candidates_by_reason": {
     "blind": [],
     "external_form_component": [],
     "data_transform": [],
-    "constructed_body": []
+    "constructed_body": [
+      "AddRoomList",
+      "AddTenantAllowBlockList",
+      "ExecAddTenant",
+      "ExecUpdateRefreshToken",
+      "PatchUser"
+    ]
   },
   "type_inference_coverage": {
     "total_params": 2613,

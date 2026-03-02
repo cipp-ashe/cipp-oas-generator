@@ -33,6 +33,12 @@ jobs:
         working-directory: cipp-api/Tools/openapi-generator
         run: pip install -r requirements.txt
 
+      - name: Check sidecar coverage
+        working-directory: cipp-api/Tools/openapi-generator
+        run: python3 pipeline.py --check-sidecars
+        env:
+          CIPP_FRONTEND_REPO: ${{ github.workspace }}/cipp-main
+
       - name: Run generator (validate-only mode)
         working-directory: cipp-api/Tools/openapi-generator
         run: python3 pipeline.py --validate-only

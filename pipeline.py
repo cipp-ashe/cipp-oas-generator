@@ -727,6 +727,8 @@ Examples:
                         help="Full parameter trace for one endpoint — shows every stage decision and assumption")
     parser.add_argument("--param",             metavar="PARAM",
                         help="Filter --validate-endpoint trace to a single parameter name")
+    parser.add_argument("--check-sidecars",    action="store_true",
+                        help="Check for wizard endpoints that need sidecars")
     parser.add_argument(
         "--verbose", action="store_true",
         help=(
@@ -741,6 +743,10 @@ Examples:
         sys.exit(validate_only(verbose=args.verbose))
     elif args.check_patterns:
         sys.exit(check_patterns())
+    elif args.check_sidecars:
+        # Run check_sidecars.py script
+        result = subprocess.run([sys.executable, Path(__file__).parent / "check_sidecars.py"])
+        sys.exit(result.returncode)
     elif args.validate_endpoint:
         sys.exit(validate_endpoint(args.validate_endpoint, param_filter=args.param))
     else:

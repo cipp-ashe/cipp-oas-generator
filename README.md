@@ -105,6 +105,7 @@ CIPP_FRONTEND_BRANCH=dev \
 | `--stage N` | One stage only (1–4), full corpus |
 | `--validate-only` | Generate + diff vs committed `openapi.json` (CI mode) |
 | `--check-patterns` | Validate generator assumptions against live repos |
+| `--check-sidecars` | Check for wizard endpoints needing sidecars |
 | `--validate-endpoint NAME` | Full parameter trace for one endpoint |
 | `--validate-endpoint NAME --param FIELD` | Trace one specific parameter |
 
@@ -157,6 +158,34 @@ Also shows:
 
 Use `--param FIELD` when a parameter is **absent** from output to trace exactly
 which filter suppressed it or why the scanner missed it.
+
+### `--check-sidecars`
+
+Identifies endpoints that use wizard components with potentially undocumented parameters:
+
+```bash
+./run.sh --fetch --check-sidecars
+```
+
+Checks:
+- **Wizard endpoints** — Finds endpoints using `CippWizard*` components (e.g., `CippWizardOffboarding`) that hide fields from static analysis
+- **Sparse parameters** — Flags POST endpoints with < 5 parameters that may need review
+- **Sidecar coverage** — Reports which wizard endpoints lack sidecars
+
+Example output:
+```
+1. Wizard-based endpoints:
+  ✓ ExecOffboardUser (CippWizardOffboarding) — has sidecar
+  ✗ AddAPDevice (CippWizardAutopilotOptions) — needs sidecar
+```
+
+When the check fails, create sidecars for missing endpoints:
+```bash
+cp sidecars/_template.json sidecars/AddAPDevice.json
+# Edit to add all wizard fields
+```
+
+Run this after CIPP releases to catch new wizard pages before they reach production.
 
 ---
 

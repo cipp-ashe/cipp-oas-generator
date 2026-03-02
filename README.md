@@ -4,7 +4,7 @@
 
 ---
 
-Generates an OpenAPI 3.1 spec for the CIPP API via static analysis of both repos —
+Generates an OpenAPI 3.1 spec for the CIPP API as static analysis of both repos —
 no runtime calls, no manual maintenance. Runs against the PowerShell API source and
 the React frontend source simultaneously.
 

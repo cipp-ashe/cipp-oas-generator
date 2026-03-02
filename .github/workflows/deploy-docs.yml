@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'out/openapi.json'
+      - 'redocly.yaml'
       - '.github/workflows/deploy-docs.yml'
   
   # Allow manual trigger
@@ -56,7 +57,7 @@ jobs:
           mkdir -p out/docs
           npx --yes @redocly/cli build-docs out/openapi.json \
             --output out/docs/index.html \
-            --title "CIPP API Documentation"
+            --config redocly.yaml
 
       - name: Create docs index page
         run: |

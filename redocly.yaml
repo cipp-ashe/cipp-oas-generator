@@ -1,0 +1,176 @@
+# Redocly Configuration - CIPP API Documentation
+# https://redocly.com/docs/api-reference-docs/configuration/
+
+apis:
+  cipp-api:
+    root: out/openapi.json
+
+theme:
+  openapi:
+    theme:
+      # Typography - Clean, professional fonts
+      typography:
+        fontSize: 16px
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif'
+        lineHeight: 1.6
+        headings:
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif'
+          fontWeight: '600'
+          lineHeight: 1.4
+        code:
+          fontSize: 14px
+          fontFamily: '"SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace'
+          lineHeight: 1.5
+          fontWeight: '400'
+      
+      # Spacing & Layout - Comfortable, not cramped
+      spacing:
+        unit: 5
+        sectionHorizontal: 40
+        sectionVertical: 40
+      
+      # Sidebar - CyberDrain Navy with Orange accents
+      sidebar:
+        backgroundColor: '#003049'           # CyberDrain Navy
+        textColor: '#E8F0F5'                # Light text on dark
+        activeTextColor: '#F77F00'          # CyberDrain Orange
+        groupItems:
+          activeBackgroundColor: 'rgba(247, 127, 0, 0.15)'  # Subtle orange tint
+          activeTextColor: '#F77F00'
+          textTransform: 'none'
+        level1Items:
+          activeBackgroundColor: 'rgba(247, 127, 0, 0.1)'
+          activeTextColor: '#F77F00'
+        arrow:
+          color: '#8BA8B8'
+      
+      # Main content area colors
+      colors:
+        primary:
+          main: '#F77F00'                   # CyberDrain Orange - links, buttons
+          light: '#FF9933'
+          dark: '#D66D00'
+          contrastText: '#FFFFFF'
+        
+        success:
+          main: '#10B981'
+          light: '#34D399'
+          dark: '#059669'
+        
+        error:
+          main: '#EF4444'
+          light: '#F87171'
+          dark: '#DC2626'
+        
+        warning:
+          main: '#F59E0B'
+          light: '#FBBF24'
+          dark: '#D97706'
+        
+        text:
+          primary: '#003049'                # CyberDrain Navy for primary text
+          secondary: '#446878'              # Lighter navy for secondary
+        
+        border:
+          dark: '#D1D5DB'
+          light: '#F3F4F6'
+        
+        # HTTP Method colors - Distinct and accessible
+        http:
+          get: '#10B981'        # Green - safe, read-only
+          post: '#F77F00'       # CyberDrain Orange - creation
+          put: '#0EA5E9'        # Blue - update/replace
+          patch: '#8B5CF6'      # Purple - partial update
+          delete: '#EF4444'     # Red - destructive
+          options: '#6B7280'    # Gray - metadata
+          head: '#9CA3AF'       # Light gray - metadata
+          basic: '#6B7280'
+        
+        # Response status colors
+        responses:
+          success:
+            color: '#10B981'
+            backgroundColor: '#ECFDF5'
+            tabTextColor: '#065F46'
+          error:
+            color: '#EF4444'
+            backgroundColor: '#FEF2F2'
+            tabTextColor: '#991B1B'
+          redirect:
+            color: '#0EA5E9'
+            backgroundColor: '#F0F9FF'
+            tabTextColor: '#075985'
+          info:
+            color: '#6366F1'
+            backgroundColor: '#EEF2FF'
+            tabTextColor: '#3730A3'
+      
+      # Right panel - Dark theme for code samples
+      rightPanel:
+        backgroundColor: '#1E293B'          # Slate dark
+        textColor: '#E2E8F0'
+        servers:
+          overlay:
+            backgroundColor: '#0F172A'
+            textColor: '#E2E8F0'
+      
+      # Code blocks - Light theme in main content
+      codeBlock:
+        backgroundColor: '#F8FAFC'
+        tokens:
+          keyword: '#F77F00'                # Orange for keywords
+          string: '#10B981'                 # Green for strings
+          number: '#0EA5E9'                 # Blue for numbers
+          comment: '#64748B'                # Gray for comments
+          function: '#003049'               # Navy for functions
+          punctuation: '#475569'
+      
+      # Schema/Model styling
+      schema:
+        nestedBackground: '#F8FAFC'
+        linesColor: '#E2E8F0'
+        defaultDetailsWidth: '75%'
+        typeNameColor: '#F77F00'            # Orange for type names
+        typeTitleColor: '#003049'           # Navy for titles
+        requireLabelColor: '#EF4444'        # Red for required
+        labelsTextSize: '0.9em'
+        nestingSpacing: '1em'
+        arrow:
+          size: '1.1em'
+          color: '#64748B'
+      
+      # Logo configuration
+      logo:
+        maxHeight: '40px'
+        maxWidth: '180px'
+        gutter: '20px'
+    
+    # Additional options
+    disableGoogleFont: true
+    showExtensions: true
+    sortEnumValuesAlphabetically: false
+    sortOperationsAlphabetically: false
+    sortPropsAlphabetically: false
+    requiredPropsFirst: true
+    expandResponses: '200,201'
+    generateCodeSamples:
+      languages:
+        - lang: curl
+          label: cURL
+        - lang: Node.js
+          label: Node.js
+        - lang: Python
+          label: Python
+        - lang: PowerShell
+          label: PowerShell
+
+# Lint rules for spec quality
+lint:
+  extends:
+    - recommended
+  rules:
+    no-unused-components: warning
+    operation-operationId: error
+    operation-summary: warning
+    operation-description: off
+    tag-description: off

@@ -73,7 +73,7 @@ jobs:
             --theme.openapi.theme.colors.error.light='#FEE4E2' \
             --theme.openapi.theme.colors.text.primary='#101828' \
             --theme.openapi.theme.colors.text.secondary='#667085' \
-            --theme.openapi.theme.sidebar.backgroundColor='#003049' \
+            --theme.openapi.theme.sidebar.backgroundColor='#0C121D' \
             --theme.openapi.theme.sidebar.textColor='#FFFFFF' \
             --theme.openapi.theme.sidebar.activeTextColor='#F77F00' \
             --theme.openapi.theme.sidebar.groupItems.activeBackgroundColor='rgba(247, 127, 0, 0.15)' \

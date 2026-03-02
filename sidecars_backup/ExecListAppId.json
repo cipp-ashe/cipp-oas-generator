@@ -1,9 +1,0 @@
-{
-  "override_confidence": "high",
-  "trust_level": "reversed",
-  "override_methods": [
-    "GET",
-    "POST"
-  ],
-  "notes": "PROBABLE 404 \u2014 frontend calls /api/ExecListAppId (CIPPDeviceCodeButton.js, 4 sites) but no Invoke-ExecListAppId.ps1 exists. PS1 is Invoke-ExecDeviceCodeLogon in CIPP/Setup. Failure mode: device code logon flow broken. Fix: rename PS1 or update frontend URL."
-}

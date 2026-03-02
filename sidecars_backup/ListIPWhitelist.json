@@ -1,8 +1,0 @@
-{
-  "override_confidence": "high",
-  "trust_level": "reversed",
-  "override_methods": [
-    "GET"
-  ],
-  "notes": "PROBABLE 404 \u2014 frontend GETs /api/ListIPWhitelist via CippDataTable in geoiplookup page, but no Invoke-ListIPWhitelist.ps1 exists. Add/remove actions correctly use /api/ExecAddTrustedIP. PS1 is Invoke-ExecAddTrustedIP which handles GET (list) and POST (add/remove). Failure mode: IP whitelist table shows empty. Fix: rename PS1 to Invoke-ListIPWhitelist or update the CippDataTable url."
-}

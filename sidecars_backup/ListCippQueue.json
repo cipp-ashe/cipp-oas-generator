@@ -1,8 +1,0 @@
-{
-  "override_confidence": "high",
-  "trust_level": "reversed",
-  "override_methods": [
-    "GET"
-  ],
-  "notes": "PROBABLE 404 \u2014 frontend calls /api/ListCippQueue (CippQueueTracker.js) but no Invoke-ListCippQueue.ps1 exists. PS1 is Invoke-ListScheduledItems in CIPP/Scheduler. Failure mode: queue tracker shows empty. Fix: rename PS1 or update frontend URL."
-}

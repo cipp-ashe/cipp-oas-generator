@@ -1,5 +1,0 @@
-{
-  "trust_level": "reversed",
-  "override_methods": ["GET"],
-  "notes": "ORPHAN — frontend calls /api/ListCSPsku (CippAddEditUser.jsx, add-subscription) but no PS1 exists. CSP SKU listing is frontend-only as of v10.1.x."
-}

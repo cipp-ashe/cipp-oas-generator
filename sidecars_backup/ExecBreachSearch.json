@@ -1,6 +1,0 @@
-{
-  "trust_level": "reversed",
-  "override_methods": ["POST"],
-  "deprecated": true,
-  "notes": "REMOVED — HaveIBeenPwned breach search feature was removed from the CIPP API. Frontend still calls /api/ExecBreachSearch (BreachSearchDialog.jsx) but no PS1 exists. Do not implement new integrations against this endpoint."
-}

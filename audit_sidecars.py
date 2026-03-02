@@ -21,6 +21,7 @@ import re
 from pathlib import Path
 from typing import Dict, List, Set, Tuple
 from collections import defaultdict
+import config
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 SCRIPT_DIR = Path(__file__).parent
@@ -30,9 +31,9 @@ ENDPOINT_INDEX = OUT_DIR / "endpoint-index.json"
 MERGED_PARAMS = OUT_DIR / "merged-params.json"
 FRONTEND_CALLS = OUT_DIR / "frontend-calls.json"
 
-# API repo paths
-API_REPO = Path("/home/ashe/.openclaw/workspaces/cipp-dev/cipp-repos/cipp-api-master")
-HTTP_FUNCTIONS_ROOT = API_REPO / "Modules/CIPPCore/Public/Entrypoints"
+# API repo paths (from config.py)
+API_REPO = config.API_REPO
+HTTP_FUNCTIONS_ROOT = config.HTTP_FUNCTIONS_ROOT
 
 # ── PowerShell AST patterns ───────────────────────────────────────────────────
 QUERY_PARAM_RE = re.compile(r'\$Request\.Query\.(\w+)', re.IGNORECASE)

@@ -481,6 +481,120 @@ python3 stage4_emitter.py --endpoint MyEndpoint
 
 ---
 
+## Sidecar Quality Assurance
+
+The generator includes tools to validate and enrich sidecars automatically, ensuring they accurately reflect the PowerShell implementation and frontend usage.
+
+### Audit Sidecars
+
+Perform comprehensive accuracy checks on all existing sidecars:
+
+```bash
+python3 audit_sidecars.py
+```
+
+The audit compares sidecars against:
+- **PowerShell source** — Checks for missing/extra parameters, nested properties, variable aliases
+- **Stage 1 output** — Validates against AST-extracted parameters
+- **Stage 3 merged data** — Cross-references with frontend and merged results
+
+**Output categories:**
+- ✅ **Good** — Sidecar is accurate and complete
+- ⚠️ **Warning** — Minor issues (e.g., extra params from wizards/frontend not in PS1)
+- 🔴 **Error** — Significant problems (missing required params, incorrect metadata)
+
+**Example output:**
+```
+AUDIT SUMMARY
+  ✅ Good:     77  (accurate and complete)
+  ⚠️  Warning:  78  (minor issues, needs review)
+  🔴 Error:     0  (significant problems, needs fix)
+
+🔴 ERROR: AddUser
+  - Missing PS1 params: Scheduled.Enabled, Scheduled.date
+  - Missing AST params: displayName, username, mailNickname
+
+⚠️  WARNING: EditGroup
+  - Extra params not found in PS1: wizardStep, formType
+```
+
+**When to run:**
+- After modifying PowerShell entrypoints
+- Before committing new/updated sidecars
+- When debugging parameter accuracy issues
+- Periodically to catch drift between sidecars and implementation
+
+### Enrich Sidecars
+
+Automatically fix sidecar accuracy issues by merging PowerShell parameters:
+
+```bash
+# Preview changes (dry-run mode)
+python3 enrich_sidecars.py
+
+# Apply changes (creates backup at sidecars_backup/)
+python3 enrich_sidecars.py --apply
+```
+
+The enrichment tool:
+1. Extracts ALL parameters from PowerShell source (including nested properties like `$UserObj.Scheduled.Enabled`)
+2. Tracks variable aliases (`$UserObj = $Request.Body` → `$UserObj.field` accesses)
+3. **Preserves** all existing sidecar params (may be from wizards/frontend)
+4. **Adds** missing PS1 parameters that aren't documented
+5. **Enriches** generic descriptions with PS1 comments
+6. **Adds** `override_confidence: high` where missing
+7. **Removes** incorrect `deprecated` flags when PS1 file exists
+
+**Features:**
+- Nested property extraction: `$Body.groupId.addedFields.groupName` → `groupId.addedFields.groupName` parameter
+- Variable alias tracking: `$UserObj = $Request.Body` followed by `$UserObj.Scheduled.Enabled`
+- TenantFilter-only handling: Keeps `TenantFilter` param even if it's the sole parameter
+- Backup creation: Automatically backs up sidecars before modification
+
+**Example output:**
+```
+SUMMARY
+  Processed:          104
+  Enriched:           73
+  Parameters added:   217
+  No PS1 file:        9
+  No changes needed:  22
+
+✓ AddUser: +4 params (displayName, username, Scheduled.Enabled, Scheduled.date)
+✓ EditGroup: +2 params (groupId.addedFields.groupName, groupId.addedFields.groupType)
+✓ ExecBreachSearch: deprecated flag removed, +1 params (TenantFilter)
+
+Backup created: sidecars_backup/
+```
+
+**Recommended workflow:**
+```bash
+# 1. Audit existing sidecars
+python3 audit_sidecars.py | grep "🔴 ERROR" -A 5
+
+# 2. Review what enrichment would change (dry-run)
+python3 enrich_sidecars.py
+
+# 3. Apply enrichment
+python3 enrich_sidecars.py --apply
+
+# 4. Verify all errors are fixed
+python3 audit_sidecars.py
+
+# 5. Review changes and commit
+git diff sidecars/
+git add sidecars/
+git commit -m "Enrich sidecars with missing PS1 parameters"
+```
+
+**Configuration:** Both tools use repo paths from `config.py` — no hardcoded paths. Override via environment variables:
+```bash
+CIPP_API_REPO=/path/to/CIPP-API python3 audit_sidecars.py
+CIPP_API_REPO=/path/to/CIPP-API python3 enrich_sidecars.py --apply
+```
+
+---
+
 ## Evergreen operation
 
 Re-run after any commit touching:

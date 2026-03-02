@@ -22,6 +22,7 @@ import shutil
 from pathlib import Path
 from typing import Dict, List, Set
 from datetime import datetime
+import config
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 SCRIPT_DIR = Path(__file__).parent
@@ -30,7 +31,7 @@ BACKUP_DIR = SCRIPT_DIR / "sidecars_backup"
 OUT_DIR = SCRIPT_DIR / "out"
 ENDPOINT_INDEX = OUT_DIR / "endpoint-index.json"
 
-API_REPO = Path("/home/ashe/.openclaw/workspaces/cipp-dev/cipp-repos/cipp-api-master")
+API_REPO = config.API_REPO
 
 # ── PowerShell parameter extraction ───────────────────────────────────────────
 QUERY_PARAM_RE = re.compile(r'\$Request\.Query\.(\w+)', re.IGNORECASE)

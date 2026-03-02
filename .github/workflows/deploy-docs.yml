@@ -1,0 +1,95 @@
+name: Deploy Documentation
+
+on:
+  # Run when openapi.json is updated
+  push:
+    branches: [main]
+    paths:
+      - 'out/openapi.json'
+      - '.github/workflows/deploy-docs.yml'
+  
+  # Allow manual trigger
+  workflow_dispatch:
+
+# Allow GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  deploy-docs:
+    name: Generate and Deploy Documentation
+    runs-on: ubuntu-latest
+    
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate OpenAPI spec
+        run: python3 validate_spec.py out/openapi.json
+
+      - name: Generate HTML documentation
+        run: |
+          mkdir -p out/docs
+          npx --yes @redocly/cli build-docs out/openapi.json \
+            --output out/docs/index.html \
+            --title "CIPP API Documentation"
+
+      - name: Create docs index page
+        run: |
+          cat > out/docs/README.md << 'EOF'
+          # CIPP API Documentation
+          
+          Interactive API documentation generated from the OpenAPI 3.1 specification.
+          
+          **[View Documentation](index.html)**
+          
+          ---
+          
+          Auto-generated from commit: ${{ github.sha }}
+          
+          [View source on GitHub](https://github.com/${{ github.repository }})
+          EOF
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'out/docs'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Summary
+        run: |
+          echo "## 📚 Documentation Deployed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Documentation is now available at:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🔗 ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY

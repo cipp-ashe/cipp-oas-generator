@@ -15,6 +15,7 @@ overwrite corpus output. You can run both safely in the same session.
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -636,8 +637,8 @@ def _print_corpus_summary() -> None:
 
 def validate_only(verbose: bool = False) -> int:
     """
-    Run full pipeline, then diff generated spec against committed openapi.json.
-    Exits 0 if current, 1 if stale.
+    Run full pipeline, validate spec correctness, then diff against committed openapi.json.
+    Exits 0 if valid and current, 1 if validation fails or spec is stale.
     CI always runs clean mode (no verbose) so the committed spec stays clean.
     """
     run_pipeline(verbose=verbose)
@@ -646,6 +647,24 @@ def validate_only(verbose: bool = False) -> int:
     if not generated_path.exists():
         print("ERROR: No generated spec found after pipeline run.")
         return 1
+
+    # Validate OpenAPI spec structure before checking diff
+    print("\n── Validating OpenAPI spec ──")
+    import subprocess
+    validation_script = Path(__file__).parent / "validate_spec.py"
+    result = subprocess.run(
+        [sys.executable, str(validation_script), "--quiet", str(generated_path)],
+        capture_output=True,
+        text=True
+    )
+    
+    if result.returncode != 0:
+        print("✗ OpenAPI spec validation failed:")
+        print(result.stderr, end="")
+        print("\nFix validation errors before committing.")
+        return 1
+    
+    print("✓ OpenAPI spec is structurally valid")
 
     if not COMMITTED_SPEC.exists():
         print(f"No committed spec at {COMMITTED_SPEC} — treating as first run.")

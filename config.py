@@ -10,9 +10,10 @@ import os
 _SCRIPT_DIR = Path(__file__).parent
 
 # ── Repo paths ────────────────────────────────────────────────────────────────
-# Resolved from env vars when present, otherwise from conventional relative layout.
-# Script lives at <api-repo>/Tools/openapi-generator/config.py
-# so parent.parent = api repo root.
+# Resolved from env vars when present, otherwise falls back to sibling directory
+# conventions (../cipp-api-master, ../cipp-main). run.sh also supports --fetch
+# to shallow-clone KelvinTegelaar/CIPP-API@master and KelvinTegelaar/CIPP@main
+# into a temp directory automatically. See run.sh for resolution order.
 _api_repo_default = _SCRIPT_DIR.parent / "cipp-api-master"
 # Frontend repo: CIPP project uses "cipp-main" in cipp-repos/ layout.
 # Fallback tries both the canonical name and the old "CIPP" name for

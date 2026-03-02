@@ -29,6 +29,10 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install dependencies
+        working-directory: cipp-api/Tools/openapi-generator
+        run: pip install -r requirements.txt
+
       - name: Run generator (validate-only mode)
         working-directory: cipp-api/Tools/openapi-generator
         run: python3 pipeline.py --validate-only

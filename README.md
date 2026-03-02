@@ -28,33 +28,68 @@ precedence over both API and frontend sources. See `sidecars/README.md`.
 
 ---
 
+## Setup
+
+Install Python dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+This installs `openapi-spec-validator` for OpenAPI 3.1 validation. The generator
+uses only Python stdlib, but validation requires this external package.
+
+**Optional:** For HTML documentation generation, install Node.js:
+- macOS: `brew install node`
+- Ubuntu: `sudo apt install nodejs npm`
+- Fedora: `sudo dnf install nodejs`
+
+---
+
 ## Quickstart
 
 ```bash
-# Full corpus run
+# Simplest — fetch KelvinTegelaar/CIPP-API@master + KelvinTegelaar/CIPP@main automatically
+./run.sh --fetch
+
+# With local clones (faster for repeated runs)
+export CIPP_API_REPO=/path/to/CIPP-API
+export CIPP_FRONTEND_REPO=/path/to/CIPP
 ./run.sh
 
 # Single endpoint (spot-check, all stages)
-./run.sh --endpoint AddUser
+./run.sh --fetch --endpoint AddUser
 
 # After a CIPP release — verify assumptions before running
-./run.sh --check-patterns
+./run.sh --fetch --check-patterns
 
 # Full parameter trace for one endpoint (see every decision the pipeline made)
-./run.sh --validate-endpoint AddUser
+./run.sh --fetch --validate-endpoint AddUser
 
 # Trace one specific parameter end-to-end
-./run.sh --validate-endpoint AddUser --param displayName
+./run.sh --fetch --validate-endpoint AddUser --param displayName
 
 # CI mode — generate and diff against committed spec
-./run.sh --validate-only
+./run.sh --fetch --validate-only
 ```
 
-`run.sh` auto-resolves sibling repo paths (`../cipp-api-master`, `../cipp-main`).
-Override with env vars if your layout differs:
+`run.sh` resolves repo paths in this order (first match wins):
 
+1. **Env vars** — `CIPP_API_REPO` / `CIPP_FRONTEND_REPO` set explicitly
+2. **Sibling directories** — `../cipp-api-master` and `../cipp-main` relative to the generator
+3. **`--fetch` flag** — shallow-clones from GitHub into a temp directory, cleaned up on exit
+
+Default remotes (used by `--fetch`):
+- API: `https://github.com/KelvinTegelaar/CIPP-API` branch `master`
+- Frontend: `https://github.com/KelvinTegelaar/CIPP` branch `main`
+
+Override remotes or branches via env vars:
 ```bash
-CIPP_API_REPO=/path/to/CIPP-API CIPP_FRONTEND_REPO=/path/to/CIPP ./run.sh
+CIPP_API_REMOTE=https://github.com/yourfork/CIPP-API \
+CIPP_API_BRANCH=dev \
+CIPP_FRONTEND_REMOTE=https://github.com/yourfork/CIPP \
+CIPP_FRONTEND_BRANCH=dev \
+./run.sh --fetch
 ```
 
 ---
@@ -122,6 +157,76 @@ Also shows:
 
 Use `--param FIELD` when a parameter is **absent** from output to trace exactly
 which filter suppressed it or why the scanner missed it.
+
+---
+
+## Validation
+
+### OpenAPI Spec Validation
+
+Validate generated specs for OAS 3.1 structural correctness:
+
+```bash
+# Validate the unified spec
+python3 validate_spec.py out/openapi.json
+
+# Validate all domain specs
+python3 validate_spec.py out/domain/*.json
+
+# Quiet mode for CI (only show errors)
+python3 validate_spec.py --quiet out/openapi.json
+```
+
+The `--validate-only` mode (CI) automatically validates before diffing against the
+committed spec. Validation failures block the pipeline.
+
+Exit codes:
+- `0` — All specs are valid
+- `1` — Validation failed (structural errors)
+- `2` — File not found or read error
+
+### Documentation Preview
+
+Generate static HTML documentation with Redocly:
+
+```bash
+# Generate docs from unified spec
+./generate_docs.sh
+
+# Generate from specific spec
+./generate_docs.sh out/domain/identity-openapi.json
+```
+
+Output: `out/docs/index.html` — standalone HTML file, no dependencies.
+
+**Requirements:** Node.js and npx (optional). If not installed, validation still works
+(Python-only), but docs generation is skipped.
+
+**Online alternative:** Drag `out/openapi.json` into:
+- [Swagger Editor](https://editor.swagger.io/) — interactive editing + preview
+- [Redoc Viewer](https://redocly.github.io/redoc/) — read-only documentation view
+
+### GitHub Pages Deployment
+
+Automatically deploy documentation to GitHub Pages for easy sharing:
+
+**Setup (one-time):**
+1. Go to your repository **Settings → Pages**
+2. Under **Source**, select **GitHub Actions**
+3. Save
+
+**Deployment:**
+- **Automatic:** Docs deploy when `out/openapi.json` is updated on `main` branch
+- **Manual:** Go to **Actions → Deploy Documentation → Run workflow**
+
+Once deployed, docs are available at:
+```
+https://<owner>.github.io/<repo>/
+```
+
+Example: `https://cipp-ashe.github.io/cipp-oas-generator/`
+
+The workflow validates the spec and generates fresh HTML on every deployment.
 
 ---
 

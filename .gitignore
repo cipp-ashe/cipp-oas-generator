@@ -18,6 +18,9 @@ out/mismatch-report.json
 out/domain/*.json
 out/*-*.json
 
+# Generated documentation (deployed via GitHub Pages)
+out/docs/
+
 # Keep example outputs for documentation
 !out/coverage-report.json
 !out/openapi.json

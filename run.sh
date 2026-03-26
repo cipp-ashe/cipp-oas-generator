@@ -107,4 +107,5 @@ cleanup() {
 trap cleanup EXIT
 
 cd "$SCRIPT_DIR"
+
 exec python3 pipeline.py "${PASSTHROUGH_ARGS[@]}"

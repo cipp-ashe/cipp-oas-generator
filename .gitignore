@@ -15,6 +15,7 @@ out/endpoint-index.json
 out/frontend-calls.json
 out/merged-params.json
 out/mismatch-report.json
+out/passthru-resolved.json
 out/domain/*.json
 out/*-*.json
 
@@ -49,3 +50,6 @@ sidecars_backup/
 
 # Sidecar templates staging area (created by scripts during development — not canonical)
 sidecar_templates/
+
+# Superpowers specs and plans (local development artifacts, not part of the tool)
+docs/superpowers/

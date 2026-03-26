@@ -1,7 +1,10 @@
 {
   "override_confidence": "high",
-  "_comment": "Enriched with PS1 data on 2026-03-02",
-  "parameters": [
+  "override_methods": [
+    "POST"
+  ],
+  "_comment": "Enriched with PS1 data on 2026-03-02 | Enriched 2026-03-25",
+  "add_params": [
     {
       "name": "tenantFilter",
       "in": "body",
@@ -11,7 +14,13 @@
     }
   ],
   "trust_level": "reversed",
-  "override_methods": [
-    "POST"
+  "parameters": [
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: tenantFilter"
+    }
   ]
 }

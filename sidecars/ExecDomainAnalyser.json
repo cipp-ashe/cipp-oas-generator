@@ -1,6 +1,15 @@
 {
   "override_confidence": "high",
-  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
-  "trust_level": "inferred",
-  "notes": "BLIND endpoint \u2014 API reads $Request.Body as a blob with no direct field access. Downstream services: lancedb. No frontend params found. Endpoint may be backend-only or frontend call not detected by scanner."
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred. | Enriched 2026-03-25",
+  "notes": "BLIND endpoint \u2014 API reads $Request.Body as a blob with no direct field access. Downstream services: lancedb. No frontend params found. Endpoint may be backend-only or frontend call not detected by scanner.",
+  "add_params": [
+    {
+      "name": "tenantFilter",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: tenantFilter"
+    }
+  ],
+  "trust_level": "inferred"
 }

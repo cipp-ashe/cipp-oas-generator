@@ -19,15 +19,17 @@ import subprocess
 import sys
 from pathlib import Path
 
+import fetch_schemas
 import stage1_api_scanner
 import stage2_frontend_scanner
 import stage3_merger
 import stage4_emitter
+import stage_passthru_builder
 from config import (
     OUT_DIR, API_REPO, FRONTEND_REPO, HTTP_FUNCTIONS_ROOT, FRONTEND_SRC_ROOT,
     TYPE_HINTS, SHARED_PARAM_REFS, FRONTEND_NOISE, PS_NOISE, PARAM_NOISE,
     ALWAYS_REQUIRED_BODY, ALWAYS_REQUIRED_QUERY, DYNAMIC_EXTENSION_PARENTS,
-    KNOWN_FRONTEND_GAPS,
+    KNOWN_FRONTEND_GAPS, PASSTHRU_ENDPOINTS,
 )
 # Import compiled patterns from stage scripts so check_patterns validates the
 # actual patterns in use — not a parallel re-implementation that can drift.
@@ -186,6 +188,21 @@ def check_patterns() -> int:
             has_form_page,
             "absent = CippFormPage submission pattern may have changed"
         )
+
+    # 11. Passthru endpoint extraction — validate PASSTHRU_ENDPOINTS config
+    check(
+        "PASSTHRU_ENDPOINTS configured",
+        len(PASSTHRU_ENDPOINTS) > 0,
+        f"{len(PASSTHRU_ENDPOINTS)} endpoints: {PASSTHRU_ENDPOINTS}",
+    )
+
+    # 12. Schema registry exists
+    registry_path = _SCRIPT_DIR / "schemas" / "schema-registry.json"
+    check(
+        "schema-registry.json exists",
+        registry_path.exists(),
+        "run fetch_schemas.py first if missing",
+    )
 
     print()
     if ok:
@@ -517,7 +534,7 @@ def _trace_suppressions(endpoint: str, s1: dict | None, s2: dict | None, sidecar
 
 def run_pipeline(
     endpoint_filter: str | None = None,
-    only_stage: int | None = None,
+    only_stage: int | str | None = None,
     verbose: bool = False,
 ) -> None:
     width = 60
@@ -526,13 +543,39 @@ def run_pipeline(
     print(f"CIPP OAS Generator {label}")
     print("=" * width)
 
+    print("\n[Stage 0] Schema Cache")
+    fetch_schemas.run()
+
+    suffix = f"-{endpoint_filter}" if endpoint_filter else ""
+
     if only_stage is None or only_stage == 1:
         print("\n[Stage 1] API Scanner")
         stage1_api_scanner.run(endpoint_filter=endpoint_filter)
 
+    # Registry enrichment — auto-add discovered Graph calls to registry
+    if only_stage is None:
+        print("\n[Stage 1.5] Registry Enrichment")
+        idx_path = OUT_DIR / f"endpoint-index{suffix}.json"
+        if idx_path.exists():
+            idx_data = json.loads(idx_path.read_text())
+            endpoint_index = idx_data.get("endpoints", {})
+            registry = stage_passthru_builder._load_registry()
+            enrichment_stats = stage_passthru_builder.enrich_registry(registry, endpoint_index)
+            registry_path = _SCRIPT_DIR / "schemas" / "schema-registry.json"
+            registry_path.write_text(json.dumps(registry, indent=2) + "\n")
+            total = len(registry.get("graph", {}))
+            print(f"  {enrichment_stats['new_entries_added']} new, "
+                  f"{enrichment_stats['entries_updated']} updated, "
+                  f"{enrichment_stats['curated_preserved']} curated preserved, "
+                  f"{total} total")
+
     if only_stage is None or only_stage == 2:
         print("\n[Stage 2] Frontend Scanner")
         stage2_frontend_scanner.run(endpoint_filter=endpoint_filter)
+
+    if only_stage is None or only_stage == "passthru":
+        print("\n[Stage 2.5] Passthru Builder")
+        stage_passthru_builder.run(endpoint_filter=endpoint_filter)
 
     if only_stage is None or only_stage == 3:
         print("\n[Stage 3] Merger + Coverage Classifier")
@@ -622,7 +665,7 @@ def _print_corpus_summary() -> None:
     coverage_path = OUT_DIR / "coverage-report.json"
     unified_path  = OUT_DIR / "openapi.json"
 
-    print("── Corpus Summary ──")
+    print("-- Corpus Summary --")
 
     if merged_path.exists():
         merged = json.loads(merged_path.read_text())
@@ -647,9 +690,9 @@ def _print_corpus_summary() -> None:
         blind = cov.get("blind_endpoints", [])
         orphan = cov.get("orphan_endpoints", [])
         if blind:
-            print(f"\n  ⚠ BLIND (need sidecars): {blind[:10]}{'...' if len(blind)>10 else ''}")
+            print(f"\n  WARN BLIND (need sidecars): {blind[:10]}{'...' if len(blind)>10 else ''}")
         if orphan:
-            print(f"  ⚠ ORPHAN (no PS1 found): {orphan[:10]}{'...' if len(orphan)>10 else ''}")
+            print(f"  WARN ORPHAN (no PS1 found): {orphan[:10]}{'...' if len(orphan)>10 else ''}")
 
     if unified_path.exists():
         spec = json.loads(unified_path.read_text())
@@ -800,8 +843,10 @@ Examples:
         """,
     )
     parser.add_argument("--endpoint",          help="Run for a single endpoint only")
-    parser.add_argument("--stage",             type=int, choices=[1, 2, 3, 4],
-                        help="Run only a specific stage")
+    parser.add_argument(
+        "--stage", type=str, default=None,
+        help="Run only this stage (1, 2, passthru, 3, 4)",
+    )
     parser.add_argument("--validate-only",     action="store_true",
                         help="Generate and compare against committed spec (CI mode)")
     parser.add_argument("--check-patterns",    action="store_true",
@@ -822,6 +867,10 @@ Examples:
     )
     args = parser.parse_args()
 
+    stage = args.stage
+    if stage is not None:
+        stage = int(stage) if stage.isdigit() else stage
+
     if args.validate_only:
         sys.exit(validate_only(verbose=args.verbose))
     elif args.check_patterns:
@@ -833,4 +882,4 @@ Examples:
     elif args.validate_endpoint:
         sys.exit(validate_endpoint(args.validate_endpoint, param_filter=args.param))
     else:
-        run_pipeline(endpoint_filter=args.endpoint, only_stage=args.stage, verbose=args.verbose)
+        run_pipeline(endpoint_filter=args.endpoint, only_stage=stage, verbose=args.verbose)

@@ -45,6 +45,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run generator (validate OAS correctness + sidecar coverage)
+        # pipeline.py now includes Stage 0 (fetch_schemas) automatically — no separate step needed.
         run: python3 pipeline.py --validate-only
         env:
           CIPP_API_REPO: ${{ github.workspace }}/cipp-api
@@ -55,17 +56,21 @@ jobs:
         # git diff detects whether the regenerated output differs from the committed version.
         # Exits 1 (fails the job) if out/openapi.json was changed by the pipeline run.
         run: |
-          if ! git diff --exit-code out/openapi.json; then
+          if ! git diff --exit-code out/openapi.json out/coverage-report.json; then
             echo ""
-            echo "❌ out/openapi.json is STALE — the generated spec differs from what is committed."
+            echo "❌ Committed spec/report is STALE — the generated output differs from what is committed."
             echo ""
-            echo "  Regenerate locally and commit the updated spec:"
+            echo "  Regenerate locally and commit the updated files:"
             echo "    ./run.sh --fetch"
-            echo "    git add out/openapi.json"
+            echo "    git add out/openapi.json out/coverage-report.json"
             echo "    git commit -m 'Regenerate openapi.json'"
             exit 1
           fi
-          echo "✓ out/openapi.json is current"
+          echo "✓ out/openapi.json and coverage-report.json are current"
+
+      - name: Purge intermediate pipeline files
+        if: always()
+        run: rm -f out/endpoint-index.json out/frontend-calls.json out/merged-params.json
 
       - name: Upload generated spec (artifact on failure)
         if: failure()

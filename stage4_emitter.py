@@ -4,7 +4,6 @@ Reads merged-params.json → emits valid OAS 3.1 JSON.
 
 Outputs:
   out/openapi.json           — unified spec (all endpoints)
-  out/domain/<name>.json     — per-domain spec
   (single-endpoint mode: prints snippet only, does not write files)
 
 OAS 3.1 correctness rules enforced here:
@@ -23,18 +22,150 @@ Verbosity modes:
                     metadata. Use for internal auditing and debugging only.
 """
 
+import re
 import json
 import argparse
 from pathlib import Path
 from collections import defaultdict
 from config import (
-    OUT_DIR, DOMAIN_DIR, SHARED_PARAM_REFS,
-    TYPE_HINTS, ALWAYS_REQUIRED_BODY, ALWAYS_REQUIRED_QUERY,
-    DYNAMIC_EXTENSION_PARENTS,
+    OUT_DIR, API_REPO, SHARED_PARAM_REFS,
+    TYPE_HINTS, EXAMPLE_HINTS, ALWAYS_REQUIRED_BODY, ALWAYS_REQUIRED_QUERY,
+    DYNAMIC_EXTENSION_PARENTS, TAG_DISPLAY_NAMES, TAG_ORDER,
 )
 
+_SCHEMAS_DIR = Path(__file__).parent / "schemas"
+
+def _normalize_graph_schema(schema: dict) -> dict:
+    """
+    Normalize a Graph API response schema to match what CIPP actually returns.
+
+    New-GraphGetRequest handles OData pagination internally — it follows @odata.nextLink
+    and returns the fully-aggregated items list directly, stripping the collection envelope.
+    So CIPP endpoints that proxy Graph collections return a plain JSON array, not
+    {value: [...], @odata.nextLink: ...}.
+
+    Rules:
+      - Collection envelope ({type: object, properties: {value: {type: array, items: X}}})
+        → unwrap to {type: array, items: X}
+      - Single-item object schemas → keep as-is
+      - Remove @odata.nextLink from any schema (never present in CIPP responses)
+    """
+    if schema.get("type") == "object":
+        props = schema.get("properties", {})
+        value_prop = props.get("value", {})
+        if value_prop.get("type") == "array" and "items" in value_prop:
+            # Collection envelope — return just the array
+            return {"type": "array", "items": value_prop["items"]}
+        # Single-item object — strip @odata.nextLink if present
+        cleaned_props = {k: v for k, v in props.items() if k != "@odata.nextLink"}
+        if cleaned_props != props:
+            return {**schema, "properties": cleaned_props}
+    return schema
+
+
+def _load_graph_responses() -> dict:
+    p = _SCHEMAS_DIR / "graph-responses.json"
+    if not p.exists():
+        return {}
+    raw = json.loads(p.read_text(encoding="utf-8"))
+    return {key: _normalize_graph_schema(schema) for key, schema in raw.items()}
+
+_GRAPH_RESPONSES: dict = _load_graph_responses()
+
+# Build a mapping: 'GET /path' → component name.
+# Both _resolve_response_schema and build_spec use this so names stay consistent.
+# Rebuilt by _refresh_graph_responses() at the start of run() so Stage 0 schema
+# cache updates (written after this module is imported) are always picked up.
+
+
+def _refresh_graph_responses() -> None:
+    """Reload graph-responses.json and component names into module globals.
+
+    Called at the top of run() so that Stage 0 (fetch_schemas) schema updates
+    — which happen after this module is imported — are reflected in Stage 4
+    output rather than requiring a second pipeline invocation.
+    """
+    global _GRAPH_RESPONSES, _GRAPH_RESPONSE_COMPONENT_NAMES
+    _GRAPH_RESPONSES = _load_graph_responses()
+    _GRAPH_RESPONSE_COMPONENT_NAMES = {
+        key: _graph_path_to_component_name(key)
+        for key in _GRAPH_RESPONSES
+    }
+
+
+def _graph_path_to_component_name(graph_key: str) -> str:
+    """
+    Derive a PascalCase OAS component name from a 'GET /some/path/{id}' key.
+
+    Examples:
+      'GET /users'                                        → 'GraphUsers'
+      'GET /users/{id}'                                   → 'GraphUser'
+      'GET /deviceManagement/managedDevices'              → 'GraphManagedDevices'
+      'GET /deviceManagement/managedDevices/{id}'         → 'GraphManagedDevice'
+      'GET /identity/conditionalAccess/namedLocations'    → 'GraphNamedLocations'
+    """
+    path = graph_key[len("GET "):].lstrip("/")
+    # Drop {id} segments — they're structural, not semantic
+    segments = [s for s in path.split("/") if not s.startswith("{")]
+    # Use the last two meaningful segments to keep names distinct
+    meaningful = segments[-2:] if len(segments) >= 2 else segments
+    # CamelCase each segment (already camelCase from Graph — just uppercase the first letter)
+    name = "".join(s[0].upper() + s[1:] for s in meaningful if s)
+    # Strip trailing 's' only when it's a single item (path ends with {id})
+    is_single = path.endswith("{id}") or path.endswith("{id})")
+    if is_single and name.endswith("s"):
+        name = name[:-1]
+    return f"Graph{name}"
+
+
+# Populated by _refresh_graph_responses() — see below.
+_GRAPH_RESPONSE_COMPONENT_NAMES: dict[str, str] = {
+    key: _graph_path_to_component_name(key)
+    for key in _GRAPH_RESPONSES
+}
+
+
+def _resolve_response_schema(graph_calls: list[dict], http_methods: list[str]) -> dict | None:
+    """
+    Resolve a Graph response schema for GET endpoints with a single unambiguous Graph GET call.
+    Normalizes {varname} → {id} before lookup so stage1 path tokens match schema cache keys.
+    Returns a $ref to the named component (registered in components/schemas by build_spec).
+    """
+    if not any(m.upper() == "GET" for m in http_methods):
+        return None
+    get_calls = [c for c in graph_calls if c.get("method") == "GET"]
+    if len(get_calls) != 1:
+        return None
+    norm_path = re.sub(r'\{[^}]+\}', '{id}', get_calls[0]['path'])
+    key = f"GET {norm_path}"
+    if key not in _GRAPH_RESPONSES:
+        return None
+    component_name = _GRAPH_RESPONSE_COMPONENT_NAMES[key]
+    return {"$ref": f"#/components/schemas/{component_name}"}
+
 _SCRIPT_DIR = Path(__file__).parent
-# DOMAIN_DIR imported from config
+
+
+# ── Tag display helpers ───────────────────────────────────────────────────────
+
+def _display_tag(tags: list[str]) -> str:
+    """
+    Convert a raw folder-path tag list to its UI-aligned display string.
+    Renames the first segment via TAG_DISPLAY_NAMES; sub-path parts pass through.
+    e.g. ["Endpoint", "Autopilot"] → "Intune > Autopilot"
+    e.g. [] → "Uncategorized"
+    """
+    if not tags:
+        return "Uncategorized"
+    first = TAG_DISPLAY_NAMES.get(tags[0], tags[0])
+    return " > ".join([first] + list(tags[1:]))
+
+
+def _tag_sort_key(tag: str) -> tuple[int, str]:
+    """Sort key: position in TAG_ORDER for the section, then alpha within section."""
+    section = tag.split(" > ")[0]
+    idx = TAG_ORDER.index(section) if section in TAG_ORDER else len(TAG_ORDER)
+    return (idx, tag)
 
 # ── Shared OAS components ─────────────────────────────────────────────────────
 
@@ -124,14 +255,14 @@ SHARED_COMPONENTS: dict = {
             "in": "query",
             "description": "Target tenant domain or 'AllTenants' for multi-tenant operations.",
             "required": True,
-            "schema": {"type": "string"},
+            "schema": {"type": "string", "example": "example.onmicrosoft.com"},
         },
         "selectedTenants": {
             "name": "selectedTenants",
             "in": "query",
             "description": "Comma-separated list of tenant domains for bulk operations.",
             "required": False,
-            "schema": {"type": "string"},
+            "schema": {"type": "string", "example": "example.onmicrosoft.com"},
         },
     },
     "securitySchemes": {
@@ -216,12 +347,12 @@ def make_schema(param: dict) -> dict:
             schema["enum"] = param["enum"]
         if param.get("format"):
             schema["format"] = param["format"]
-        return schema
+        return _inject_example(schema, name_lower)
 
     # TYPE_HINTS lookup (name-based global overrides in config)
     hint = TYPE_HINTS.get(name_lower)
     if hint:
-        return dict(hint)  # copy to avoid mutating the config
+        return _inject_example(dict(hint), name_lower)  # copy to avoid mutating the config
 
     # Param carries inline enum/format without an explicit type — apply to string default
     if param.get("enum") or param.get("format"):
@@ -230,13 +361,23 @@ def make_schema(param: dict) -> dict:
             schema["enum"] = param["enum"]
         if param.get("format"):
             schema["format"] = param["format"]
-        return schema
+        return _inject_example(schema, name_lower)
 
     # Default
     desc = param.get("description")
     schema = {"type": "string"}
     if desc:
         schema["description"] = desc
+    return _inject_example(schema, name_lower)
+
+
+def _inject_example(schema: dict, name_lower: str) -> dict:
+    """Add example value to schema if available in EXAMPLE_HINTS. Skips $ref schemas."""
+    if "$ref" in schema:
+        return schema
+    example = EXAMPLE_HINTS.get(name_lower)
+    if example is not None and "example" not in schema:
+        schema["example"] = example
     return schema
 
 
@@ -255,7 +396,7 @@ def make_param_object(param: dict, required_set: set[str], verbose: bool = False
     obj: dict = {
         "name":     param["name"],
         "in":       "query",
-        "required": name_lower in required_set,
+        "required": name_lower in required_set or param.get("required", False),
         "schema":   schema,
     }
     if verbose:
@@ -283,7 +424,7 @@ def build_request_body(body_params: list[dict], verbose: bool = False) -> dict |
         name_lower = name.lower()
         schema     = make_schema(param)
 
-        if name_lower in ALWAYS_REQUIRED_BODY:
+        if name_lower in ALWAYS_REQUIRED_BODY or param.get("required", False):
             required.append(name)
 
         if "." in name:
@@ -341,6 +482,118 @@ def build_request_body(body_params: list[dict], verbose: bool = False) -> dict |
     }
 
 
+def _emit_passthru_request_body(passthru_resolved: dict) -> dict:
+    """Build oneOf requestBody for a passthru endpoint."""
+    variants = passthru_resolved.get("variants", [])
+    discriminator_param = passthru_resolved.get("discriminator_param", "Endpoint")
+
+    one_of = []
+    for v in variants:
+        schema = dict(v.get("request_schema", {}))
+        schema["title"] = f"GET {v['endpoint_value']}"
+        one_of.append(schema)
+
+    return {
+        "content": {
+            "application/json": {
+                "schema": {
+                    "oneOf": one_of,
+                    "discriminator": {"propertyName": discriminator_param},
+                }
+            }
+        }
+    }
+
+
+def _emit_passthru_response(passthru_resolved: dict) -> dict:
+    """Build oneOf 200 response for a passthru endpoint."""
+    variants = passthru_resolved.get("variants", [])
+
+    one_of = []
+    for v in variants:
+        resp = v.get("response_schema")
+        if resp is None:
+            continue
+        schema = dict(resp)
+        schema["title"] = f"GET {v['endpoint_value']}"
+        one_of.append(schema)
+
+    return {
+        "description": "Success",
+        "content": {
+            "application/json": {
+                "schema": {
+                    "oneOf": one_of,
+                }
+            }
+        }
+    }
+
+
+def _emit_response_schema_from_inference(inferred: dict) -> dict:
+    """Wrap an inferred response schema in OAS response format."""
+    return {
+        "description": "Success",
+        "content": {
+            "application/json": {
+                "schema": inferred,
+            }
+        }
+    }
+
+
+def _emit_fallback_response(entity_name: str) -> dict:
+    """Emit honest fallback response with additionalProperties + extension."""
+    return {
+        "description": "Success",
+        "content": {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "additionalProperties": True,
+                    "x-cipp-response-source": entity_name,
+                }
+            }
+        }
+    }
+
+
+def _emit_dual_mode_response(dual_mode_resolved: dict) -> dict:
+    """Build oneOf 200 response for a dual-mode endpoint."""
+    variants = dual_mode_resolved.get("variants", [])
+
+    one_of = []
+    for v in variants:
+        schema = v.get("response_schema")
+        if schema is None:
+            continue
+        variant_schema = dict(schema)
+        variant_schema["title"] = v.get("title", v.get("mode", ""))
+        variant_schema["description"] = v.get("description", "")
+        one_of.append(variant_schema)
+
+    if not one_of:
+        return {
+            "description": "Success",
+            "content": {
+                "application/json": {
+                    "schema": {"type": "object", "additionalProperties": True}
+                }
+            }
+        }
+
+    return {
+        "description": "Success",
+        "content": {
+            "application/json": {
+                "schema": {
+                    "oneOf": one_of,
+                }
+            }
+        }
+    }
+
+
 def build_path_entry(ep: dict, verbose: bool = False) -> dict:
     """Build OAS paths entry (method operations) for one endpoint."""
     endpoint    = ep["endpoint"]
@@ -359,8 +612,67 @@ def build_path_entry(ep: dict, verbose: bool = False) -> dict:
     has_external_form  = ep.get("has_external_form_component", False)
     external_components = ep.get("external_form_components", [])
     extra_responses = ep.get("extra_responses", {})
-    raw_request_body  = ep.get("raw_request_body")   # sidecar escape hatch
-    raw_response_body = ep.get("raw_response_body")  # sidecar escape hatch
+    raw_request_body       = ep.get("raw_request_body")        # sidecar escape hatch
+    raw_response_body      = ep.get("raw_response_body")       # sidecar escape hatch
+    # Resolve response schema via the Graph schema cache ($ref-based, not inline).
+    inferred_response = _resolve_response_schema(ep.get("graph_calls", []), methods)
+
+    # Fallback: use frontend $select / Graph-resource hints when no Graph $ref resolved.
+    if not inferred_response and not ep.get("raw_response_body"):
+        hints = ep.get("response_field_hints")
+        if hints and hints.get("variants"):
+            from stage2_frontend_scanner import select_fields_to_schema
+            variant_schemas = []
+            for v in hints["variants"]:
+                resource   = v.get("endpoint_resource", "")
+                sel_fields = v.get("select_fields", [])
+                simple_cols = v.get("simple_columns", [])
+
+                if sel_fields:
+                    # $select was explicit — generate a precisely typed schema
+                    item_schema = select_fields_to_schema(sel_fields)
+                else:
+                    # No $select — look up the full Graph schema for this resource path
+                    norm_path = "/" + resource.rstrip("/")
+                    norm_path = re.sub(r'\{[^}]+\}', '{id}', norm_path)
+                    graph_key = f"GET {norm_path}"
+                    cached = _GRAPH_RESPONSES.get(graph_key)
+                    if cached:
+                        # The cached schema is the collection envelope {value:[...]}
+                        # Extract the items schema if present
+                        value_prop = cached.get("properties", {}).get("value", {})
+                        item_schema = value_prop.get("items") or cached
+                    elif simple_cols:
+                        # Fall back to simpleColumns as a minimal field list
+                        item_schema = select_fields_to_schema(simple_cols)
+                    else:
+                        item_schema = {"type": "object", "additionalProperties": True}
+
+                desc = f"Graph `{resource}` object"
+                if sel_fields:
+                    desc += f" — {len(sel_fields)} fields from $select"
+                variant_schemas.append({
+                    "type": "object",
+                    "description": desc,
+                    **(item_schema if item_schema.get("type") == "object"
+                       else {"properties": {"value": {"type": "object"}}}),
+                })
+
+            if len(variant_schemas) == 1:
+                items = variant_schemas[0]
+            else:
+                items = {"oneOf": variant_schemas}
+
+            # CIPP's ListGraphRequest wraps results in {Results: [...]}
+            inferred_response = {
+                "type": "object",
+                "properties": {
+                    "Results": {
+                        "type": "array",
+                        "items": items,
+                    },
+                },
+            }
     trust_level    = ep.get("trust_level")
     tested_version = ep.get("tested_version")
     deprecated     = ep.get("deprecated", False)
@@ -420,22 +732,81 @@ def build_path_entry(ep: dict, verbose: bool = False) -> dict:
     else:
         request_body = build_request_body(body_params, verbose=verbose)
 
+    # ── Passthru endpoint emitter ─────────────────────────────────────────
+    passthru = ep.get("passthru_resolved")
+    if passthru and passthru.get("variants"):
+        request_body = _emit_passthru_request_body(passthru)
+
     # ── Responses ─────────────────────────────────────────────────────────
-    # raw_response_body from sidecar replaces standard responses entirely when present.
+    # Priority: sidecar raw_response_body > passthru oneOf > inferred Graph schema > StandardResults fallback.
     if raw_response_body:
+        # Sidecar escape hatch — highest authority, replaces everything.
         responses = {}
         for code, resp_obj in raw_response_body.items():
             if isinstance(resp_obj, dict):
                 responses[str(code)] = resp_obj
             else:
-                # Fallback: treat as description string (graceful degradation)
                 responses[str(code)] = {"description": str(resp_obj)}
         # Always keep 401/403 — auth failures apply to everything
         if "401" not in responses:
             responses["401"] = _STANDARD_RESPONSES["401"]
         if "403" not in responses:
             responses["403"] = _STANDARD_RESPONSES["403"]
+    elif passthru and passthru.get("variants"):
+        # Passthru endpoint — emit oneOf response covering all known Graph variants.
+        responses = {
+            "200": _emit_passthru_response(passthru),
+            "400": _STANDARD_RESPONSES["400"],
+            "401": _STANDARD_RESPONSES["401"],
+            "403": _STANDARD_RESPONSES["403"],
+            "500": _STANDARD_RESPONSES["500"],
+        }
+        for code, desc in extra_responses.items():
+            responses[str(code)] = desc if isinstance(desc, dict) else {"description": desc}
+    elif (dual_mode := ep.get("dual_mode_resolved")) and dual_mode.get("variants"):
+        # Dual-mode endpoint — emit oneOf response covering collection and single-item variants.
+        has_variants = any(v.get("response_schema") for v in dual_mode["variants"])
+        if has_variants:
+            responses = {
+                "200": _emit_dual_mode_response(dual_mode),
+                "400": _STANDARD_RESPONSES["400"],
+                "401": _STANDARD_RESPONSES["401"],
+                "403": _STANDARD_RESPONSES["403"],
+                "500": _STANDARD_RESPONSES["500"],
+            }
+            for code, desc in extra_responses.items():
+                responses[str(code)] = desc if isinstance(desc, dict) else {"description": desc}
+        else:
+            responses = dict(_STANDARD_RESPONSES)
+    elif (assembled := ep.get("assembled_response_schema")):
+        # Standard response schema pre-assembled by passthru builder from computed fields.
+        responses = {
+            "200": _emit_response_schema_from_inference(assembled),
+            "400": _STANDARD_RESPONSES["400"],
+            "401": _STANDARD_RESPONSES["401"],
+            "403": _STANDARD_RESPONSES["403"],
+            "500": _STANDARD_RESPONSES["500"],
+        }
+        for code, desc in extra_responses.items():
+            responses[str(code)] = desc if isinstance(desc, dict) else {"description": desc}
+    elif inferred_response:
+        # Graph response schema inferred from downstream URI + schema cache.
+        responses = {
+            "200": {
+                "description": "Success",
+                "content": {
+                    "application/json": {"schema": inferred_response}
+                },
+            },
+            "400": _STANDARD_RESPONSES["400"],
+            "401": _STANDARD_RESPONSES["401"],
+            "403": _STANDARD_RESPONSES["403"],
+            "500": _STANDARD_RESPONSES["500"],
+        }
+        for code, desc in extra_responses.items():
+            responses[str(code)] = desc if isinstance(desc, dict) else {"description": desc}
     else:
+        # Standard fallback — StandardResults envelope.
         responses = dict(_STANDARD_RESPONSES)
         for code, desc in extra_responses.items():
             if isinstance(desc, dict):
@@ -446,7 +817,7 @@ def build_path_entry(ep: dict, verbose: bool = False) -> dict:
     # ── Operation object ──────────────────────────────────────────────────
     operation: dict = {
         "summary":  synopsis,
-        "tags":     [" > ".join(tags)] if tags else ["Uncategorized"],
+        "tags":     [_display_tag(tags)],
         "security": [{"bearerAuth": []}],
         "responses": responses,
     }
@@ -496,8 +867,13 @@ def build_path_entry(ep: dict, verbose: bool = False) -> dict:
 
 def build_spec(endpoints: dict, title: str = "CIPP API", verbose: bool = False) -> dict:
     paths: dict = {}
+    all_tag_strings: set[str] = set()
     for ep_name, ep_data in endpoints.items():
         paths[f"/api/{ep_name}"] = build_path_entry(ep_data, verbose=verbose)
+        all_tag_strings.add(_display_tag(ep_data.get("tags", [])))
+
+    ordered_tags = sorted(all_tag_strings, key=_tag_sort_key)
+    tags_array = [{"name": t} for t in ordered_tags]
 
     description = (
         "CIPP-API is an Azure Function App providing the logic layer for the CIPP platform. "
@@ -511,37 +887,49 @@ def build_spec(endpoints: dict, title: str = "CIPP API", verbose: bool = False) 
             " BLIND=pure blob passthrough (needs sidecar); ORPHAN=frontend-only."
         )
 
+    # Read API version from CIPP-API repo's version_latest.txt
+    version = "unknown"
+    version_file = API_REPO / "version_latest.txt"
+    if version_file.exists():
+        version = version_file.read_text(encoding="utf-8").strip()
+
     info: dict = {
         "title":       title,
-        "version":     "auto",
+        "version":     version,
         "description": description,
         "x-cipp-docs": "https://docs.cipp.app",
     }
     if verbose:
         info["x-generated-by"] = "cipp-oas-generator/stage4_emitter.py"
 
+    # Merge Graph response schemas into components/schemas so they appear in the
+    # spec's schema registry and tooling can render them by name.
+    components = {
+        **SHARED_COMPONENTS,
+        "schemas": {
+            **SHARED_COMPONENTS["schemas"],
+            **{
+                _GRAPH_RESPONSE_COMPONENT_NAMES[key]: schema
+                for key, schema in _GRAPH_RESPONSES.items()
+            },
+        },
+    }
+
     return {
         "openapi":    "3.1.0",
         "info":       info,
+        "tags":       tags_array,
         "servers":    [{"url": "/api", "description": "CIPP API"}],
         "security":   [{"bearerAuth": []}],
-        "components": SHARED_COMPONENTS,
+        "components": components,
         "paths":      paths,
     }
 
 
-def group_by_domain(endpoints: dict) -> dict[str, dict]:
-    domains: dict[str, dict] = defaultdict(dict)
-    for ep_name, ep_data in endpoints.items():
-        tags   = ep_data.get("tags", [])
-        domain = tags[0] if tags else "Uncategorized"
-        domains[domain][ep_name] = ep_data
-    return dict(domains)
-
-
 def run(endpoint_filter: str | None = None, verbose: bool = False) -> None:
+    # Reload schema cache so Stage 0 updates (written after import) are visible.
+    _refresh_graph_responses()
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    DOMAIN_DIR.mkdir(parents=True, exist_ok=True)
 
     # Load merged params — prefer endpoint-specific file if filtering
     if endpoint_filter:
@@ -568,6 +956,7 @@ def run(endpoint_filter: str | None = None, verbose: bool = False) -> None:
     #
     # The coverage-report.json probable_404s field is the right place for these bugs.
     _suppressed_orphans: list[str] = []
+    _suppressed_api_only: list[str] = []
     _deprecated_orphans: list[str] = []
     filtered_endpoints: dict = {}
     for ep_name, ep_data in endpoints.items():
@@ -578,14 +967,23 @@ def run(endpoint_filter: str | None = None, verbose: bool = False) -> None:
             else:
                 _suppressed_orphans.append(ep_name)
                 # excluded — do not add to filtered_endpoints
+        elif not ep_data.get("call_sites"):
+            # API-only endpoint — no frontend call sites detected.
+            # The CIPP API for the frontend IS the API; endpoints not called
+            # from the frontend are internal/unused and excluded from the spec.
+            _suppressed_api_only.append(ep_name)
         else:
             filtered_endpoints[ep_name] = ep_data
     endpoints = filtered_endpoints
 
     if _suppressed_orphans:
-        print(f"[Stage 4] ⚠ Suppressed {len(_suppressed_orphans)} ORPHAN endpoints from OAS "
-              f"(no PS1 backing — would 404): {sorted(_suppressed_orphans)[:5]}"
+        print(f"[Stage 4] WARN Suppressed {len(_suppressed_orphans)} ORPHAN endpoints from OAS "
+              f"(no PS1 backing - would 404): {sorted(_suppressed_orphans)[:5]}"
               f"{'...' if len(_suppressed_orphans) > 5 else ''}")
+    if _suppressed_api_only:
+        print(f"[Stage 4] Suppressed {len(_suppressed_api_only)} API-only endpoints "
+              f"(no frontend calls): {sorted(_suppressed_api_only)[:5]}"
+              f"{'...' if len(_suppressed_api_only) > 5 else ''}")
     if _deprecated_orphans:
         print(f"[Stage 4]   {len(_deprecated_orphans)} deprecated ORPHANs included as deprecated: "
               f"{sorted(_deprecated_orphans)}")
@@ -595,7 +993,9 @@ def run(endpoint_filter: str | None = None, verbose: bool = False) -> None:
         if not ep:
             # Check if it was suppressed
             if endpoint_filter in _suppressed_orphans:
-                print(f"[Stage 4] Endpoint '{endpoint_filter}' suppressed from OAS (ORPHAN — no PS1).")
+                print(f"[Stage 4] Endpoint '{endpoint_filter}' suppressed from OAS (ORPHAN - no PS1).")
+            elif endpoint_filter in _suppressed_api_only:
+                print(f"[Stage 4] Endpoint '{endpoint_filter}' suppressed from OAS (API-only - no frontend calls).")
             else:
                 print(f"[Stage 4] Endpoint '{endpoint_filter}' not found in merged data.")
             return
@@ -609,14 +1009,8 @@ def run(endpoint_filter: str | None = None, verbose: bool = False) -> None:
     unified_path = OUT_DIR / "openapi.json"
     unified_path.write_text(json.dumps(full_spec, indent=2))
     mode_label = " [verbose]" if verbose else " [clean]"
-    print(f"[Stage 4] Unified spec → {unified_path} ({len(endpoints)} endpoints){mode_label}")
+    print(f"[Stage 4] Unified spec -> {unified_path} ({len(endpoints)} endpoints){mode_label}")
 
-    domains = group_by_domain(endpoints)
-    for domain, domain_eps in domains.items():
-        safe = domain.lower().replace(" ", "-")
-        domain_spec = build_spec(domain_eps, title=f"CIPP {domain} API", verbose=verbose)
-        (DOMAIN_DIR / f"{safe}-openapi.json").write_text(json.dumps(domain_spec, indent=2))
-    print(f"[Stage 4] Per-domain specs → {DOMAIN_DIR}/ ({len(domains)} domains)")
 
 
 if __name__ == "__main__":

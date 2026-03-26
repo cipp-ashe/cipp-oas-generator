@@ -1,7 +1,11 @@
 {
   "override_confidence": "high",
-  "_comment": "Enriched with PS1 data on 2026-03-02",
-  "parameters": [
+  "override_methods": [
+    "GET"
+  ],
+  "_comment": "Enriched with PS1 data on 2026-03-02 | Enriched 2026-03-25",
+  "notes": "ORPHAN \u2014 frontend calls /api/ListOrg (ExecutiveReportButton.js, 3 call sites) but no PS1 exists. Executive report org listing is frontend-only as of v10.1.x.",
+  "add_params": [
     {
       "name": "tenantFilter",
       "in": "query",
@@ -11,8 +15,13 @@
     }
   ],
   "trust_level": "reversed",
-  "override_methods": [
-    "GET"
-  ],
-  "notes": "ORPHAN \u2014 frontend calls /api/ListOrg (ExecutiveReportButton.js, 3 call sites) but no PS1 exists. Executive report org listing is frontend-only as of v10.1.x."
+  "parameters": [
+    {
+      "name": "tenantFilter",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: tenantFilter"
+    }
+  ]
 }

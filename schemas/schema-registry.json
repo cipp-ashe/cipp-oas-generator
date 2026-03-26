@@ -1,0 +1,5715 @@
+{
+  "version": "1.0",
+  "graph": {
+    "DELETE /applications/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceAppManagement/mobileApps/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceManagement/deviceCompliancePolicies/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceManagement/deviceConfigurations/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceManagement/importedWindowsAutopilotDeviceIdentities/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /groups/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /identity/conditionalAccess/namedLocations/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /identity/conditionalAccess/policies/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /oauth2PermissionGrants/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /security/auditLog/queries/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /servicePrincipals/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /subscriptions/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /teams/{id}/channels/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /users/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /users/{id}/authentication/phoneMethods/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /admin/serviceAnnouncement/issues": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Microsoft 365 service health issue.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "service": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "classification": {
+                  "type": "string"
+                },
+                "startDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "endDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "lastModifiedDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "title": "string",
+        "service": "string",
+        "status": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "classification": "string",
+        "startDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastModifiedDateTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "GET /admin/sharepoint/settings": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "description": "SharePoint Online tenant-level settings.",
+        "properties": {
+          "sharingCapability": {
+            "type": "string"
+          },
+          "allowedDomainGuidsForSyncApp": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "availableManagedPathsForSiteCreation": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "deletedUserPersonalSiteRetentionPeriodInDays": {
+            "type": "integer"
+          },
+          "excludedFileExtensionsForSyncApp": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isGuestUserSharingLimitedToSelectedDomainList": {
+            "type": "boolean"
+          },
+          "isResharingByExternalUsersEnabled": {
+            "type": "boolean"
+          },
+          "isSiteCreationEnabled": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true
+      },
+      "select_fields": {
+        "sharingCapability": "string",
+        "allowedDomainGuidsForSyncApp": "string",
+        "availableManagedPathsForSiteCreation": "string",
+        "deletedUserPersonalSiteRetentionPeriodInDays": "string",
+        "excludedFileExtensionsForSyncApp": "string",
+        "isGuestUserSharingLimitedToSelectedDomainList": "string",
+        "isResharingByExternalUsersEnabled": "string",
+        "isSiteCreationEnabled": "string"
+      }
+    },
+    "GET /applications": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Microsoft Graph application registration.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "appId": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "keyCredentials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "passwordCredentials": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "appId": "string",
+        "displayName": "string",
+        "keyCredentials": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "passwordCredentials": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "GET /auditLogs/directoryAudits": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Azure AD directory audit entry.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "activityDisplayName": {
+                  "type": "string"
+                },
+                "activityDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "operationType": {
+                  "type": "string"
+                },
+                "result": {
+                  "type": "string"
+                },
+                "resultReason": {
+                  "type": "string"
+                },
+                "initiatedBy": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "targetResources": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "category": "string",
+        "activityDisplayName": "string",
+        "activityDateTime": "string",
+        "operationType": "string",
+        "result": "string",
+        "resultReason": "string",
+        "initiatedBy": "string",
+        "targetResources": "string"
+      }
+    },
+    "GET /auditLogs/signIns": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Microsoft Graph sign-in log entry.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "createdDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "userDisplayName": {
+                  "type": "string"
+                },
+                "userPrincipalName": {
+                  "type": "string"
+                },
+                "appDisplayName": {
+                  "type": "string"
+                },
+                "ipAddress": {
+                  "type": "string"
+                },
+                "clientAppUsed": {
+                  "type": "string"
+                },
+                "conditionalAccessStatus": {
+                  "type": "string"
+                },
+                "riskDetail": {
+                  "type": "string"
+                },
+                "riskLevelAggregated": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "object",
+                  "properties": {
+                    "errorCode": {
+                      "type": "integer"
+                    },
+                    "failureReason": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "location": {
+                  "type": "object",
+                  "properties": {
+                    "city": {
+                      "type": "string"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "countryOrRegion": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "createdDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "userDisplayName": "string",
+        "userPrincipalName": "string",
+        "appDisplayName": "string",
+        "ipAddress": "string",
+        "clientAppUsed": "string",
+        "conditionalAccessStatus": "string",
+        "riskDetail": "string",
+        "riskLevelAggregated": "string",
+        "status": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "location": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "GET /contacts": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Microsoft Graph contact object.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "givenName": {
+                  "type": "string"
+                },
+                "surname": {
+                  "type": "string"
+                },
+                "emailAddresses": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "businessPhones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "mobilePhone": {
+                  "type": "string"
+                },
+                "jobTitle": {
+                  "type": "string"
+                },
+                "companyName": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "givenName": "string",
+        "surname": "string",
+        "emailAddresses": "string",
+        "businessPhones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mobilePhone": "string",
+        "jobTitle": "string",
+        "companyName": "string"
+      }
+    },
+    "GET /deviceManagement/Intents": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Intune device management intent (security baseline).",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "isAssigned": {
+                  "type": "boolean"
+                },
+                "lastModifiedDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "templateId": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "description": "string",
+        "isAssigned": "string",
+        "lastModifiedDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "templateId": "string"
+      }
+    },
+    "GET /deviceManagement/assignmentFilters": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Intune assignment filter.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "platform": {
+                  "type": "string"
+                },
+                "rule": {
+                  "type": "string"
+                },
+                "roleScopeTags": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "description": "string",
+        "platform": "string",
+        "rule": "string",
+        "roleScopeTags": "string"
+      }
+    },
+    "GET /deviceManagement/assignmentFilters/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "description": "Intune assignment filter.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "rule": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "description": "string",
+        "platform": "string",
+        "rule": "string"
+      }
+    },
+    "GET /deviceManagement/detectedApps": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "App detected on managed devices.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "version": {
+                  "type": "string"
+                },
+                "sizeInByte": {
+                  "type": "integer"
+                },
+                "deviceCount": {
+                  "type": "integer"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "version": "string",
+        "sizeInByte": "integer",
+        "deviceCount": "integer"
+      }
+    },
+    "GET /deviceManagement/detectedApps/{id}/managedDevices": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Managed device with the detected app installed.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "deviceName": {
+                  "type": "string"
+                },
+                "userPrincipalName": {
+                  "type": "string"
+                },
+                "operatingSystem": {
+                  "type": "string"
+                },
+                "complianceState": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "deviceName": "string",
+        "userPrincipalName": "string",
+        "operatingSystem": "string",
+        "complianceState": "string"
+      }
+    },
+    "GET /deviceManagement/deviceEnrollmentConfigurations": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Device enrollment configuration.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "priority": {
+                  "type": "integer"
+                },
+                "@odata.type": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "description": "string",
+        "priority": "integer"
+      }
+    },
+    "GET /deviceManagement/managedDevices": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Intune managed device.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "deviceName": {
+                  "type": "string"
+                },
+                "operatingSystem": {
+                  "type": "string"
+                },
+                "complianceState": {
+                  "type": "string"
+                },
+                "managementState": {
+                  "type": "string"
+                },
+                "userPrincipalName": {
+                  "type": "string"
+                },
+                "enrolledDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "lastSyncDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "isEncrypted": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "deviceName": "string",
+        "operatingSystem": "string",
+        "complianceState": "string",
+        "managementState": "string",
+        "userPrincipalName": "string",
+        "enrolledDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastSyncDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "isEncrypted": "boolean"
+      }
+    },
+    "GET /deviceManagement/managedDevices/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "description": "Intune managed device.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "deviceName": {
+            "type": "string"
+          },
+          "operatingSystem": {
+            "type": "string"
+          },
+          "complianceState": {
+            "type": "string"
+          },
+          "managementState": {
+            "type": "string"
+          },
+          "userPrincipalName": {
+            "type": "string"
+          },
+          "enrolledDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastSyncDateTime": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "isEncrypted": {
+            "type": "boolean"
+          },
+          "serialNumber": {
+            "type": "string"
+          },
+          "model": {
+            "type": "string"
+          },
+          "manufacturer": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "select_fields": {
+        "id": "string",
+        "deviceName": "string",
+        "operatingSystem": "string",
+        "complianceState": "string",
+        "managementState": "string",
+        "userPrincipalName": "string",
+        "enrolledDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastSyncDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "isEncrypted": "boolean",
+        "serialNumber": "string",
+        "model": "string",
+        "manufacturer": "string"
+      }
+    },
+    "GET /deviceManagement/managedDevices/{id}/detectedApps": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "App detected on a specific managed device.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "version": {
+                  "type": "string"
+                },
+                "sizeInByte": {
+                  "type": "integer"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "version": "string",
+        "sizeInByte": "integer"
+      }
+    },
+    "GET /deviceManagement/organizationalMessageDetails": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Intune organizational message.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "frequency": {
+                  "type": "string"
+                },
+                "startDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "endDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "surface": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "status": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "frequency": "string",
+        "startDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "surface": "string"
+      }
+    },
+    "GET /deviceManagement/windowsAutopilotDeploymentProfiles": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Windows Autopilot deployment profile.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "language": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "description": "string",
+        "language": "string"
+      }
+    },
+    "GET /deviceManagement/windowsAutopilotDeviceIdentities": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Windows Autopilot device identity.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "serialNumber": {
+                  "type": "string"
+                },
+                "model": {
+                  "type": "string"
+                },
+                "manufacturer": {
+                  "type": "string"
+                },
+                "groupTag": {
+                  "type": "string"
+                },
+                "deploymentProfileAssignmentStatus": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "serialNumber": "string",
+        "model": "string",
+        "manufacturer": "string",
+        "groupTag": "string",
+        "deploymentProfileAssignmentStatus": "string"
+      }
+    },
+    "GET /devices": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Microsoft Graph device object.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "deviceId": {
+                  "type": "string"
+                },
+                "operatingSystem": {
+                  "type": "string"
+                },
+                "isCompliant": {
+                  "type": "boolean"
+                },
+                "isManaged": {
+                  "type": "boolean"
+                },
+                "registrationDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "deviceId": "string",
+        "operatingSystem": "string",
+        "isCompliant": "boolean",
+        "isManaged": "boolean",
+        "registrationDateTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "GET /directoryRoles": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Azure AD directory role.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "roleTemplateId": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "description": "string",
+        "roleTemplateId": "string"
+      }
+    },
+    "GET /domains": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Azure AD verified domain.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "isDefault": {
+                  "type": "boolean"
+                },
+                "isInitial": {
+                  "type": "boolean"
+                },
+                "isVerified": {
+                  "type": "boolean"
+                },
+                "authenticationType": {
+                  "type": "string"
+                },
+                "supportedServices": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "isDefault": "boolean",
+        "isInitial": "boolean",
+        "isVerified": "boolean",
+        "authenticationType": "string",
+        "supportedServices": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "GET /groups": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Microsoft Graph group object.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "mailEnabled": {
+                  "type": "boolean"
+                },
+                "securityEnabled": {
+                  "type": "boolean"
+                },
+                "groupTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "mail": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "mailEnabled": "boolean",
+        "securityEnabled": "boolean",
+        "groupTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mail": "string",
+        "description": "string"
+      }
+    },
+    "GET /groups/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "description": "Microsoft Graph group object.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "mailEnabled": {
+            "type": "boolean"
+          },
+          "securityEnabled": {
+            "type": "boolean"
+          },
+          "groupTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "mailEnabled": "boolean",
+        "securityEnabled": "boolean",
+        "groupTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "GET /groups/{id}/members": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Group member.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "userPrincipalName": {
+                  "type": "string"
+                },
+                "@odata.type": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "userPrincipalName": "string"
+      }
+    },
+    "GET /identity/conditionalAccess/namedLocations": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Conditional Access named location (IP range or country).",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "@odata.type": {
+                  "type": "string"
+                },
+                "createdDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "modifiedDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "isTrusted": {
+                  "type": "boolean"
+                },
+                "ipRanges": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cidrAddress": {
+                        "type": "string"
+                      },
+                      "@odata.type": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "countriesAndRegions": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "createdDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "modifiedDateTime": "string",
+        "isTrusted": "string",
+        "ipRanges": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "countriesAndRegions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "GET /identity/conditionalAccess/policies": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Conditional access policy.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string",
+                  "enum": [
+                    "enabled",
+                    "disabled",
+                    "enabledForReportingButNotEnforced"
+                  ]
+                },
+                "conditions": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "grantControls": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "state": "string",
+        "conditions": "string",
+        "grantControls": "string"
+      }
+    },
+    "GET /identityGovernance/appConsent/appConsentRequests/{id}/userConsentRequests": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "User consent request for an app.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "reason": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "createdDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "status": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "reason": "string",
+        "createdBy": "string",
+        "createdDateTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "GET /me": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "description": "Currently authenticated user.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "userPrincipalName": {
+            "type": "string"
+          },
+          "mail": {
+            "type": "string"
+          },
+          "jobTitle": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "userPrincipalName": "string",
+        "mail": "string",
+        "jobTitle": "string"
+      }
+    },
+    "GET /me/mailFolders/{id}/messages": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Mail message.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "subject": {
+                  "type": "string"
+                },
+                "bodyPreview": {
+                  "type": "string"
+                },
+                "isRead": {
+                  "type": "boolean"
+                },
+                "receivedDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "from": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "toRecipients": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "subject": "string",
+        "bodyPreview": "string",
+        "isRead": "string",
+        "receivedDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "from": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "toRecipients": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "GET /oauth2PermissionGrants": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "OAuth2 delegated permission grant.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "clientId": {
+                  "type": "string"
+                },
+                "consentType": {
+                  "type": "string"
+                },
+                "principalId": {
+                  "type": "string"
+                },
+                "resourceId": {
+                  "type": "string"
+                },
+                "scope": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "clientId": "string",
+        "consentType": "string",
+        "principalId": "string",
+        "resourceId": "string",
+        "scope": "string"
+      }
+    },
+    "GET /organization": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Azure AD organization (tenant) object.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "verifiedDomains": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "isDefault": {
+                        "type": "boolean"
+                      },
+                      "isInitial": {
+                        "type": "boolean"
+                      }
+                    }
+                  }
+                },
+                "onPremisesSyncEnabled": {
+                  "type": "boolean"
+                },
+                "onPremisesLastSyncDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "dirSyncEnabled": {
+                  "type": "boolean"
+                },
+                "technicalNotificationMails": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "assignedPlans": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "servicePlanId": {
+                        "type": "string"
+                      },
+                      "capabilityStatus": {
+                        "type": "string"
+                      },
+                      "service": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "verifiedDomains": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "onPremisesSyncEnabled": "boolean",
+        "onPremisesLastSyncDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "dirSyncEnabled": "boolean",
+        "technicalNotificationMails": "string",
+        "assignedPlans": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    },
+    "GET /security/alerts": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Microsoft Graph security alert.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "severity": {
+                  "type": "string",
+                  "enum": [
+                    "unknown",
+                    "informational",
+                    "low",
+                    "medium",
+                    "high"
+                  ]
+                },
+                "status": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "createdDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "lastModifiedDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "vendorInformation": {
+                  "type": "object",
+                  "additionalProperties": true
+                },
+                "userStates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "hostStates": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "title": "string",
+        "description": "string",
+        "severity": "string",
+        "status": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "category": "string",
+        "createdDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastModifiedDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "vendorInformation": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "userStates": "string",
+        "hostStates": "string"
+      }
+    },
+    "GET /security/alerts_v2": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Microsoft Graph security alert (v2).",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "severity": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "classification": {
+                  "type": "string"
+                },
+                "createdDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "lastUpdateDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "title": "string",
+        "severity": "string",
+        "status": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "classification": "string",
+        "createdDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastUpdateDateTime": "string"
+      }
+    },
+    "GET /servicePrincipals": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Microsoft Graph service principal.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "appId": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "accountEnabled": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "appId": "string",
+        "displayName": "string",
+        "accountEnabled": "boolean"
+      }
+    },
+    "GET /servicePrincipals/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "description": "Microsoft Graph service principal.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "appId": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "accountEnabled": {
+            "type": "boolean"
+          },
+          "appRoles": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "oauth2PermissionScopes": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        },
+        "additionalProperties": true
+      },
+      "select_fields": {
+        "id": "string",
+        "appId": "string",
+        "displayName": "string",
+        "accountEnabled": "boolean",
+        "appRoles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "oauth2PermissionScopes": "string"
+      }
+    },
+    "GET /sites/{id}/lists": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "SharePoint list.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "webUrl": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "name": "string",
+        "displayName": "string",
+        "description": "string",
+        "webUrl": "string"
+      }
+    },
+    "GET /sites/{id}/lists/{id}/items": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "SharePoint list item.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "createdDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "fields": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "createdDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "fields": "string"
+      }
+    },
+    "GET /subscribedSkus": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Subscribed licence SKU.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "skuId": {
+                  "type": "string"
+                },
+                "skuPartNumber": {
+                  "type": "string"
+                },
+                "consumedUnits": {
+                  "type": "integer"
+                },
+                "prepaidUnits": {
+                  "type": "object",
+                  "additionalProperties": true
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "skuId": "string",
+        "skuPartNumber": "string",
+        "consumedUnits": "integer",
+        "prepaidUnits": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "GET /teams/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "description": "Microsoft Teams team.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "isArchived": {
+            "type": "boolean"
+          },
+          "webUrl": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "description": "string",
+        "isArchived": "string",
+        "webUrl": "string"
+      }
+    },
+    "GET /teams/{id}/channels": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Microsoft Teams channel.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "membershipType": {
+                  "type": "string"
+                },
+                "webUrl": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "description": "string",
+        "membershipType": "string",
+        "webUrl": "string"
+      }
+    },
+    "GET /teams/{id}/installedApps": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "App installed in a Teams team.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string"
+      }
+    },
+    "GET /teams/{id}/members": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Teams member.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "userId": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "roles": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "userId": "string",
+        "email": "string",
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "GET /tenantRelationships/delegatedAdminRelationships": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "GDAP delegated admin relationship.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "customer": {
+                  "type": "object",
+                  "properties": {
+                    "tenantId": {
+                      "type": "string"
+                    },
+                    "displayName": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "createdDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "activatedDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "endDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "status": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "customer": "string",
+        "createdDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "activatedDateTime": "string",
+        "endDateTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "GET /tenantRelationships/delegatedAdminRelationships/{id}/accessAssignments": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "GDAP delegated admin access assignment.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "accessContainer": {
+                  "type": "object",
+                  "properties": {
+                    "accessContainerId": {
+                      "type": "string"
+                    },
+                    "accessContainerType": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "accessDetails": {
+                  "type": "object",
+                  "properties": {
+                    "unifiedRoles": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "roleDefinitionId": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "status": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "accessContainer": "string",
+        "accessDetails": "string"
+      }
+    },
+    "GET /tenantRelationships/findTenantInformationByTenantId/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "description": "Basic tenant identity information.",
+        "properties": {
+          "tenantId": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "defaultDomainName": {
+            "type": "string"
+          },
+          "federationBrandName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      },
+      "select_fields": {
+        "tenantId": "string",
+        "displayName": "string",
+        "defaultDomainName": "string",
+        "federationBrandName": "string"
+      }
+    },
+    "GET /tenantRelationships/managedTenants/managedDeviceCompliances": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Managed tenant device compliance record.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "tenantId": {
+                  "type": "string"
+                },
+                "tenantDisplayName": {
+                  "type": "string"
+                },
+                "deviceName": {
+                  "type": "string"
+                },
+                "complianceStatus": {
+                  "type": "string"
+                },
+                "osDescription": {
+                  "type": "string"
+                },
+                "lastSyncDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "tenantId": "string",
+        "tenantDisplayName": "string",
+        "deviceName": "string",
+        "complianceStatus": "string",
+        "osDescription": "string",
+        "lastSyncDateTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "GET /tenantRelationships/managedTenants/managedTenantOperations": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Managed tenant async operation.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "operationId": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "createdDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "lastActionDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "tenantId": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "operationId": "string",
+        "status": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "createdDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "lastActionDateTime": "string",
+        "tenantId": "string"
+      }
+    },
+    "GET /tenantRelationships/managedTenants/managedTenants": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Managed tenant record in Microsoft Lighthouse.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "tenantId": {
+                  "type": "string"
+                },
+                "tenantDisplayName": {
+                  "type": "string"
+                },
+                "onboardingStatus": {
+                  "type": "string"
+                },
+                "onboardingDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "tenantId": "string",
+        "tenantDisplayName": "string",
+        "onboardingStatus": "string",
+        "onboardingDateTime": "string"
+      }
+    },
+    "GET /users": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Microsoft Graph user object.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "userPrincipalName": {
+                  "type": "string"
+                },
+                "mail": {
+                  "type": "string"
+                },
+                "accountEnabled": {
+                  "type": "boolean"
+                },
+                "givenName": {
+                  "type": "string"
+                },
+                "surname": {
+                  "type": "string"
+                },
+                "jobTitle": {
+                  "type": "string"
+                },
+                "department": {
+                  "type": "string"
+                },
+                "usageLocation": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "mobilePhone": {
+                  "type": "string"
+                },
+                "businessPhones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "assignedLicenses": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "onPremisesSyncEnabled": {
+                  "type": "boolean"
+                },
+                "onPremisesImmutableId": {
+                  "type": "string"
+                },
+                "createdDateTime": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "userPrincipalName": "string",
+        "mail": "string",
+        "accountEnabled": "boolean",
+        "givenName": "string",
+        "surname": "string",
+        "jobTitle": "string",
+        "department": "string",
+        "usageLocation": "string",
+        "city": "string",
+        "country": "string",
+        "mobilePhone": "string",
+        "businessPhones": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "assignedLicenses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "onPremisesSyncEnabled": "boolean",
+        "onPremisesImmutableId": "string",
+        "createdDateTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "GET /users/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "description": "Microsoft Graph user object.",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "userPrincipalName": {
+            "type": "string"
+          },
+          "mail": {
+            "type": "string"
+          },
+          "accountEnabled": {
+            "type": "boolean"
+          },
+          "givenName": {
+            "type": "string"
+          },
+          "surname": {
+            "type": "string"
+          },
+          "jobTitle": {
+            "type": "string"
+          },
+          "department": {
+            "type": "string"
+          },
+          "usageLocation": {
+            "type": "string"
+          },
+          "assignedLicenses": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "onPremisesSyncEnabled": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": true
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "userPrincipalName": "string",
+        "mail": "string",
+        "accountEnabled": "boolean",
+        "givenName": "string",
+        "surname": "string",
+        "jobTitle": "string",
+        "department": "string",
+        "usageLocation": "string",
+        "assignedLicenses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        },
+        "onPremisesSyncEnabled": "boolean"
+      }
+    },
+    "GET /users/{id}/managedDevices": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Intune managed device.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "deviceName": {
+                  "type": "string"
+                },
+                "operatingSystem": {
+                  "type": "string"
+                },
+                "complianceState": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "deviceName": "string",
+        "operatingSystem": "string",
+        "complianceState": "string"
+      }
+    },
+    "GET /users/{id}/ownedDevices": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Device owned by the user.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "deviceId": {
+                  "type": "string"
+                },
+                "operatingSystem": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string",
+        "deviceId": "string",
+        "operatingSystem": "string"
+      }
+    },
+    "GET /users/{id}/transitiveMemberOf": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Group or directory role membership.",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                },
+                "@odata.type": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": true
+            }
+          }
+        }
+      },
+      "select_fields": {
+        "id": "string",
+        "displayName": "string"
+      }
+    },
+    "PATCH /applications/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /deviceAppManagement/mobileApps/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /deviceManagement/deviceCompliancePolicies/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /deviceManagement/deviceConfigurations/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /groups/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /identity/conditionalAccess/namedLocations/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /identity/conditionalAccess/policies/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /subscriptions/{id}": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "expirationDateTime"
+        ],
+        "properties": {
+          "expirationDateTime": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /teams/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /users/{id}": {
+      "source": "curated",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /applicationTemplates/{id}/instantiate": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "displayName"
+        ],
+        "properties": {
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /applications": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "displayName"
+        ],
+        "properties": {
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceAppManagement/mobileApps": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "@odata.type",
+          "displayName"
+        ],
+        "properties": {
+          "@odata.type": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/deviceCompliancePolicies": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "@odata.type",
+          "displayName"
+        ],
+        "properties": {
+          "@odata.type": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/deviceConfigurations": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "@odata.type",
+          "displayName"
+        ],
+        "properties": {
+          "@odata.type": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/importedWindowsAutopilotDeviceIdentities": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "serialNumber"
+        ],
+        "properties": {
+          "serialNumber": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /groups": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "displayName",
+          "mailEnabled",
+          "mailNickname",
+          "securityEnabled"
+        ],
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "mailEnabled": {
+            "type": "string"
+          },
+          "mailNickname": {
+            "type": "string"
+          },
+          "securityEnabled": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /identity/conditionalAccess/namedLocations": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "@odata.type",
+          "displayName"
+        ],
+        "properties": {
+          "@odata.type": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /identity/conditionalAccess/policies": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "displayName",
+          "state",
+          "conditions",
+          "grantControls"
+        ],
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "conditions": {
+            "type": "string"
+          },
+          "grantControls": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /identityGovernance/entitlementManagement/accessPackages": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "displayName",
+          "isHidden"
+        ],
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "isHidden": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /identityGovernance/privilegedAccess/group/eligibilityScheduleRequests": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "action",
+          "principalId",
+          "groupId",
+          "accessId"
+        ],
+        "properties": {
+          "action": {
+            "type": "string"
+          },
+          "principalId": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": "string"
+          },
+          "accessId": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /oauth2PermissionGrants": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "clientId",
+          "consentType",
+          "resourceId",
+          "scope"
+        ],
+        "properties": {
+          "clientId": {
+            "type": "string"
+          },
+          "consentType": {
+            "type": "string"
+          },
+          "resourceId": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /security/auditLog/queries": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "displayName",
+          "filterStartDateTime",
+          "filterEndDateTime"
+        ],
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "filterStartDateTime": {
+            "type": "string"
+          },
+          "filterEndDateTime": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /servicePrincipals": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "appId"
+        ],
+        "properties": {
+          "appId": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /servicePrincipals/{id}/appRoleAssignments": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "principalId",
+          "resourceId",
+          "appRoleId"
+        ],
+        "properties": {
+          "principalId": {
+            "type": "string"
+          },
+          "resourceId": {
+            "type": "string"
+          },
+          "appRoleId": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /sites/{id}/lists": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "displayName",
+          "list"
+        ],
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "list": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /subscriptions": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "changeType",
+          "notificationUrl",
+          "resource",
+          "expirationDateTime"
+        ],
+        "properties": {
+          "changeType": {
+            "type": "string"
+          },
+          "notificationUrl": {
+            "type": "string"
+          },
+          "resource": {
+            "type": "string"
+          },
+          "expirationDateTime": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /teams": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "template@odata.bind"
+        ],
+        "properties": {
+          "template@odata.bind": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /teams/{id}/channels": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "displayName"
+        ],
+        "properties": {
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /users": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "accountEnabled",
+          "displayName",
+          "mailNickname",
+          "passwordProfile",
+          "userPrincipalName"
+        ],
+        "properties": {
+          "accountEnabled": {
+            "type": "string"
+          },
+          "displayName": {
+            "type": "string"
+          },
+          "mailNickname": {
+            "type": "string"
+          },
+          "passwordProfile": {
+            "type": "string"
+          },
+          "userPrincipalName": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /users/{id}/authentication/phoneMethods": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "phoneNumber",
+          "phoneType"
+        ],
+        "properties": {
+          "phoneNumber": {
+            "type": "string"
+          },
+          "phoneType": {
+            "type": "string"
+          }
+        }
+      },
+      "response": null,
+      "select_fields": null
+    },
+    "POST /me/sendMail": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /schemaExtensions": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /schemaExtensions/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /subscriptions": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /conditionalAccess/policies": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/deviceCompliancePolicies": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceAppManagement/managedAppPolicies": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/{urlname}/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceAppManagement/{urlname}('{id}')": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/{urlname}('{id}')": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/{urlname}('{id}')/definitionValues": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/{urlname}('{id}')/definitionValues('{id}')/presentationValues": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/deviceConfigurations/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/deviceConfigurations('{deviceconfigurationid}')/getOmaSettingPlainTextValue/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{userdetails}/transitiveMemberOf": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /policies/mfaServicePolicy": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /roleManagement/exchange/roleDefinitions": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /me/memberOf": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /groups/{id}/memberOf": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /applications/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /applications/{id}/addPassword": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /serviceprincipals": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /servicePrincipals/{id}/appRoleAssignments": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /servicePrincipals/{id}/oauth2PermissionGrants": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /oauth2PermissionGrants/{_}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /oauth2PermissionGrants/{oldscopeid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /servicePrincipals/{id}/memberOf/#microsoft.graph.directoryRole": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /schemaExtensions/{schemaid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{upn}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{userid}/transitiveMemberOf": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /groups/{targetgroupid}/members": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /tenantRelationships/delegatedAdminRelationships/{relationshipid}/accessAssignments": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /groups/{groupid}/members": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{userid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /users/{userid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{username}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /policies/identitySecurityDefaultsEnforcementPolicy": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /directoryObjects/getByIds": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /me/mailFolders/Inbox/messages": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceAppManagement/mobileApps": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceAppManagement/mobileApps/{id}/assign": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceAppManagement/mobileApps/{appfilter}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceAppManagement/mobileApps/{applicationid}/assignments": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceAppManagement/mobileApps/{applicationid}/assign": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceAppManagement/vppTokens": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceAppManagement/vppTokens/{id}/syncLicenses": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/configurationPolicies('{policyid}')/assign": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceAppManagement/mobileApps/{policyid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceManagement/windowsAutopilotDeploymentProfiles/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/windowsAutopilotDeploymentProfiles": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /deviceManagement/windowsAutopilotDeploymentProfiles/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/windowsAutopilotDeploymentProfiles/{id}/assignments": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/windowsAutopilotDeploymentProfiles/{id}/assignments": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /deviceManagement/deviceEnrollmentConfigurations/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/windowsAutopilotDeviceIdentities/{deviceobject}/UpdateDeviceProperties": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/windowsAutopilotDeviceIdentities/{deviceid}/UpdateDeviceProperties": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/windowsAutopilotSettings/sync": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceManagement/windowsAutopilotDeviceIdentities/{deviceid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/windowsAutopilotSettings/sync": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceManagement/windowsAutopilotDeploymentProfiles/{profileid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/windowsAutopilotDeploymentProfiles/{profileid}/assignments": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceManagement/windowsAutopilotDeploymentProfiles/{profileid}/assignments/{assignmentid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceManagement/windowsAutopilotDeploymentProfiles/{profileid}/assignments/{alternativeassignmentid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/assignmentFilters": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/mobileThreatDefenseConnectors": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/mobileThreatDefenseConnectors/{connectorid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/configurationPolicies": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/configurationPolicies": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/configurationPolicies('{id}')/assign": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/reusablePolicySettings": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PUT /deviceManagement/reusablePolicySettings/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/reusablePolicySettings": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/reusablePolicySettings/{settingid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PUT /deviceManagement/reusablePolicySettings/{targetid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /{platformtype}/{templatetypeurl}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /{platformtype}/{templatetypeurl}/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /{platformtype}/{templatetypeurl}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /{platformtype}/{templatetypeurl}('{id}')/definitionValues": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /{platformtype}/{templatetypeurl}('{id}')/updateDefinitionValues": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/configurationPolicyTemplates('{templateid}')/settingTemplates": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PUT /{platformtype}/{templatetypeurl}/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /{platformtype}/{type}('{policyid}')/assign": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /{platformtype}/{type}('{policyid}')/assign": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /deviceManagement/assignmentFilters/{filterid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /deviceManagement/{policytype}/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /deviceManagement/groupPolicyConfigurations('{id}')": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/groupPolicyConfigurations('{id}')/assign": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceManagement/assignmentFilters/{filterid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /{platformtype}/{templatetypeurl}('{id}')": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /{platformtype}/{templatetypeurl}('{policyid}')": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /{platformtype}/{templatetypeurl}('{id}')/definitionValues('{id}')/presentationValues": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /{platformtype}/{templatetypeurl}('{policyid}')/definitionValues": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /{platformtype}/{templatetypeurl}('{policyid}')/definitionValues('{id}')/presentationValues": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/managedDevices/{devicefilter}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /deviceManagement/managedDevices/{devicefilter}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/managedDevices('{devicefilter}')/{action}/{ref}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /deviceManagement/managedDevices('{devicefilter}')/{action}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/managedDevices/{device}/getFileVaultKey": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/depOnboardingSettings": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/depOnboardingSettings/{id}/syncWithAppleDeviceEnrollmentProgram": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/assignmentFilters/{filterid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/managedDevices/{deviceid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /{baseendpoint}/{urlname}('{policyid}')": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /devices/{deviceid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /devices/{deviceid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /groups/{groupid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{member}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /groups/{groupid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /invitations": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /users/{user}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /groups/{id}/members/{ref}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PUT /users/{user}/manager/{ref}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PUT /users/{user}/sponsors/{ref}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /users/{userid}/invalidateAllRefreshTokens": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{userid}/Drives": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{userprincipalname}/authentication/methods": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /admin/teams/telephoneNumberManagement/numberAssignments": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{userid}/memberOf/microsoft.graph.group": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /users/{userid}/assignlicense": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /users/{userid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /groups/{groupid}/members/{ref}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /groups/{groupid}/members/{id}/{ref}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /users/{userid}/authentication/temporaryAccessPassMethods": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{value}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /users/{username}/authentication/temporaryAccessPassMethods": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{userprincipalname}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /directoryRoles/{id}/members/{ref}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /groups/{groupid}/members/{ref}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /directoryRoles/{id}/members/{id}/{ref}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /groups/{groupid}/members/{id}/{ref}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /sites": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /sites/{id}/drive": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /users/{userid}/reprocessLicenseAssignment": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /directory/deletedItems/{requestid}/restore": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /servicePrincipals/{spid}/addPassword": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /users/{userid}/photo/{value}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /users/{userid}/photo/{value}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /identity/conditionalAccess/evaluate": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{userid}/managedDevices": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{userid}/ownedDevices": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /directory/deletedItems/{requestid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /users/{id}/onPremisesSyncBehavior": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /groups/{id}/onPremisesSyncBehavior": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /contacts/{id}/onPremisesSyncBehavior": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /reports/authenticationMethods/userRegistrationDetails": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /roleManagement/directory/roleAssignments": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /roleManagement/directory/roleDefinitions": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /security/alerts_v2/{alertid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /security/alerts/{alertfilter}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /security/incidents/{incidentfilter}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /sites/{siteid}/lists": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /sites/{siteid}/lists/{id}/items": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /teams/{teamid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /teams/{teamid}/Channels": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /teams/{teamid}/Members": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /teams/{teamid}/installedApps": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /reports/get{type}Detail/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /security/auditLog/queries/{searchid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /security/auditLog/queries": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /domains": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /domains/{domainname}/verify": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /domains/{domainname}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /domains/{domainname}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /organization/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /serviceprincipals/{value}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /serviceprincipals/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /tenantRelationships/delegatedAdminRelationships/{id}/requests": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /security/secureScoreControlProfiles/{controlname}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /policies/authenticationmethodspolicy/authenticationMethodConfigurations/{authenticationmethodid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /policies/authenticationmethodspolicy/authenticationMethodConfigurations/{authenticationmethodid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /identity/conditionalAccess/authenticationStrength/policies": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /identity/conditionalAccess/authenticationStrength/policies": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /identity/conditionalAccess/namedLocations/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /policies/identitySecurityDefaultsEnforcementPolicy": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /identity/conditionalAccess/policies/{policyid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /identity/conditionalAccess/namedLocations/{namedlocationid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /identity/conditionalAccess/namedLocations/{namedlocationid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /identity/conditionalAccess/namedLocations/{namedlocationid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /identity/conditionalAccess/policies/{policyid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /tenantRelationships/delegatedAdminRelationships/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /tenantRelationships/delegatedAdminRelationships/{relationshipid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /tenantRelationships/delegatedAdminRelationships/{gdapid}/requests": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /tenantRelationships/delegatedAdminRelationships": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /tenantRelationships/delegatedAdminRelationships/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "POST /tenantRelationships/delegatedAdminRelationships/{id}/accessAssignments": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /tenantRelationships/delegatedAdminRelationships/{gdapid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "PATCH /tenantRelationships/delegatedAdminRelationships/{gdapid}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "DELETE /{urlname}/{id}": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/reports/getDeviceInstallStatusReport": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/detectedApps/{appid}/managedDevices": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    },
+    "GET /deviceManagement/managedDevices/{deviceid}/detectedApps": {
+      "source": "discovered",
+      "request": null,
+      "response": null,
+      "select_fields": null
+    }
+  },
+  "exo": {
+    "Add-DistributionGroupMember": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity",
+          "Member"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          },
+          "Member": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Add-MailboxFolderPermission": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity",
+          "User",
+          "AccessRights"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          },
+          "User": {
+            "type": "string"
+          },
+          "AccessRights": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Add-MailboxPermission": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity",
+          "User",
+          "AccessRights"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          },
+          "User": {
+            "type": "string"
+          },
+          "AccessRights": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Add-RecipientPermission": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity",
+          "Trustee",
+          "AccessRights"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          },
+          "Trustee": {
+            "type": "string"
+          },
+          "AccessRights": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Add-UnifiedGroupLinks": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity",
+          "LinkType",
+          "Links"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          },
+          "LinkType": {
+            "type": "string"
+          },
+          "Links": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Enable-Mailbox": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Get-BlockedSenderAddress": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Get-DistributionGroupMember": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Get-EXOMailbox": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Get-EXORecipient": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Get-Mailbox": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Get-MailboxStatistics": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Get-MessageTrace": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Get-MobileDeviceStatistics": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Mailbox"
+        ],
+        "properties": {
+          "Mailbox": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Get-QuarantineMessage": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Get-Recipient": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "New-DistributionGroup": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Name"
+        ],
+        "properties": {
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "New-HostedContentFilterPolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Name"
+        ],
+        "properties": {
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "New-HostedContentFilterRule": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Name",
+          "HostedContentFilterPolicy"
+        ],
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "HostedContentFilterPolicy": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "New-InboundConnector": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Name",
+          "ConnectorType"
+        ],
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "ConnectorType": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "New-MailContact": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Name",
+          "ExternalEmailAddress"
+        ],
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "ExternalEmailAddress": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "New-OutboundConnector": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Name",
+          "ConnectorType"
+        ],
+        "properties": {
+          "Name": {
+            "type": "string"
+          },
+          "ConnectorType": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "New-QuarantinePolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Name"
+        ],
+        "properties": {
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "New-SafeAttachmentPolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Name"
+        ],
+        "properties": {
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "New-SafeLinksPolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Name"
+        ],
+        "properties": {
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "New-TransportRule": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Name"
+        ],
+        "properties": {
+          "Name": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "New-UnifiedGroup": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "DisplayName"
+        ],
+        "properties": {
+          "DisplayName": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-DistributionGroup": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-DistributionGroupMember": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity",
+          "Member"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          },
+          "Member": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-HostedContentFilterPolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-InboundConnector": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-MailContact": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-Mailbox": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-MailboxFolderPermission": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity",
+          "User"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          },
+          "User": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-MailboxPermission": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity",
+          "User",
+          "AccessRights"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          },
+          "User": {
+            "type": "string"
+          },
+          "AccessRights": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-MobileDevice": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-OutboundConnector": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-QuarantinePolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-RecipientPermission": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity",
+          "Trustee",
+          "AccessRights"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          },
+          "Trustee": {
+            "type": "string"
+          },
+          "AccessRights": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-SafeAttachmentPolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-SafeLinksPolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-TransportRule": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-UnifiedGroup": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Remove-UnifiedGroupLinks": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity",
+          "LinkType",
+          "Links"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          },
+          "LinkType": {
+            "type": "string"
+          },
+          "Links": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Search-UnifiedAuditLog": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "StartDate",
+          "EndDate"
+        ],
+        "properties": {
+          "StartDate": {
+            "type": "string"
+          },
+          "EndDate": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Search-unifiedAuditLog": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "StartDate",
+          "EndDate"
+        ],
+        "properties": {
+          "StartDate": {
+            "type": "string"
+          },
+          "EndDate": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-DistributionGroup": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-HostedConnectionFilterPolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-HostedContentFilterPolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-HostedContentFilterRule": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-InboundConnector": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-Mailbox": {
+      "source": "curated",
+      "request": null,
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-MailboxFolderPermission": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity",
+          "User",
+          "AccessRights"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          },
+          "User": {
+            "type": "string"
+          },
+          "AccessRights": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-OutboundConnector": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-QuarantinePolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-SafeAttachmentPolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-SafeLinksPolicy": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-TransportRule": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    },
+    "Set-UnifiedGroup": {
+      "source": "curated",
+      "request": {
+        "required": [
+          "Identity"
+        ],
+        "properties": {
+          "Identity": {
+            "type": "string"
+          }
+        }
+      },
+      "response": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}

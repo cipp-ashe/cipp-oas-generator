@@ -1,131 +1,266 @@
 {
   "summary": {
-    "PARTIAL": 183,
-    "FULL": 260,
-    "ORPHAN": 8,
-    "BLIND": 43,
-    "ARRAY_BODY": 2
+    "PARTIAL": 166,
+    "FULL": 298,
+    "BLIND": 45,
+    "ARRAY_BODY": 2,
+    "PASSTHRU": 1
   },
   "tier_definitions": {
     "FULL": "Both API and frontend sources present; all params high confidence",
     "PARTIAL": "One source only, or mix of confidence levels, or blob-only access",
     "BLIND": "API function found but zero params extracted (pure blob passthrough)",
     "ARRAY_BODY": "Body is an array of objects; required element fields detected, rest is open schema",
+    "PASSTHRU": "Endpoint proxies Graph; oneOf variants resolved (fully or partially)",
     "ORPHAN": "Frontend calls endpoint but no Invoke-*.ps1 found",
     "STUB": "No sources at all \u2014 sidecar-only documentation"
   },
-  "blind_endpoints": [],
-  "orphan_endpoints": [
-    "AddCustomDomain",
-    "AddStandardTemplate",
-    "EditTenantGroup",
-    "ListCippQueue",
-    "RecoverPolicies",
-    "RemoveAntiPhishingFilter",
-    "RemoveMalwareFilter",
-    "RemoveSafeAttachmentsFilter"
+  "blind_endpoints": [
+    "BestPracticeAnalyser_List",
+    "CIPPDBTestsRun",
+    "CIPPOffboardingJob",
+    "CIPPStandardsRun",
+    "ExecAPIPermissionList",
+    "ExecAddSPN",
+    "ExecAppUpload",
+    "ExecBackendURLs",
+    "ExecBulkLicense",
+    "ExecCPVRefresh",
+    "ExecCreateDefaultGroups",
+    "ExecExtensionClearHIBPKey",
+    "ExecExtensionNinjaOneQueue",
+    "ExecGDAPInviteApproved",
+    "ExecPermissionRepair",
+    "ExecRunBackup",
+    "ExecSchedulerBillingRun",
+    "ExecStandardConvert",
+    "ListApiTest",
+    "ListApplicationQueue",
+    "ListCustomRole",
+    "ListDiagnosticsPresets",
+    "ListExcludedLicenses",
+    "ListExtensionSync",
+    "ListFeatureFlags",
+    "ListGDAPRoles",
+    "ListGenericTestFunction",
+    "ListHaloClients",
+    "ListPendingWebhooks",
+    "ListTenantAlignment",
+    "ListTestReports",
+    "ListUserSettings",
+    "ListWebhookAlert",
+    "PublicPing",
+    "RemoveCippQueue",
+    "invoke-ListEmptyResults"
   ],
-  "probable_404s": [
-    {
-      "endpoint": "AddCustomDomain",
-      "call_sites": [
-        "src/pages/domains.js"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-AddCustomDomain.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "AddStandardTemplate",
-      "call_sites": [
-        "src/components/CippComponents/CippPolicyImportDrawer.jsx"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-AddStandardTemplate.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "EditTenantGroup",
-      "call_sites": [
-        "src/pages/tenant/administration/tenants/groups/add.js"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-EditTenantGroup.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "ListCippQueue",
-      "call_sites": [
-        "src/components/CippTable/CippQueueTracker.js"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-ListCippQueue.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "RecoverPolicies",
-      "call_sites": [
-        "src/pages/tenant/manage/recover-policies.js"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-RecoverPolicies.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "RemoveAntiPhishingFilter",
-      "call_sites": [
-        "src/pages/email/reports/antiphishing-filters/index.js"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-RemoveAntiPhishingFilter.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "RemoveMalwareFilter",
-      "call_sites": [
-        "src/pages/email/reports/malware-filters/index.js"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-RemoveMalwareFilter.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    },
-    {
-      "endpoint": "RemoveSafeAttachmentsFilter",
-      "call_sites": [
-        "src/pages/email/reports/safeattachments-filters/index.js"
-      ],
-      "call_count": 1,
-      "deprecated": false,
-      "note": "Frontend calls this URL but no Invoke-RemoveSafeAttachmentsFilter.ps1 exists. In CIPP's single-entrypoint router, this returns 404 at runtime. Either the PS1 is missing, or the frontend URL is wrong."
-    }
-  ],
+  "orphan_endpoints": [],
+  "probable_404s": [],
   "orphan_delta": {
     "new": [],
     "resolved": []
   },
   "sidecar_candidates": [
+    "AddAppTemplate",
+    "AddCustomScript",
     "AddRoomList",
     "AddTenantAllowBlockList",
+    "BestPracticeAnalyser_List",
+    "CIPPDBTestsRun",
+    "CIPPOffboardingJob",
+    "CIPPStandardsRun",
+    "ExecAPIPermissionList",
+    "ExecAddSPN",
     "ExecAddTenant",
+    "ExecAppUpload",
+    "ExecBackendURLs",
+    "ExecBulkLicense",
+    "ExecCPVRefresh",
+    "ExecCreateDefaultGroups",
+    "ExecCustomScript",
+    "ExecExtensionClearHIBPKey",
+    "ExecExtensionNinjaOneQueue",
+    "ExecGDAPInviteApproved",
+    "ExecPasswordConfig",
+    "ExecPermissionRepair",
+    "ExecRestoreBackup",
+    "ExecRunBackup",
+    "ExecScheduleOOOVacation",
+    "ExecSchedulerBillingRun",
+    "ExecStandardConvert",
     "ExecUpdateRefreshToken",
-    "PatchUser"
+    "ListApiTest",
+    "ListApplicationQueue",
+    "ListCustomRole",
+    "ListDiagnosticsPresets",
+    "ListExcludedLicenses",
+    "ListExtensionSync",
+    "ListFeatureFlags",
+    "ListGDAPRoles",
+    "ListGenericTestFunction",
+    "ListHaloClients",
+    "ListPendingWebhooks",
+    "ListTenantAlignment",
+    "ListTestReports",
+    "ListUserSettings",
+    "ListWebhookAlert",
+    "PatchUser",
+    "PublicPing",
+    "RemoveCippQueue",
+    "invoke-ListEmptyResults"
   ],
   "sidecar_candidates_by_reason": {
-    "blind": [],
+    "blind": [
+      "BestPracticeAnalyser_List",
+      "CIPPDBTestsRun",
+      "CIPPOffboardingJob",
+      "CIPPStandardsRun",
+      "ExecAPIPermissionList",
+      "ExecAddSPN",
+      "ExecAppUpload",
+      "ExecBackendURLs",
+      "ExecBulkLicense",
+      "ExecCPVRefresh",
+      "ExecCreateDefaultGroups",
+      "ExecExtensionClearHIBPKey",
+      "ExecExtensionNinjaOneQueue",
+      "ExecGDAPInviteApproved",
+      "ExecPermissionRepair",
+      "ExecRunBackup",
+      "ExecSchedulerBillingRun",
+      "ExecStandardConvert",
+      "ListApiTest",
+      "ListApplicationQueue",
+      "ListCustomRole",
+      "ListDiagnosticsPresets",
+      "ListExcludedLicenses",
+      "ListExtensionSync",
+      "ListFeatureFlags",
+      "ListGDAPRoles",
+      "ListGenericTestFunction",
+      "ListHaloClients",
+      "ListPendingWebhooks",
+      "ListTenantAlignment",
+      "ListTestReports",
+      "ListUserSettings",
+      "ListWebhookAlert",
+      "PublicPing",
+      "RemoveCippQueue",
+      "invoke-ListEmptyResults"
+    ],
     "external_form_component": [],
-    "data_transform": [],
+    "data_transform": [
+      "AddCustomScript"
+    ],
     "constructed_body": [
+      "AddAppTemplate",
       "AddRoomList",
       "AddTenantAllowBlockList",
       "ExecAddTenant",
+      "ExecCustomScript",
+      "ExecPasswordConfig",
+      "ExecRestoreBackup",
+      "ExecScheduleOOOVacation",
       "ExecUpdateRefreshToken",
       "PatchUser"
     ]
   },
   "type_inference_coverage": {
-    "total_params": 2613,
-    "non_string_params": 499,
-    "pct_typed": 19.1
+    "total_params": 2799,
+    "non_string_params": 523,
+    "pct_typed": 18.7
   },
-  "note": "blind_endpoints: API function found but zero params extracted. probable_404s: ORPHAN endpoints with active call sites \u2014 genuine runtime 404s in CIPP. orphan_delta.new: endpoints that became ORPHAN since last run \u2014 investigate immediately. sidecar_candidates = all endpoints without a sidecar that need one. type_inference_coverage.pct_typed: % params with a richer type than default 'string' \u2014 increases as sidecars and TYPE_HINTS improve."
+  "passthru_gaps": {
+    "ListGraphRequest": [
+      {
+        "graph_url": null,
+        "source_file": "src\\components\\CippComponents\\CippDomainServiceConfigurationRecords.jsx",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": null,
+        "source_file": "src\\components\\CippComponents\\CippDomainVerificationRecords.jsx",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": null,
+        "source_file": "src\\pages\\email\\reports\\mailbox-activity\\index.js",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": null,
+        "source_file": "src\\pages\\endpoint\\MEM\\devices\\device\\index.jsx",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": null,
+        "source_file": "src\\pages\\identity\\administration\\groups\\group\\index.jsx",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": null,
+        "source_file": "src\\pages\\identity\\administration\\users\\user\\devices.jsx",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": null,
+        "source_file": "src\\pages\\tenant\\gdap-management\\relationships\\relationship\\index.js",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": null,
+        "source_file": "src\\pages\\tenant\\gdap-management\\relationships\\relationship\\mappings.js",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": "/applicationTemplates",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": "/directoryObjects/microsoft.graph.administrativeUnit",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": "/security/secureScoreControlProfiles",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": "/security/secureScores",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": "/policies/crossTenantAccessPolicy/partners",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": "/deviceManagement/userExperienceAnalyticsDeviceScores",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": "/deviceManagement/autopilotEvents",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": "/deviceManagement/userExperienceAnalyticsWorkFromAnywhereMetrics(",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": "/identityProtection/riskyUsers",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": "/ServicePrincipals",
+        "sidecar_candidate": true
+      },
+      {
+        "graph_url": "/contracts",
+        "sidecar_candidate": true
+      }
+    ]
+  },
+  "registry_enrichment": {
+    "curated": 99,
+    "discovered": 191,
+    "total": 290
+  },
+  "note": "blind_endpoints: API function found but zero params extracted. probable_404s: ORPHAN endpoints with active call sites \u2014 genuine runtime 404s in CIPP. orphan_delta.new: endpoints that became ORPHAN since last run \u2014 investigate immediately. sidecar_candidates = all endpoints without a sidecar that need one. type_inference_coverage.pct_typed: % params with a richer type than default 'string' \u2014 increases as sidecars and TYPE_HINTS improve. passthru_gaps: unresolved PASSTHRU variants per endpoint. registry_enrichment: curated vs discovered Graph operations in the schema registry."
 }

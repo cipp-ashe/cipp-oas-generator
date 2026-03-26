@@ -7,7 +7,6 @@ This script fixes sidecar accuracy issues by:
   2. Merging PS1 params into existing sidecars (preserving frontend/wizard fields)
   3. Adding override_confidence: high where missing
   4. Enriching generic descriptions with PS1 comments/context
-  5. Creating backups before modification
 
 Strategy:
   - PRESERVE all existing sidecar parameters (they may be from wizards)
@@ -18,7 +17,6 @@ Strategy:
 
 import json
 import re
-import shutil
 from pathlib import Path
 from typing import Dict, List, Set
 from datetime import datetime
@@ -27,7 +25,6 @@ import config
 # ── Configuration ─────────────────────────────────────────────────────────────
 SCRIPT_DIR = Path(__file__).parent
 SIDECARS_DIR = SCRIPT_DIR / "sidecars"
-BACKUP_DIR = SCRIPT_DIR / "sidecars_backup"
 OUT_DIR = SCRIPT_DIR / "out"
 ENDPOINT_INDEX = OUT_DIR / "endpoint-index.json"
 
@@ -298,14 +295,6 @@ def run_enrichment(dry_run: bool = True):
     print("=" * 80)
     print()
     
-    # Create backup
-    if not dry_run:
-        if BACKUP_DIR.exists():
-            shutil.rmtree(BACKUP_DIR)
-        shutil.copytree(SIDECARS_DIR, BACKUP_DIR)
-        print(f"✓ Created backup: {BACKUP_DIR}")
-        print()
-    
     # Load endpoint index
     index = load_endpoint_index()
     print(f"Loaded {len(index['endpoints'])} endpoints from stage1")
@@ -391,16 +380,17 @@ def run_enrichment(dry_run: bool = True):
         print("To apply changes:")
         print("  python3 enrich_sidecars.py --apply")
         print()
-        print("Backup will be created at: sidecars_backup/")
+        print("DRY RUN - No changes made")
+        print()
+        print("To apply changes:")
+        print("  python3 enrich_sidecars.py --apply")
     else:
-        print("✅ Changes applied!")
+        print("Changes applied!")
         print()
         print("Next steps:")
         print("  1. Run: python3 audit_sidecars.py")
         print("  2. Run: python3 pipeline.py")
         print("  3. Review: git diff sidecars/")
-        print()
-        print(f"Backup saved at: {BACKUP_DIR}")
 
 if __name__ == '__main__':
     import sys

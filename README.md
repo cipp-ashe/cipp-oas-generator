@@ -13,13 +13,15 @@ the React frontend source simultaneously.
 ## How it works
 
 ```
-Stage 1: API Scanner      Invoke-*.ps1 files → endpoint-index.json
-Stage 2: Frontend Scanner JSX/JS call sites  → frontend-calls.json
-Stage 3: Merger           reconcile + score  → merged-params.json
-                                               mismatch-report.json
-                                               coverage-report.json
-Stage 4: OAS Emitter      merged output      → out/openapi.json
-                                               out/domain/<name>-openapi.json
+Stage 0:   Schema Cache        fetch_schemas.py      → schema-registry.json (+ 3 legacy caches)
+Stage 1:   API Scanner         Invoke-*.ps1 files    → endpoint-index.json
+Stage 1.5: Registry Enrichment auto-discovered calls  → schema-registry.json (enriched in-place)
+Stage 2:   Frontend Scanner    JSX/JS call sites      → frontend-calls.json
+Stage 2.5: Passthru Builder    registry + stage 1/2   → passthru-resolved.json
+           + Dual-mode resolver                         (oneOf variants for passthru + ID-based endpoints)
+           + Standard response builder                  (registry + PS1 computed fields)
+Stage 3:   Merger              reconcile + score      → merged-params.json, coverage-report.json
+Stage 4:   OAS Emitter         merged output          → out/openapi.json
 ```
 
 Each stage is independently runnable and testable. Outputs are plain JSON and feed
@@ -106,7 +108,7 @@ CIPP_FRONTEND_BRANCH=dev \
 |---|---|
 | _(none)_ | Full corpus run — all endpoints, all stages |
 | `--endpoint NAME` | One endpoint through all stages |
-| `--stage N` | One stage only (1–4), full corpus |
+| `--stage N` | One stage only (1, 2, passthru, 3, 4), full corpus |
 | `--validate-only` | Generate + validate OAS correctness + sidecar coverage (CI mode) |
 | `--check-patterns` | Validate generator assumptions against live repos |
 | `--check-sidecars` | Check for wizard endpoints needing sidecars |
@@ -299,6 +301,7 @@ Every endpoint is assigned a coverage tier in the output:
 | `PARTIAL` | One source only, or mixed confidence, or blob-access params |
 | `BLIND` | API function found but zero params extracted — pure blob passthrough |
 | `ARRAY_BODY` | Body is an array of objects; required element fields detected, rest is open schema |
+| `PASSTHRU` | Endpoint proxies Graph; oneOf variants resolved (e.g. ListGraphRequest) |
 | `ORPHAN` | Frontend calls endpoint but no `Invoke-*.ps1` found |
 | `STUB` | Neither source found — sidecar-only documentation |
 
@@ -323,7 +326,12 @@ Single source of truth for all tunable constants. Nothing is hardcoded in stage 
 | `PS_NOISE` | PowerShell auto-members and LabelValue sub-fields to suppress |
 | `PARAM_NOISE` | Call-option keys that appear in data objects but aren't params |
 | `DOWNSTREAM_PATTERNS` | Regex patterns for detecting downstream service usage |
+| `PASSTHRU_ENDPOINTS` | Endpoints that proxy arbitrary Graph URLs (e.g. `ListGraphRequest`) |
+| `HELPER_FUNCTION_IGNORE` | Infrastructure helper functions to skip during traversal |
+| `GRAPH_URL_NORMALIZE_RE` | Regex to strip Graph base URL for path extraction |
 | `TYPE_HINTS` | Field name → OAS schema fragment (richer than default `string`) |
+| `EXAMPLE_HINTS` | Field name → example value for request samples in doc tools |
+| `GRAPH_FIELD_TYPES` | Graph field name → OAS type (for response schema inference) |
 | `ALWAYS_REQUIRED_BODY/QUERY` | Params that are required on every endpoint |
 | `DYNAMIC_EXTENSION_PARENTS` | Dotted paths that collapse to `DynamicExtensionFields $ref` |
 | `KNOWN_FRONTEND_GAPS` | Documented static analysis limits (in output, never silent) |
@@ -342,6 +350,17 @@ Stage 1 (`stage1_api_scanner.py`) walks all `Invoke-*.ps1` HTTP entrypoints and 
 | `$Alias = $Request.Body` then `$Alias.Name` | `ast_blob` | medium |
 | `foreach ($x in $Request.Body.array)` then `$x.Field` | `ast_blob` | medium |
 | `foreach` array container param | `ast_foreach_array` | high |
+
+Also extracts:
+- `downstream_calls` — Graph API calls with method, URL, `$select` strings, and passthru flags
+- `computed_fields` — PS1 `Add-Member` and `Select-Object @{Name=...}` computed properties with inferred types
+- `dual_mode` — heuristic detection of endpoints that behave differently with/without an ID param
+- `helper_calls` — recursive traversal of `Set-CIPP*`/`Get-CIPP*`/`New-CIPP*` helper functions, with Graph calls, EXO calls, and computed fields flattened into the entrypoint's output
+
+Helper traversal follows function calls into `Modules/CIPPCore/Public/` with circular
+reference protection. Infrastructure helpers (table access, auth, logging) are skipped
+via `HELPER_FUNCTION_IGNORE` in config. Discovered items are tagged with source
+(e.g. `helper:Set-CIPPCloudManaged`) for traceability.
 
 Also flags:
 - `has_scheduled_branch` — body branches on `Scheduled.enabled`
@@ -369,6 +388,10 @@ Stage 2 (`stage2_frontend_scanner.py`) scans all `.jsx`/`.js` files and extracts
 | `<CippFormDomainSelector name="field" />` | — | LabelValue shape |
 | `<CippFormLicenseSelector name="field" />` | — | Array of SKU IDs |
 | `<CippFormUserSelector name="field" />` | — | LabelValue shape |
+
+**Passthru call extraction:** For endpoints in `PASSTHRU_ENDPOINTS` (e.g. `ListGraphRequest`),
+Stage 2 also extracts `Endpoint=` values from `data: {}` blocks and URL query strings,
+producing `passthru_calls` with the Graph URL and `$select` string per call site.
 
 **Call record flags** (preserved through `consolidate()` into Stage 3 output):
 
@@ -415,6 +438,12 @@ Stage 3 (`stage3_merger.py`) reconciles Stage 1 + Stage 2 + sidecar:
 Sidecar validation runs before merge. Fatal errors (missing required fields, bad types)
 skip the endpoint and log it as an error — they don't abort the full run.
 
+Stage 3 also attaches data from the passthru builder:
+- `passthru_resolved` — oneOf variants for passthru endpoints, with sidecar `add_passthru_variants` merged
+- `dual_mode_resolved` — collection/single-item oneOf variants, with sidecar `dual_mode_response` overrides
+- `assembled_response_schema` — registry + computed fields merged response for standard endpoints
+- `computed_fields` — PS1 computed fields passed through for traceability
+
 **`trust_level` validation:** If a sidecar sets `trust_level: "tested"`, a warning is
 emitted when `tested_version` is absent or null. Set `tested_version` to the CIPP release
 the sidecar was validated against (e.g. `"v10.1.0"`) to enable regression tracking.
@@ -423,9 +452,18 @@ the sidecar was validated against (e.g. `"v10.1.0"`) to enable regression tracki
 
 Stage 4 (`stage4_emitter.py`) produces OAS 3.1 JSON:
 
-- `out/openapi.json` — unified spec, all endpoints
+- `out/openapi.json` — unified spec, all frontend-facing endpoints
 - `out/domain/<name>-openapi.json` — per-domain specs (Identity, Email-Exchange, etc.)
-- Single-endpoint mode prints the OAS path snippet to stdout, writes nothing
+
+**Endpoint filtering:** API-only endpoints (no frontend call sites) are suppressed from
+the spec. The CIPP API for the frontend IS the API — endpoints not called from the
+frontend are internal/unused. ORPHAN endpoints (frontend calls with no PS1 backing)
+are also suppressed. Both are logged in pipeline output for visibility.
+
+Single-endpoint mode prints the OAS path snippet to stdout, writes nothing.
+
+**Versioning:** `info.version` is read from the CIPP-API repo's `version_latest.txt`
+(e.g. `10.2.6`) so the spec version always matches the API release.
 
 OAS 3.1 correctness enforced:
 - `$ref` is never combined with sibling keys — wrapped in `allOf` when extensions needed
@@ -455,6 +493,23 @@ Extensions added per operation:
 
 ---
 
+## Response Schema Resolution
+
+Response schemas are assembled from multiple sources with this priority:
+
+1. **Sidecar `raw_response_body`** — highest authority (hand-authored override)
+2. **Sidecar `add_responses`** — adds/overrides specific status codes
+3. **Passthru oneOf variants** — for `PASSTHRU` endpoints (e.g. ListGraphRequest), discriminated by `Endpoint` param
+4. **Dual-mode oneOf variants** — for endpoints with optional ID params (e.g. ListGroups with/without GroupID)
+5. **Assembled schema** — Graph registry fields + PS1 computed fields (Add-Member, Select-Object)
+6. **`additionalProperties: true`** — honest fallback with `x-cipp-response-source` extension
+
+The schema registry is auto-enriched on each pipeline run (Stage 1.5): new Graph calls
+discovered by the scanner are added with inferred `select_fields` from `$select` strings
+and `GRAPH_FIELD_TYPES`. Curated entries (from `fetch_schemas.py`) are never overwritten.
+
+---
+
 ## Outputs
 
 | File | Stage | Description |
@@ -462,6 +517,7 @@ Extensions added per operation:
 | `out/endpoint-index.json` | 1 | All API endpoints with AST params |
 | `out/endpoint-index-{Name}.json` | 1 | Single-endpoint run (never overwrites corpus) |
 | `out/frontend-calls.json` | 2 | All frontend call sites |
+| `out/passthru-resolved.json` | 2.5 | Passthru + dual-mode + standard response schemas |
 | `out/frontend-calls-{Name}.json` | 2 | Single-endpoint |
 | `out/merged-params.json` | 3 | Reconciled, confidence-scored |
 | `out/merged-params-{Name}.json` | 3 | Single-endpoint |
@@ -635,12 +691,14 @@ git commit -m "Regenerate openapi.json"
 This tool uses regex-based static analysis, not a real AST parser. It handles the
 patterns CIPP actually uses. Patterns it cannot resolve:
 
-- Params consumed only inside downstream functions (e.g. `New-CIPPUserTask` internals)
+- Params consumed inside non-CIPP helper functions (e.g. Azure SDK calls, third-party modules)
 - Fields rendered conditionally by shared form components without `postUrl` tracing
 - Dynamic computed endpoint URLs
 - Direct `axios`/`fetch` calls not using CIPP's wrapper functions
 - PS1 parameter default values (not extracted)
-- Response body structure (auto-detected only where sidecars exist; blind elsewhere)
+- POST/PATCH required fields for Graph calls (curated entries in the schema registry handle known operations)
+- Helpers that only access Azure tables — response shape is whatever the batch job stored. Sidecars needed.
+- Dynamic helper calls (`Invoke-Command $functionName`) cannot be resolved statically
 - Usage examples (not generated — add manually via sidecar `add_responses`)
 
 For all of these: write a sidecar. The `raw_request_body` escape hatch handles cases

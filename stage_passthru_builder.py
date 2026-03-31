@@ -249,14 +249,20 @@ def build_passthru_resolved(
             else:
                 # Add request schema with discriminator const
                 req = variant.get("request_schema")
+                existing_required = (req.get("required", []) if req else [])
+                # Ensure the discriminator property is always marked required so
+                # OpenAPI tooling can reliably perform variant selection/validation.
+                merged_required = ["Endpoint"] + [
+                    r for r in existing_required if r != "Endpoint"
+                ]
                 variant["request_schema"] = {
+                    "type": "object",
                     "properties": {
                         "Endpoint": {"const": entry["url"]},
                         **(req.get("properties", {}) if req else {}),
-                    }
+                    },
+                    "required": merged_required,
                 }
-                if req and req.get("required"):
-                    variant["request_schema"]["required"] = req["required"]
                 variants.append(variant)
 
         resolved[ep_name] = {

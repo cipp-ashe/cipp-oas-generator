@@ -27,12 +27,11 @@ from pathlib import Path
 from config import (
     OUT_DIR, SIDECARS_DIR, SHARED_PARAM_REFS, FRONTEND_NOISE,
     COVERAGE_TIERS, KNOWN_URL_ALIASES, KNOWN_NON_PS1_ENDPOINTS,
-    PASSTHRU_ENDPOINTS,
 )
 
 # ── Sidecar schema (validated on load) ───────────────────────────────────────
 _SIDECAR_ALLOWED_KEYS = {
-    "override_synopsis", "override_description", "override_methods",
+    "override_synopsis", "override_description", "override_methods", "override_method",
     "override_confidence", "override_role", "add_params", "remove_params",
     "add_responses", "notes", "_comment",
     # Raw escape hatches — used when add_params can't express the schema
@@ -153,9 +152,18 @@ def validate_sidecar(sidecar: dict, endpoint: str) -> list[str]:
                 "(e.g. \"v10.1.0\") so regressions can be detected on upgrade."
             )
 
-    # ── override_methods ──────────────────────────────────────────────────
+    # ── override_methods / override_method ───────────────────────────────
+    valid_methods = {"GET", "POST", "PATCH", "DELETE", "PUT"}
+    if "override_method" in sidecar and "override_methods" not in sidecar:
+        # Normalise legacy singular key: treat as a single-element list
+        m = sidecar["override_method"]
+        if not isinstance(m, str):
+            raise ValueError(
+                f"Sidecar {endpoint}: override_method must be a string"
+            )
+        if m.upper() not in valid_methods:
+            warnings.append(f"override_method: unrecognised HTTP method '{m}'")
     if "override_methods" in sidecar:
-        valid_methods = {"GET", "POST", "PATCH", "DELETE", "PUT"}
         for m in sidecar["override_methods"]:
             if m.upper() not in valid_methods:
                 warnings.append(f"override_methods: unrecognised HTTP method '{m}'")
@@ -166,6 +174,23 @@ def validate_sidecar(sidecar: dict, endpoint: str) -> list[str]:
             raise ValueError(
                 f"Sidecar {endpoint}: x_cipp_warnings must be a list of strings"
             )
+
+    # ── add_passthru_variants ─────────────────────────────────────────────
+    if "add_passthru_variants" in sidecar:
+        apv = sidecar["add_passthru_variants"]
+        if not isinstance(apv, list):
+            raise ValueError(
+                f"Sidecar {endpoint}: add_passthru_variants must be a list of variant objects"
+            )
+        for i, entry in enumerate(apv):
+            if not isinstance(entry, dict):
+                raise ValueError(
+                    f"Sidecar {endpoint}: add_passthru_variants[{i}] must be an object"
+                )
+            if "endpoint_value" not in entry:
+                raise ValueError(
+                    f"Sidecar {endpoint}: add_passthru_variants[{i}] is missing required key 'endpoint_value'"
+                )
 
     return warnings
 
@@ -496,10 +521,23 @@ def _merge_sidecar_passthru_variants(passthru_ep: dict, sidecar: dict) -> None:
     if not sidecar_variants:
         return
 
-    # Index existing variants by endpoint_value for replacement
-    existing = {v["endpoint_value"]: i for i, v in enumerate(passthru_ep["variants"])}
+    if not isinstance(sidecar_variants, list):
+        raise ValueError(
+            "add_passthru_variants must be a list of variant descriptor objects"
+        )
+
+    # Default to empty list if the builder produced no variants (e.g. unresolved endpoint)
+    existing_variants: list = passthru_ep.get("variants", [])
+    passthru_ep.setdefault("variants", existing_variants)
+
+    # Index existing variants by endpoint_value for O(1) replacement lookup
+    existing = {v["endpoint_value"]: i for i, v in enumerate(existing_variants)}
 
     for sv in sidecar_variants:
+        if not isinstance(sv, dict) or "endpoint_value" not in sv:
+            raise ValueError(
+                "Each add_passthru_variants entry must be an object with an 'endpoint_value' key"
+            )
         ev = sv["endpoint_value"]
         if ev in existing:
             # Sidecar replaces existing variant (highest authority)
@@ -794,6 +832,7 @@ def run(endpoint_filter: str | None = None) -> dict:
             "tags":                api_data.get("tags", []),
             "http_methods": (
                 sidecar.get("override_methods")
+                or ([sidecar["override_method"]] if sidecar.get("override_method") else None)
                 or api_data.get("http_methods")
                 or fe_data.get("methods")
                 or ["GET"]

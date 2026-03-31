@@ -1,7 +1,6 @@
 {
   "override_confidence": "high",
-  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
-  "trust_level": "inferred",
+  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred. | Enriched 2026-03-25",
   "notes": "External form component \u2014 fields from child component(s), not inline. Resolved: CippNotificationForm (CippNotificationForm.jsx). 2 param(s) still defaulting to string \u2014 verify types.",
   "add_params": [
     {
@@ -51,6 +50,63 @@
       "confidence": "medium",
       "description": "(auto) from CippNotificationForm.jsx",
       "type": "boolean"
+    },
+    {
+      "name": "webhookAuthType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: webhookAuthType"
+    },
+    {
+      "name": "webhookAuthToken",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: webhookAuthToken"
+    },
+    {
+      "name": "webhookAuthUsername",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: webhookAuthUsername"
+    },
+    {
+      "name": "webhookAuthPassword",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: webhookAuthPassword"
+    },
+    {
+      "name": "webhookAuthHeaderName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: webhookAuthHeaderName"
+    },
+    {
+      "name": "webhookAuthHeaderValue",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: webhookAuthHeaderValue"
+    },
+    {
+      "name": "webhookAuthHeaders",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: webhookAuthHeaders"
+    },
+    {
+      "name": "UseStandardizedSchema",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: UseStandardizedSchema"
     }
-  ]
+  ],
+  "trust_level": "inferred"
 }

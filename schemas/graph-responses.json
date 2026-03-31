@@ -1,0 +1,1943 @@
+{
+  "GET /users": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Microsoft Graph user object.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "userPrincipalName": {
+              "type": "string"
+            },
+            "mail": {
+              "type": "string"
+            },
+            "accountEnabled": {
+              "type": "boolean"
+            },
+            "givenName": {
+              "type": "string"
+            },
+            "surname": {
+              "type": "string"
+            },
+            "jobTitle": {
+              "type": "string"
+            },
+            "department": {
+              "type": "string"
+            },
+            "usageLocation": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "mobilePhone": {
+              "type": "string"
+            },
+            "businessPhones": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "assignedLicenses": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "onPremisesSyncEnabled": {
+              "type": "boolean"
+            },
+            "onPremisesImmutableId": {
+              "type": "string"
+            },
+            "createdDateTime": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "@odata.nextLink": {
+        "type": "string"
+      }
+    }
+  },
+  "GET /users/{id}": {
+    "type": "object",
+    "description": "Microsoft Graph user object.",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "displayName": {
+        "type": "string"
+      },
+      "userPrincipalName": {
+        "type": "string"
+      },
+      "mail": {
+        "type": "string"
+      },
+      "accountEnabled": {
+        "type": "boolean"
+      },
+      "givenName": {
+        "type": "string"
+      },
+      "surname": {
+        "type": "string"
+      },
+      "jobTitle": {
+        "type": "string"
+      },
+      "department": {
+        "type": "string"
+      },
+      "usageLocation": {
+        "type": "string"
+      },
+      "assignedLicenses": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        }
+      },
+      "onPremisesSyncEnabled": {
+        "type": "boolean"
+      }
+    },
+    "additionalProperties": true
+  },
+  "GET /groups": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Microsoft Graph group object.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "mailEnabled": {
+              "type": "boolean"
+            },
+            "securityEnabled": {
+              "type": "boolean"
+            },
+            "groupTypes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "mail": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "@odata.nextLink": {
+        "type": "string"
+      }
+    }
+  },
+  "GET /groups/{id}": {
+    "type": "object",
+    "description": "Microsoft Graph group object.",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "displayName": {
+        "type": "string"
+      },
+      "mailEnabled": {
+        "type": "boolean"
+      },
+      "securityEnabled": {
+        "type": "boolean"
+      },
+      "groupTypes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "GET /applications": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Microsoft Graph application registration.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "appId": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "keyCredentials": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "passwordCredentials": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /devices": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Microsoft Graph device object.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "deviceId": {
+              "type": "string"
+            },
+            "operatingSystem": {
+              "type": "string"
+            },
+            "isCompliant": {
+              "type": "boolean"
+            },
+            "isManaged": {
+              "type": "boolean"
+            },
+            "registrationDateTime": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /identity/conditionalAccess/policies": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Conditional access policy.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string",
+              "enum": [
+                "enabled",
+                "disabled",
+                "enabledForReportingButNotEnforced"
+              ]
+            },
+            "conditions": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "grantControls": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /security/alerts_v2": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Microsoft Graph security alert (v2).",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "severity": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "classification": {
+              "type": "string"
+            },
+            "createdDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "lastUpdateDateTime": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /deviceManagement/managedDevices": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Intune managed device.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "deviceName": {
+              "type": "string"
+            },
+            "operatingSystem": {
+              "type": "string"
+            },
+            "complianceState": {
+              "type": "string"
+            },
+            "managementState": {
+              "type": "string"
+            },
+            "userPrincipalName": {
+              "type": "string"
+            },
+            "enrolledDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "lastSyncDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "isEncrypted": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /deviceManagement/windowsAutopilotDeviceIdentities": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Windows Autopilot device identity.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "serialNumber": {
+              "type": "string"
+            },
+            "model": {
+              "type": "string"
+            },
+            "manufacturer": {
+              "type": "string"
+            },
+            "groupTag": {
+              "type": "string"
+            },
+            "deploymentProfileAssignmentStatus": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /servicePrincipals": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Microsoft Graph service principal.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "appId": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "accountEnabled": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /subscribedSkus": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Subscribed licence SKU.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "skuId": {
+              "type": "string"
+            },
+            "skuPartNumber": {
+              "type": "string"
+            },
+            "consumedUnits": {
+              "type": "integer"
+            },
+            "prepaidUnits": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /deviceManagement/managedDevices/{id}": {
+    "type": "object",
+    "description": "Intune managed device.",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "deviceName": {
+        "type": "string"
+      },
+      "operatingSystem": {
+        "type": "string"
+      },
+      "complianceState": {
+        "type": "string"
+      },
+      "managementState": {
+        "type": "string"
+      },
+      "userPrincipalName": {
+        "type": "string"
+      },
+      "enrolledDateTime": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "lastSyncDateTime": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "isEncrypted": {
+        "type": "boolean"
+      },
+      "serialNumber": {
+        "type": "string"
+      },
+      "model": {
+        "type": "string"
+      },
+      "manufacturer": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": true
+  },
+  "GET /auditLogs/signIns": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Microsoft Graph sign-in log entry.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "createdDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "userDisplayName": {
+              "type": "string"
+            },
+            "userPrincipalName": {
+              "type": "string"
+            },
+            "appDisplayName": {
+              "type": "string"
+            },
+            "ipAddress": {
+              "type": "string"
+            },
+            "clientAppUsed": {
+              "type": "string"
+            },
+            "conditionalAccessStatus": {
+              "type": "string"
+            },
+            "riskDetail": {
+              "type": "string"
+            },
+            "riskLevelAggregated": {
+              "type": "string"
+            },
+            "status": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "integer"
+                },
+                "failureReason": {
+                  "type": "string"
+                }
+              }
+            },
+            "location": {
+              "type": "object",
+              "properties": {
+                "city": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "countryOrRegion": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "@odata.nextLink": {
+        "type": "string"
+      }
+    }
+  },
+  "GET /auditLogs/directoryAudits": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Azure AD directory audit entry.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "activityDisplayName": {
+              "type": "string"
+            },
+            "activityDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "operationType": {
+              "type": "string"
+            },
+            "result": {
+              "type": "string"
+            },
+            "resultReason": {
+              "type": "string"
+            },
+            "initiatedBy": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "targetResources": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "@odata.nextLink": {
+        "type": "string"
+      }
+    }
+  },
+  "GET /servicePrincipals/{id}": {
+    "type": "object",
+    "description": "Microsoft Graph service principal.",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "appId": {
+        "type": "string"
+      },
+      "displayName": {
+        "type": "string"
+      },
+      "accountEnabled": {
+        "type": "boolean"
+      },
+      "appRoles": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        }
+      },
+      "oauth2PermissionScopes": {
+        "type": "array",
+        "items": {
+          "type": "object"
+        }
+      }
+    },
+    "additionalProperties": true
+  },
+  "GET /users/{id}/transitiveMemberOf": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Group or directory role membership.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "@odata.type": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /groups/{id}/members": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Group member.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "userPrincipalName": {
+              "type": "string"
+            },
+            "@odata.type": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /users/{id}/managedDevices": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Intune managed device.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "deviceName": {
+              "type": "string"
+            },
+            "operatingSystem": {
+              "type": "string"
+            },
+            "complianceState": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /users/{id}/ownedDevices": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Device owned by the user.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "deviceId": {
+              "type": "string"
+            },
+            "operatingSystem": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /deviceManagement/windowsAutopilotDeploymentProfiles": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Windows Autopilot deployment profile.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "language": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /deviceManagement/deviceEnrollmentConfigurations": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Device enrollment configuration.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "integer"
+            },
+            "@odata.type": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /deviceManagement/assignmentFilters/{id}": {
+    "type": "object",
+    "description": "Intune assignment filter.",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "displayName": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "platform": {
+        "type": "string"
+      },
+      "rule": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": true
+  },
+  "GET /sites/{id}/lists": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "SharePoint list.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "webUrl": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /sites/{id}/lists/{id}/items": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "SharePoint list item.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "createdDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "fields": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /teams/{id}": {
+    "type": "object",
+    "description": "Microsoft Teams team.",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "displayName": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "isArchived": {
+        "type": "boolean"
+      },
+      "webUrl": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": true
+  },
+  "GET /teams/{id}/channels": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Microsoft Teams channel.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "membershipType": {
+              "type": "string"
+            },
+            "webUrl": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /teams/{id}/members": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Teams member.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "userId": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "roles": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /teams/{id}/installedApps": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "App installed in a Teams team.",
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /tenantRelationships/delegatedAdminRelationships/{id}/accessAssignments": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "GDAP delegated admin access assignment.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "accessContainer": {
+              "type": "object",
+              "properties": {
+                "accessContainerId": {
+                  "type": "string"
+                },
+                "accessContainerType": {
+                  "type": "string"
+                }
+              }
+            },
+            "accessDetails": {
+              "type": "object",
+              "properties": {
+                "unifiedRoles": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "roleDefinitionId": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /tenantRelationships/managedTenants/managedDeviceCompliances": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Managed tenant device compliance record.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "tenantId": {
+              "type": "string"
+            },
+            "tenantDisplayName": {
+              "type": "string"
+            },
+            "deviceName": {
+              "type": "string"
+            },
+            "complianceStatus": {
+              "type": "string"
+            },
+            "osDescription": {
+              "type": "string"
+            },
+            "lastSyncDateTime": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /tenantRelationships/findTenantInformationByTenantId/{id}": {
+    "type": "object",
+    "description": "Basic tenant identity information.",
+    "properties": {
+      "tenantId": {
+        "type": "string"
+      },
+      "displayName": {
+        "type": "string"
+      },
+      "defaultDomainName": {
+        "type": "string"
+      },
+      "federationBrandName": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": true
+  },
+  "GET /admin/serviceAnnouncement/issues": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Microsoft 365 service health issue.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "service": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "classification": {
+              "type": "string"
+            },
+            "startDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "endDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "lastModifiedDateTime": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /identityGovernance/appConsent/appConsentRequests/{id}/userConsentRequests": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "User consent request for an app.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "reason": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "createdDateTime": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /deviceManagement/detectedApps": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "App detected on managed devices.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "sizeInByte": {
+              "type": "integer"
+            },
+            "deviceCount": {
+              "type": "integer"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /deviceManagement/detectedApps/{id}/managedDevices": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Managed device with the detected app installed.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "deviceName": {
+              "type": "string"
+            },
+            "userPrincipalName": {
+              "type": "string"
+            },
+            "operatingSystem": {
+              "type": "string"
+            },
+            "complianceState": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /deviceManagement/managedDevices/{id}/detectedApps": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "App detected on a specific managed device.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "sizeInByte": {
+              "type": "integer"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /contacts": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Microsoft Graph contact object.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "givenName": {
+              "type": "string"
+            },
+            "surname": {
+              "type": "string"
+            },
+            "emailAddresses": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "businessPhones": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "mobilePhone": {
+              "type": "string"
+            },
+            "jobTitle": {
+              "type": "string"
+            },
+            "companyName": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /organization": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Azure AD organization (tenant) object.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "verifiedDomains": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "isDefault": {
+                    "type": "boolean"
+                  },
+                  "isInitial": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "onPremisesSyncEnabled": {
+              "type": "boolean"
+            },
+            "onPremisesLastSyncDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "dirSyncEnabled": {
+              "type": "boolean"
+            },
+            "technicalNotificationMails": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "assignedPlans": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "servicePlanId": {
+                    "type": "string"
+                  },
+                  "capabilityStatus": {
+                    "type": "string"
+                  },
+                  "service": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /domains": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Azure AD verified domain.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "isDefault": {
+              "type": "boolean"
+            },
+            "isInitial": {
+              "type": "boolean"
+            },
+            "isVerified": {
+              "type": "boolean"
+            },
+            "authenticationType": {
+              "type": "string"
+            },
+            "supportedServices": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /identity/conditionalAccess/namedLocations": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Conditional Access named location (IP range or country).",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "@odata.type": {
+              "type": "string"
+            },
+            "createdDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "modifiedDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "isTrusted": {
+              "type": "boolean"
+            },
+            "ipRanges": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "cidrAddress": {
+                    "type": "string"
+                  },
+                  "@odata.type": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "countriesAndRegions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /directoryRoles": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Azure AD directory role.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "roleTemplateId": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /security/alerts": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Microsoft Graph security alert.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "severity": {
+              "type": "string",
+              "enum": [
+                "unknown",
+                "informational",
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            "status": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "createdDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "lastModifiedDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "vendorInformation": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "userStates": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "hostStates": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /deviceManagement/Intents": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Intune device management intent (security baseline).",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "isAssigned": {
+              "type": "boolean"
+            },
+            "lastModifiedDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "templateId": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /admin/sharepoint/settings": {
+    "type": "object",
+    "description": "SharePoint Online tenant-level settings.",
+    "properties": {
+      "sharingCapability": {
+        "type": "string"
+      },
+      "allowedDomainGuidsForSyncApp": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "availableManagedPathsForSiteCreation": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "deletedUserPersonalSiteRetentionPeriodInDays": {
+        "type": "integer"
+      },
+      "excludedFileExtensionsForSyncApp": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "isGuestUserSharingLimitedToSelectedDomainList": {
+        "type": "boolean"
+      },
+      "isResharingByExternalUsersEnabled": {
+        "type": "boolean"
+      },
+      "isSiteCreationEnabled": {
+        "type": "boolean"
+      }
+    },
+    "additionalProperties": true
+  },
+  "GET /deviceManagement/organizationalMessageDetails": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Intune organizational message.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "frequency": {
+              "type": "string"
+            },
+            "startDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "endDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "surface": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /tenantRelationships/managedTenants/managedTenantOperations": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Managed tenant async operation.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "operationId": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "createdDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "lastActionDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "tenantId": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /deviceManagement/assignmentFilters": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Intune assignment filter.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "platform": {
+              "type": "string"
+            },
+            "rule": {
+              "type": "string"
+            },
+            "roleScopeTags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /tenantRelationships/managedTenants/managedTenants": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Managed tenant record in Microsoft Lighthouse.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "tenantId": {
+              "type": "string"
+            },
+            "tenantDisplayName": {
+              "type": "string"
+            },
+            "onboardingStatus": {
+              "type": "string"
+            },
+            "onboardingDateTime": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /tenantRelationships/delegatedAdminRelationships": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "GDAP delegated admin relationship.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "displayName": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "customer": {
+              "type": "object",
+              "properties": {
+                "tenantId": {
+                  "type": "string"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              }
+            },
+            "createdDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "activatedDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "endDateTime": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /me/mailFolders/{id}/messages": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "Mail message.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "bodyPreview": {
+              "type": "string"
+            },
+            "isRead": {
+              "type": "boolean"
+            },
+            "receivedDateTime": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "from": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "toRecipients": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  },
+  "GET /me": {
+    "type": "object",
+    "description": "Currently authenticated user.",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "displayName": {
+        "type": "string"
+      },
+      "userPrincipalName": {
+        "type": "string"
+      },
+      "mail": {
+        "type": "string"
+      },
+      "jobTitle": {
+        "type": "string"
+      }
+    },
+    "additionalProperties": true
+  },
+  "GET /oauth2PermissionGrants": {
+    "type": "object",
+    "properties": {
+      "value": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "description": "OAuth2 delegated permission grant.",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "clientId": {
+              "type": "string"
+            },
+            "consentType": {
+              "type": "string"
+            },
+            "principalId": {
+              "type": "string"
+            },
+            "resourceId": {
+              "type": "string"
+            },
+            "scope": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": true
+        }
+      }
+    }
+  }
+}

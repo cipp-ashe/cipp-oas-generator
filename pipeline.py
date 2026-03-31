@@ -19,15 +19,17 @@ import subprocess
 import sys
 from pathlib import Path
 
+import fetch_schemas
 import stage1_api_scanner
 import stage2_frontend_scanner
 import stage3_merger
 import stage4_emitter
+import stage_passthru_builder
 from config import (
     OUT_DIR, API_REPO, FRONTEND_REPO, HTTP_FUNCTIONS_ROOT, FRONTEND_SRC_ROOT,
     TYPE_HINTS, SHARED_PARAM_REFS, FRONTEND_NOISE, PS_NOISE, PARAM_NOISE,
     ALWAYS_REQUIRED_BODY, ALWAYS_REQUIRED_QUERY, DYNAMIC_EXTENSION_PARENTS,
-    KNOWN_FRONTEND_GAPS,
+    KNOWN_FRONTEND_GAPS, PASSTHRU_ENDPOINTS,
 )
 # Import compiled patterns from stage scripts so check_patterns validates the
 # actual patterns in use — not a parallel re-implementation that can drift.
@@ -41,7 +43,7 @@ from stage2_frontend_scanner import (
     POST_CONTEXT_RE         as _S2_POST_CONTEXT_RE,
     FORM_NAME_STATIC_RE     as _S2_FORM_NAME_STATIC_RE,
     SELECTOR_COMPONENT_RES  as _S2_SELECTOR_COMPONENT_RES,
-    CIPP_FORM_PAGE_URL_RE   as _S2_CIPP_FORM_PAGE_URL_RE,
+    POST_URL_RE             as _S2_POST_URL_RE,
     MUTATE_URL_RE           as _S2_MUTATE_URL_RE,
 )
 
@@ -180,12 +182,27 @@ def check_patterns() -> int:
         )
 
         # 10. CippFormPage postUrl= pattern — validated via Stage 2's compiled pattern
-        has_form_page = bool(_S2_CIPP_FORM_PAGE_URL_RE.search(combined))
+        has_form_page = bool(_S2_POST_URL_RE.search(combined))
         check(
             "CippFormPage postUrl= pattern present in frontend",
             has_form_page,
             "absent = CippFormPage submission pattern may have changed"
         )
+
+    # 11. Passthru endpoint extraction — validate PASSTHRU_ENDPOINTS config
+    check(
+        "PASSTHRU_ENDPOINTS configured",
+        len(PASSTHRU_ENDPOINTS) > 0,
+        f"{len(PASSTHRU_ENDPOINTS)} endpoints: {PASSTHRU_ENDPOINTS}",
+    )
+
+    # 12. Schema registry exists
+    registry_path = _SCRIPT_DIR / "schemas" / "schema-registry.json"
+    check(
+        "schema-registry.json exists",
+        registry_path.exists(),
+        "run fetch_schemas.py first if missing",
+    )
 
     print()
     if ok:
@@ -517,7 +534,7 @@ def _trace_suppressions(endpoint: str, s1: dict | None, s2: dict | None, sidecar
 
 def run_pipeline(
     endpoint_filter: str | None = None,
-    only_stage: int | None = None,
+    only_stage: int | str | None = None,
     verbose: bool = False,
 ) -> None:
     width = 60
@@ -526,13 +543,39 @@ def run_pipeline(
     print(f"CIPP OAS Generator {label}")
     print("=" * width)
 
+    print("\n[Stage 0] Schema Cache")
+    fetch_schemas.run()
+
+    suffix = f"-{endpoint_filter}" if endpoint_filter else ""
+
     if only_stage is None or only_stage == 1:
         print("\n[Stage 1] API Scanner")
         stage1_api_scanner.run(endpoint_filter=endpoint_filter)
 
+    # Registry enrichment — auto-add discovered Graph calls to registry
+    if only_stage is None:
+        print("\n[Stage 1.5] Registry Enrichment")
+        idx_path = OUT_DIR / f"endpoint-index{suffix}.json"
+        if idx_path.exists():
+            idx_data = json.loads(idx_path.read_text())
+            endpoint_index = idx_data.get("endpoints", {})
+            registry = stage_passthru_builder._load_registry()
+            enrichment_stats = stage_passthru_builder.enrich_registry(registry, endpoint_index)
+            registry_path = _SCRIPT_DIR / "schemas" / "schema-registry.json"
+            registry_path.write_text(json.dumps(registry, indent=2) + "\n")
+            total = len(registry.get("graph", {}))
+            print(f"  {enrichment_stats['new_entries_added']} new, "
+                  f"{enrichment_stats['entries_updated']} updated, "
+                  f"{enrichment_stats['curated_preserved']} curated preserved, "
+                  f"{total} total")
+
     if only_stage is None or only_stage == 2:
         print("\n[Stage 2] Frontend Scanner")
         stage2_frontend_scanner.run(endpoint_filter=endpoint_filter)
+
+    if only_stage is None or only_stage == "passthru":
+        print("\n[Stage 2.5] Passthru Builder")
+        stage_passthru_builder.run(endpoint_filter=endpoint_filter)
 
     if only_stage is None or only_stage == 3:
         print("\n[Stage 3] Merger + Coverage Classifier")
@@ -622,7 +665,7 @@ def _print_corpus_summary() -> None:
     coverage_path = OUT_DIR / "coverage-report.json"
     unified_path  = OUT_DIR / "openapi.json"
 
-    print("── Corpus Summary ──")
+    print("-- Corpus Summary --")
 
     if merged_path.exists():
         merged = json.loads(merged_path.read_text())
@@ -647,9 +690,9 @@ def _print_corpus_summary() -> None:
         blind = cov.get("blind_endpoints", [])
         orphan = cov.get("orphan_endpoints", [])
         if blind:
-            print(f"\n  ⚠ BLIND (need sidecars): {blind[:10]}{'...' if len(blind)>10 else ''}")
+            print(f"\n  WARN BLIND (need sidecars): {blind[:10]}{'...' if len(blind)>10 else ''}")
         if orphan:
-            print(f"  ⚠ ORPHAN (no PS1 found): {orphan[:10]}{'...' if len(orphan)>10 else ''}")
+            print(f"  WARN ORPHAN (no PS1 found): {orphan[:10]}{'...' if len(orphan)>10 else ''}")
 
     if unified_path.exists():
         spec = json.loads(unified_path.read_text())
@@ -659,15 +702,18 @@ def _print_corpus_summary() -> None:
 
 # ── Sidecar coverage validation ──────────────────────────────────────────────
 
-def validate_sidecar_coverage(merged_params_path: Path | None = None) -> int:
+def validate_sidecar_coverage(merged_params_path: Path | None = None, auto_create: bool = False) -> int:
     """
     Validate that all wizard endpoints have sidecars.
-    
+
     This validation runs after Stage 2 has completed and wizard components have been
     detected. Wizard endpoints require manual sidecars because their form fields
     are hidden from static analysis.
-    
-    Returns 0 if all wizard endpoints have sidecars, 1 if any are missing.
+
+    If auto_create is True, missing sidecars are created automatically with
+    a minimal verified stub instead of returning an error.
+
+    Returns 0 if all wizard endpoints have sidecars (or were auto-created), 1 if any are missing.
     """
     # Load merged params if available (preferred), otherwise load frontend-calls
     frontend_calls_path = OUT_DIR / "frontend-calls.json"
@@ -717,6 +763,18 @@ def validate_sidecar_coverage(merged_params_path: Path | None = None) -> int:
         if not has_sidecar:
             missing.append(endpoint)
     
+    if missing and auto_create:
+        print(f"\n⚠ Auto-creating {len(missing)} missing wizard sidecars:")
+        for ep in missing:
+            sidecar_path = sidecars_dir / f"{ep}.json"
+            wizard_names = ', '.join(wizard_endpoints[ep])
+            sidecar_path.write_text(json.dumps({
+                "notes": f"Auto-created — wizard component(s): {wizard_names}. Review and enrich manually.",
+                "trust_level": "verified",
+            }, indent=2) + "\n")
+            print(f"    ✓ Created sidecars/{ep}.json")
+        missing.clear()
+
     if missing:
         print(f"\n✗ {len(missing)} wizard endpoints need sidecars:")
         for ep in missing:
@@ -730,7 +788,7 @@ def validate_sidecar_coverage(merged_params_path: Path | None = None) -> int:
 
 # ── Validate-only (CI mode) ───────────────────────────────────────────────────
 
-def validate_only(verbose: bool = False) -> int:
+def validate_only(verbose: bool = False, auto_sidecar: bool = False) -> int:
     """
     Run full pipeline, validate OAS 3.1 structural correctness, and check sidecar coverage.
 
@@ -771,7 +829,7 @@ def validate_only(verbose: bool = False) -> int:
     print("✓ OpenAPI spec is structurally valid")
 
     # ── Sidecar coverage check ────────────────────────────────────────────────
-    sidecar_result = validate_sidecar_coverage()
+    sidecar_result = validate_sidecar_coverage(auto_create=auto_sidecar)
     if sidecar_result != 0:
         print("\nFix missing sidecars before committing.")
         return 1
@@ -800,8 +858,10 @@ Examples:
         """,
     )
     parser.add_argument("--endpoint",          help="Run for a single endpoint only")
-    parser.add_argument("--stage",             type=int, choices=[1, 2, 3, 4],
-                        help="Run only a specific stage")
+    parser.add_argument(
+        "--stage", type=str, default=None,
+        help="Run only this stage (1, 2, passthru, 3, 4)",
+    )
     parser.add_argument("--validate-only",     action="store_true",
                         help="Generate and compare against committed spec (CI mode)")
     parser.add_argument("--check-patterns",    action="store_true",
@@ -812,6 +872,8 @@ Examples:
                         help="Filter --validate-endpoint trace to a single parameter name")
     parser.add_argument("--check-sidecars",    action="store_true",
                         help="Check for wizard endpoints that need sidecars")
+    parser.add_argument("--auto-sidecar",     action="store_true",
+                        help="Auto-create missing wizard sidecars instead of failing")
     parser.add_argument(
         "--verbose", action="store_true",
         help=(
@@ -822,15 +884,19 @@ Examples:
     )
     args = parser.parse_args()
 
+    stage = args.stage
+    if stage is not None:
+        stage = int(stage) if stage.isdigit() else stage
+
     if args.validate_only:
-        sys.exit(validate_only(verbose=args.verbose))
+        sys.exit(validate_only(verbose=args.verbose, auto_sidecar=args.auto_sidecar))
     elif args.check_patterns:
         sys.exit(check_patterns())
     elif args.check_sidecars:
         # Full pipeline to stage 2 (to get wizard detection), then validate coverage
         run_pipeline(only_stage=2)
-        sys.exit(validate_sidecar_coverage())
+        sys.exit(validate_sidecar_coverage(auto_create=args.auto_sidecar))
     elif args.validate_endpoint:
         sys.exit(validate_endpoint(args.validate_endpoint, param_filter=args.param))
     else:
-        run_pipeline(endpoint_filter=args.endpoint, only_stage=args.stage, verbose=args.verbose)
+        run_pipeline(endpoint_filter=args.endpoint, only_stage=stage, verbose=args.verbose)

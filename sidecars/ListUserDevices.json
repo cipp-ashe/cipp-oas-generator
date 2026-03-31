@@ -1,0 +1,38 @@
+{
+  "_comment": "ListUserDevices returns the user's owned (Azure AD registered) devices enriched with an EPMID from their Intune managed device record.",
+  "raw_response_body": {
+    "200": {
+      "description": "Array of devices owned by the specified user, enriched with Intune endpoint privilege management ID.",
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "User-owned device with selected Azure AD device properties and EPMID.",
+              "properties": {
+                "ID":                           { "type": "string" },
+                "accountEnabled":               { "type": "boolean" },
+                "approximateLastSignInDateTime":{ "type": "string" },
+                "createdDateTime":              { "type": "string" },
+                "deviceOwnership":              { "type": "string" },
+                "displayName":                  { "type": "string" },
+                "enrollmentType":               { "type": "string" },
+                "isCompliant":                  { "type": "boolean" },
+                "managementType":               { "type": "string" },
+                "manufacturer":                 { "type": "string" },
+                "model":                        { "type": "string" },
+                "operatingSystem":              { "type": "string" },
+                "onPremisesSyncEnabled":        { "type": "boolean" },
+                "operatingSystemVersion":       { "type": "string" },
+                "trustType":                    { "type": "string" },
+                "EPMID":                        { "type": "string", "description": "Intune endpoint privilege management ID, looked up from the user's managed devices." }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

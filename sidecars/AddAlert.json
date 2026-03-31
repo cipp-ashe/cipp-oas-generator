@@ -1,6 +1,7 @@
 {
   "override_confidence": "high",
-  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 12 params | Enriched 2026-03-02",
+  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 12 params | Enriched 2026-03-02 | Enriched 2026-03-25",
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence.",
   "add_params": [
     {
       "name": "actions",
@@ -105,8 +106,14 @@
       "required": false,
       "type": "string",
       "description": "Body parameter from PS1: count"
+    },
+    {
+      "name": "CustomSubject",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: CustomSubject"
     }
   ],
-  "trust_level": "verified",
-  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+  "trust_level": "verified"
 }

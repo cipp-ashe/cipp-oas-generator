@@ -1,6 +1,85 @@
 {
   "override_confidence": "high",
-  "_comment": "Auto-generated from: CippIntunePolicy (6 fields) | Enriched 2026-03-02",
+  "_comment": "Auto-generated from: CippIntunePolicy (6 fields) | Enriched 2026-03-02 | Enriched 2026-03-25",
+  "add_params": [
+    {
+      "name": "tenantFilter",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: tenantFilter"
+    },
+    {
+      "name": "URLName",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: URLName"
+    },
+    {
+      "name": "ID",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: ID"
+    },
+    {
+      "name": "ODataType",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: ODataType"
+    },
+    {
+      "name": "RawJSON",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: RawJSON"
+    },
+    {
+      "name": "displayName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: displayName"
+    },
+    {
+      "name": "description",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: description"
+    },
+    {
+      "name": "TemplateType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: TemplateType"
+    },
+    {
+      "name": "URLName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: URLName"
+    },
+    {
+      "name": "ID",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ID"
+    },
+    {
+      "name": "ODataType",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ODataType"
+    }
+  ],
   "override_method": "POST",
   "parameters": [
     {

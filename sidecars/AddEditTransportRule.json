@@ -1,7 +1,7 @@
 {
   "override_confidence": "high",
-  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 113 params | Enriched 2026-03-02",
-  "description": "This function creates a new transport rule or edits an existing one (mail flow rule).",
+  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 113 params | Enriched 2026-03-02 | Enriched 2026-03-25",
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence.",
   "add_params": [
     {
       "name": "actionType",
@@ -922,8 +922,99 @@
       "required": false,
       "type": "string",
       "description": "Body parameter from PS1: Count"
+    },
+    {
+      "name": "AttachmentNameMatchesPatterns",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AttachmentNameMatchesPatterns"
+    },
+    {
+      "name": "AttachmentPropertyContainsWords",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AttachmentPropertyContainsWords"
+    },
+    {
+      "name": "AttachmentHasExecutableContent",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AttachmentHasExecutableContent"
+    },
+    {
+      "name": "AttachmentIsPasswordProtected",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AttachmentIsPasswordProtected"
+    },
+    {
+      "name": "AttachmentIsUnsupported",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AttachmentIsUnsupported"
+    },
+    {
+      "name": "AttachmentProcessingLimitExceeded",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: AttachmentProcessingLimitExceeded"
+    },
+    {
+      "name": "IncidentReportContent",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: IncidentReportContent"
+    },
+    {
+      "name": "ExceptIfAttachmentNameMatchesPatterns",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ExceptIfAttachmentNameMatchesPatterns"
+    },
+    {
+      "name": "ExceptIfAttachmentPropertyContainsWords",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ExceptIfAttachmentPropertyContainsWords"
+    },
+    {
+      "name": "ExceptIfAttachmentHasExecutableContent",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ExceptIfAttachmentHasExecutableContent"
+    },
+    {
+      "name": "ExceptIfAttachmentIsPasswordProtected",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ExceptIfAttachmentIsPasswordProtected"
+    },
+    {
+      "name": "ExceptIfAttachmentIsUnsupported",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ExceptIfAttachmentIsUnsupported"
+    },
+    {
+      "name": "ExceptIfAttachmentProcessingLimitExceeded",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ExceptIfAttachmentProcessingLimitExceeded"
     }
   ],
   "trust_level": "verified",
-  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+  "description": "This function creates a new transport rule or edits an existing one (mail flow rule)."
 }

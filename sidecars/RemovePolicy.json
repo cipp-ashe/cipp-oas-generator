@@ -1,6 +1,43 @@
 {
   "override_confidence": "high",
-  "_comment": "Auto-generated from: CippIntunePolicy (6 fields) | Enriched 2026-03-02",
+  "_comment": "Auto-generated from: CippIntunePolicy (6 fields) | Enriched 2026-03-02 | Enriched 2026-03-25",
+  "add_params": [
+    {
+      "name": "tenantFilter",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: tenantFilter"
+    },
+    {
+      "name": "ID",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: ID"
+    },
+    {
+      "name": "URLName",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query parameter from PS1: URLName"
+    },
+    {
+      "name": "ID",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: ID"
+    },
+    {
+      "name": "URLName",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: URLName"
+    }
+  ],
   "override_method": "POST",
   "parameters": [
     {

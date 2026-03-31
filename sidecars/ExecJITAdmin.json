@@ -1,7 +1,7 @@
 {
   "override_confidence": "high",
-  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 15 params | Enriched 2026-03-02",
-  "description": "Just-in-time admin management API endpoint. This function can create users, add roles, remove roles, delete, or disable a user.",
+  "_comment": "AUTO-GENERATED \u2014 PARTIAL endpoint with 15 params | Enriched 2026-03-02 | Enriched 2026-03-25",
+  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence.",
   "add_params": [
     {
       "name": "AdminRoles",
@@ -142,8 +142,15 @@
       "required": false,
       "type": "string",
       "description": "Body parameter from PS1: Reason"
+    },
+    {
+      "name": "GroupMemberships",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: GroupMemberships"
     }
   ],
   "trust_level": "verified",
-  "notes": "Parameters extracted from: api, frontend. Verified and promoted to high confidence."
+  "description": "Just-in-time admin management API endpoint. This function can create users, add roles, remove roles, delete, or disable a user."
 }

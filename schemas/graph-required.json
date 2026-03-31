@@ -1,0 +1,122 @@
+{
+  "POST /users": [
+    "accountEnabled",
+    "displayName",
+    "mailNickname",
+    "passwordProfile",
+    "userPrincipalName"
+  ],
+  "PATCH /users/{id}": [],
+  "DELETE /users/{id}": [],
+  "POST /groups": [
+    "displayName",
+    "mailEnabled",
+    "mailNickname",
+    "securityEnabled"
+  ],
+  "PATCH /groups/{id}": [],
+  "DELETE /groups/{id}": [],
+  "POST /applications": [
+    "displayName"
+  ],
+  "PATCH /applications/{id}": [],
+  "DELETE /applications/{id}": [],
+  "POST /servicePrincipals": [
+    "appId"
+  ],
+  "DELETE /servicePrincipals/{id}": [],
+  "POST /oauth2PermissionGrants": [
+    "clientId",
+    "consentType",
+    "resourceId",
+    "scope"
+  ],
+  "DELETE /oauth2PermissionGrants/{id}": [],
+  "POST /servicePrincipals/{id}/appRoleAssignments": [
+    "principalId",
+    "resourceId",
+    "appRoleId"
+  ],
+  "POST /identity/conditionalAccess/policies": [
+    "displayName",
+    "state",
+    "conditions",
+    "grantControls"
+  ],
+  "PATCH /identity/conditionalAccess/policies/{id}": [],
+  "DELETE /identity/conditionalAccess/policies/{id}": [],
+  "POST /identity/conditionalAccess/namedLocations": [
+    "@odata.type",
+    "displayName"
+  ],
+  "PATCH /identity/conditionalAccess/namedLocations/{id}": [],
+  "DELETE /identity/conditionalAccess/namedLocations/{id}": [],
+  "POST /subscriptions": [
+    "changeType",
+    "notificationUrl",
+    "resource",
+    "expirationDateTime"
+  ],
+  "PATCH /subscriptions/{id}": [
+    "expirationDateTime"
+  ],
+  "DELETE /subscriptions/{id}": [],
+  "POST /users/{id}/authentication/phoneMethods": [
+    "phoneNumber",
+    "phoneType"
+  ],
+  "DELETE /users/{id}/authentication/phoneMethods/{id}": [],
+  "POST /deviceAppManagement/mobileApps": [
+    "@odata.type",
+    "displayName"
+  ],
+  "PATCH /deviceAppManagement/mobileApps/{id}": [],
+  "DELETE /deviceAppManagement/mobileApps/{id}": [],
+  "POST /deviceManagement/deviceConfigurations": [
+    "@odata.type",
+    "displayName"
+  ],
+  "PATCH /deviceManagement/deviceConfigurations/{id}": [],
+  "DELETE /deviceManagement/deviceConfigurations/{id}": [],
+  "POST /deviceManagement/deviceCompliancePolicies": [
+    "@odata.type",
+    "displayName"
+  ],
+  "PATCH /deviceManagement/deviceCompliancePolicies/{id}": [],
+  "DELETE /deviceManagement/deviceCompliancePolicies/{id}": [],
+  "POST /deviceManagement/importedWindowsAutopilotDeviceIdentities": [
+    "serialNumber"
+  ],
+  "DELETE /deviceManagement/importedWindowsAutopilotDeviceIdentities/{id}": [],
+  "POST /security/auditLog/queries": [
+    "displayName",
+    "filterStartDateTime",
+    "filterEndDateTime"
+  ],
+  "DELETE /security/auditLog/queries/{id}": [],
+  "POST /applicationTemplates/{id}/instantiate": [
+    "displayName"
+  ],
+  "POST /teams": [
+    "template@odata.bind"
+  ],
+  "PATCH /teams/{id}": [],
+  "POST /teams/{id}/channels": [
+    "displayName"
+  ],
+  "DELETE /teams/{id}/channels/{id}": [],
+  "POST /sites/{id}/lists": [
+    "displayName",
+    "list"
+  ],
+  "POST /identityGovernance/privilegedAccess/group/eligibilityScheduleRequests": [
+    "action",
+    "principalId",
+    "groupId",
+    "accessId"
+  ],
+  "POST /identityGovernance/entitlementManagement/accessPackages": [
+    "displayName",
+    "isHidden"
+  ]
+}

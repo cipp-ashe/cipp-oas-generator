@@ -1,7 +1,11 @@
 {
   "override_confidence": "high",
-  "_comment": "Enriched with PS1 data on 2026-03-02",
-  "parameters": [
+  "override_methods": [
+    "POST"
+  ],
+  "_comment": "Enriched with PS1 data on 2026-03-02 | Enriched 2026-03-25",
+  "notes": "ORPHAN \u2014 frontend calls /api/ExecUserSettings (CippSettingsSideBar.jsx) but no PS1 exists. User settings persistence is frontend-only as of v10.1.x.",
+  "add_params": [
     {
       "name": "currentSettings",
       "in": "body",
@@ -18,8 +22,20 @@
     }
   ],
   "trust_level": "reversed",
-  "override_methods": [
-    "POST"
-  ],
-  "notes": "ORPHAN \u2014 frontend calls /api/ExecUserSettings (CippSettingsSideBar.jsx) but no PS1 exists. User settings persistence is frontend-only as of v10.1.x."
+  "parameters": [
+    {
+      "name": "currentSettings",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: currentSettings"
+    },
+    {
+      "name": "user",
+      "in": "body",
+      "required": false,
+      "type": "string",
+      "description": "Body parameter from PS1: user"
+    }
+  ]
 }

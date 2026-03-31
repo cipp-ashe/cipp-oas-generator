@@ -14,8 +14,8 @@
       "name": "user",
       "in": "body",
       "required": true,
-      "type": "array",
-      "description": "Array of user principal names to offboard"
+      "type": "LabelValue",
+      "description": "User(s) to offboard — LabelValue with array of user principal names"
     },
     {
       "name": "ConvertToShared",

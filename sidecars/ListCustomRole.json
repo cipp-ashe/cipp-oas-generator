@@ -1,6 +1,0 @@
-{
-  "override_confidence": "high",
-  "_comment": "AUTO-GENERATED \u2014 review before publishing. trust_level=inferred.",
-  "trust_level": "inferred",
-  "notes": "BLIND endpoint \u2014 API reads $Request.Body as a blob with no direct field access. Downstream services: lancedb. No frontend params found. Endpoint may be backend-only or frontend call not detected by scanner."
-}

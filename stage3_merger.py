@@ -4,7 +4,6 @@ Reconciles Stage 1 (API scan) + Stage 2 (frontend scan) + sidecars (human overri
 
 Outputs:
   out/merged-params.json     — authoritative param list per endpoint
-  out/mismatch-report.json   — structured drift report per endpoint
   out/coverage-report.json   — coverage tier breakdown with sidecar candidates
 
 Coverage tiers (assigned per endpoint):
@@ -28,6 +27,7 @@ from pathlib import Path
 from config import (
     OUT_DIR, SIDECARS_DIR, SHARED_PARAM_REFS, FRONTEND_NOISE,
     COVERAGE_TIERS, KNOWN_URL_ALIASES, KNOWN_NON_PS1_ENDPOINTS,
+    PASSTHRU_ENDPOINTS,
 )
 
 # ── Sidecar schema (validated on load) ───────────────────────────────────────
@@ -45,6 +45,10 @@ _SIDECAR_ALLOWED_KEYS = {
     "x_cipp_warnings",    # List of strings — forwarded to OAS as x-cipp-warnings extension
     # Deprecation
     "deprecated",         # true/false — marks the endpoint deprecated in OAS
+    # Passthru variants — instructs stage_passthru_builder to emit additional operation variants
+    "add_passthru_variants",  # List of variant descriptors for passthru endpoints
+    # Dual-mode response overrides — per-mode response schema overrides for dual-mode endpoints
+    "dual_mode_response",     # Dict of {mode: OAS schema} — overrides variant response_schema
 }
 _ADD_PARAM_REQUIRED = {"name", "in"}
 _ADD_PARAM_ALLOWED = {"name", "in", "required", "type", "description", "confidence"}
@@ -359,6 +363,14 @@ def merge_param_lists(
         if desc:
             entry["description"] = desc
 
+        # required: propagate from API source only.
+        # Frontend required = client-side form validation, not an API contract.
+        # Sidecar add_params with required=true override this in apply_sidecar_additions.
+        if api_p and api_p.get("required"):
+            entry["required"] = True
+            if api_p.get("required_source"):
+                entry["required_source"] = api_p["required_source"]
+
         merged.append(entry)
 
     return merged, mismatches
@@ -382,7 +394,20 @@ def apply_sidecar_additions(
         entry.setdefault("confidence", "high")
 
         if cn in all_names:
-            # Replace existing entry — sidecar override
+            # Replace existing entry — sidecar override.
+            # Exception: if the merged entry has required=True from Stage 1 AST analysis
+            # and the sidecar does not explicitly assert required=True, preserve Stage 1's
+            # signal. Auto-generated sidecars default to required=False which should not
+            # negate a concrete required inference from the scanner.
+            existing = next(
+                (e for e in merged_body + merged_query if canonical_name(e["name"]) == cn),
+                None
+            )
+            if existing and existing.get("required") and not p.get("required"):
+                entry["required"] = True
+                if existing.get("required_source"):
+                    entry["required_source"] = existing["required_source"]
+
             if p.get("in", "body") == "query":
                 merged_query = [e for e in merged_query if canonical_name(e["name"]) != cn]
                 merged_query.append(entry)
@@ -459,6 +484,74 @@ def assign_coverage_tier(
     return "PARTIAL"
 
 
+def _assign_passthru_coverage(ep_data: dict, passthru_ep: dict) -> None:
+    """Upgrade coverage tier to PASSTHRU if variants were resolved."""
+    if passthru_ep.get("variants"):
+        ep_data["coverage_tier"] = "PASSTHRU"
+
+
+def _merge_sidecar_passthru_variants(passthru_ep: dict, sidecar: dict) -> None:
+    """Merge sidecar add_passthru_variants into the builder's variant list."""
+    sidecar_variants = sidecar.get("add_passthru_variants", [])
+    if not sidecar_variants:
+        return
+
+    # Index existing variants by endpoint_value for replacement
+    existing = {v["endpoint_value"]: i for i, v in enumerate(passthru_ep["variants"])}
+
+    for sv in sidecar_variants:
+        ev = sv["endpoint_value"]
+        if ev in existing:
+            # Sidecar replaces existing variant (highest authority)
+            passthru_ep["variants"][existing[ev]] = sv
+        else:
+            passthru_ep["variants"].append(sv)
+
+
+def _attach_passthru_data(ep_data: dict, passthru_ep: dict) -> None:
+    """Attach passthru resolution data to the merged endpoint for Stage 4."""
+    ep_data["passthru_resolved"] = {
+        "coverage": passthru_ep.get("coverage", "PASSTHRU"),
+        "discriminator_param": passthru_ep.get("discriminator_param", "Endpoint"),
+        "variants": passthru_ep.get("variants", []),
+        "unresolved": passthru_ep.get("unresolved", []),
+    }
+
+
+def _get_registry_enrichment_stats() -> dict:
+    """Read registry and return curated/discovered/total counts."""
+    registry_path = Path(__file__).parent / "schemas" / "schema-registry.json"
+    if not registry_path.exists():
+        return {"curated": 0, "discovered": 0, "total": 0}
+    reg = json.loads(registry_path.read_text())
+    graph = reg.get("graph", {})
+    return {
+        "curated": sum(1 for e in graph.values() if e.get("source") == "curated"),
+        "discovered": sum(1 for e in graph.values() if e.get("source") == "discovered"),
+        "total": len(graph),
+    }
+
+
+def _attach_dual_mode_data(ep_data: dict, dual_mode_ep: dict) -> None:
+    """Attach dual-mode resolution data to the merged endpoint for Stage 4."""
+    ep_data["dual_mode_resolved"] = {
+        "dual_mode": dual_mode_ep.get("dual_mode", True),
+        "discriminator_param": dual_mode_ep.get("discriminator_param"),
+        "variants": dual_mode_ep.get("variants", []),
+    }
+
+
+def _merge_sidecar_dual_mode(dual_mode_ep: dict, sidecar: dict) -> None:
+    """Merge sidecar dual_mode_response overrides into the variant list."""
+    overrides = sidecar.get("dual_mode_response", {})
+    if not overrides:
+        return
+    for variant in dual_mode_ep.get("variants", []):
+        mode = variant["mode"]
+        if mode in overrides:
+            variant["response_schema"] = overrides[mode]
+
+
 def run(endpoint_filter: str | None = None) -> dict:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     SIDECARS_DIR.mkdir(parents=True, exist_ok=True)
@@ -473,6 +566,22 @@ def run(endpoint_filter: str | None = None) -> dict:
 
     stage1 = _load("endpoint-index", endpoint_filter)
     stage2 = _load("frontend-calls", endpoint_filter)
+
+    # Load passthru-resolved data (optional — pipeline may not have run passthru builder yet)
+    def _load_passthru(ep: str | None) -> dict:
+        if ep:
+            path = OUT_DIR / f"passthru-resolved-{ep}.json"
+            if path.exists():
+                return json.loads(path.read_text())
+        path = OUT_DIR / "passthru-resolved.json"
+        if path.exists():
+            return json.loads(path.read_text())
+        return {}
+
+    passthru_data = _load_passthru(endpoint_filter)
+    passthru_endpoints_map: dict = passthru_data.get("passthru_endpoints", {})
+    dual_mode_data: dict = passthru_data.get("dual_mode_endpoints", {})
+    standard_responses: dict = passthru_data.get("standard_responses", {})
 
     api_endpoints = stage1["endpoints"]
     fe_endpoints  = stage2["endpoints"]
@@ -530,7 +639,7 @@ def run(endpoint_filter: str | None = None) -> dict:
         try:
             sidecar, warnings = load_sidecar(endpoint)
         except (json.JSONDecodeError, ValueError) as e:
-            print(f"[Stage 3] ⚠ Sidecar error for {endpoint}: {e}")
+            print(f"[Stage 3] WARN Sidecar error for {endpoint}: {e}")
             sidecar, warnings = {}, [str(e)]
 
         if warnings:
@@ -609,6 +718,32 @@ def run(endpoint_filter: str | None = None) -> dict:
 
         # Coverage tier
         tier = assign_coverage_tier(api_data, fe_data, merged_query, merged_body, bool(sidecar))
+
+        # ── PASSTHRU tier + sidecar variant merge ─────────────────────────
+        # If this endpoint is in the passthru builder's output, apply PASSTHRU
+        # logic: merge sidecar add_passthru_variants, upgrade tier, attach data.
+        _passthru_ep = passthru_endpoints_map.get(endpoint)
+        _passthru_resolved_data: dict | None = None
+        if _passthru_ep is not None:
+            _merge_sidecar_passthru_variants(_passthru_ep, sidecar)
+            _tier_holder: dict = {"coverage_tier": tier}
+            _assign_passthru_coverage(_tier_holder, _passthru_ep)
+            tier = _tier_holder["coverage_tier"]
+            _attach_passthru_data(_tier_holder, _passthru_ep)
+            _passthru_resolved_data = _tier_holder.get("passthru_resolved")
+
+        # ── Dual-mode sidecar merge + data attachment ──────────────────────
+        # If this endpoint is in the dual_mode_endpoints map, apply sidecar
+        # dual_mode_response overrides and attach resolved variant data.
+        _dual_mode_resolved_data: dict | None = None
+        if endpoint in dual_mode_data:
+            dm_ep = dual_mode_data[endpoint]
+            if sidecar:
+                _merge_sidecar_dual_mode(dm_ep, sidecar)
+            _dm_holder: dict = {}
+            _attach_dual_mode_data(_dm_holder, dm_ep)
+            _dual_mode_resolved_data = _dm_holder.get("dual_mode_resolved")
+
         coverage_counts[tier] = coverage_counts.get(tier, 0) + 1
 
         if tier == "BLIND" and not sidecar:
@@ -665,7 +800,9 @@ def run(endpoint_filter: str | None = None) -> dict:
             ),
             "query_params":        merged_query,
             "body_params":         merged_body,
-            "downstream":          api_data.get("downstream", []),
+            "downstream":              api_data.get("downstream", []),
+            "graph_calls":             api_data.get("graph_calls", []),
+            "computed_fields":          api_data.get("computed_fields", []),
             "has_scheduled_branch": api_data.get("has_scheduled_branch", False),
             "has_dynamic_options": api_data.get("has_dynamic_options", False),
             "dynamic_fields":      api_data.get("dynamic_fields", []),
@@ -673,6 +810,7 @@ def run(endpoint_filter: str | None = None) -> dict:
             "extra_responses":     sidecar.get("add_responses", {}),
             "call_sites":          fe_data.get("call_sites", []),
             "url_patterns":        fe_data.get("url_patterns", []),
+            "response_field_hints": fe_data.get("response_field_hints"),
             "sidecar_applied":     bool(sidecar),
             # Frontend scan flags — passed through for Stage 4 OAS extensions
             "has_data_transform":          fe_data.get("has_data_transform", False),
@@ -687,8 +825,16 @@ def run(endpoint_filter: str | None = None) -> dict:
             "tested_version":      sidecar.get("tested_version"),
             "deprecated":          sidecar.get("deprecated", False),
             "x_cipp_warnings":     sidecar.get("x_cipp_warnings", []),
+            # PASSTHRU resolved data — present only for PASSTHRU-tier endpoints
+            "passthru_resolved":   _passthru_resolved_data,
+            # Dual-mode resolved data — present only for dual-mode endpoints
+            "dual_mode_resolved":  _dual_mode_resolved_data,
             "_source":             "stage3_merger",
         }
+
+        # Attach assembled response schema from passthru builder when available
+        if endpoint in standard_responses:
+            merged_output[endpoint]["assembled_response_schema"] = standard_responses[endpoint]
 
         if mismatches:
             all_mismatches[endpoint] = mismatches
@@ -711,11 +857,6 @@ def run(endpoint_filter: str | None = None) -> dict:
         "with_sidecar_overrides": with_sidecar,
         "sidecar_warnings":     sidecar_warnings,
         "endpoints":            merged_output,
-    }
-
-    mismatch_file_output = {
-        "total_endpoints_with_mismatches": len(all_mismatches),
-        "mismatches": all_mismatches,
     }
 
     # Categorise sidecar candidates by reason for traceability
@@ -816,20 +957,30 @@ def run(endpoint_filter: str | None = None) -> dict:
             "non_string_params": _non_string_params,
             "pct_typed":         _type_coverage_pct,
         },
+        # PASSTHRU gap tracking — unresolved variants from the passthru builder.
+        # Populated only when passthru-resolved.json was loaded.
+        "passthru_gaps": {
+            ep: passthru_endpoints_map[ep].get("unresolved", [])
+            for ep in passthru_endpoints_map
+            if passthru_endpoints_map[ep].get("unresolved")
+        },
+        # Registry enrichment stats — how many Graph operations are curated vs auto-discovered
+        "registry_enrichment": _get_registry_enrichment_stats(),
         "note": (
             "blind_endpoints: API function found but zero params extracted. "
             "probable_404s: ORPHAN endpoints with active call sites — genuine runtime 404s in CIPP. "
             "orphan_delta.new: endpoints that became ORPHAN since last run — investigate immediately. "
             "sidecar_candidates = all endpoints without a sidecar that need one. "
             "type_inference_coverage.pct_typed: % params with a richer type than default 'string' — "
-            "increases as sidecars and TYPE_HINTS improve."
+            "increases as sidecars and TYPE_HINTS improve. "
+            "passthru_gaps: unresolved PASSTHRU variants per endpoint. "
+            "registry_enrichment: curated vs discovered Graph operations in the schema registry."
         ),
     }
 
     # Write — single-endpoint runs go to separate files to preserve corpus output
     suffix = f"-{endpoint_filter}" if endpoint_filter else ""
     (OUT_DIR / f"merged-params{suffix}.json").write_text(json.dumps(merged_file_output, indent=2))
-    (OUT_DIR / f"mismatch-report{suffix}.json").write_text(json.dumps(mismatch_file_output, indent=2))
     if not endpoint_filter:
         (OUT_DIR / "coverage-report.json").write_text(json.dumps(coverage_file_output, indent=2))
 
@@ -842,20 +993,20 @@ def run(endpoint_filter: str | None = None) -> dict:
         f"ORPHAN={coverage_counts.get('ORPHAN',0)}"
     )
     if blind_endpoints:
-        print(f"[Stage 3] ⚠ {len(blind_endpoints)} BLIND endpoints need sidecars: "
+        print(f"[Stage 3] WARN {len(blind_endpoints)} BLIND endpoints need sidecars: "
               f"{blind_endpoints[:5]}{'...' if len(blind_endpoints) > 5 else ''}")
     if _probable_404s:
         p404_names = [p["endpoint"] for p in _probable_404s if not p.get("deprecated")]
         if p404_names:
-            print(f"[Stage 3] 🔴 {len(p404_names)} probable production 404s (active call sites, no PS1): "
+            print(f"[Stage 3] ERROR {len(p404_names)} probable production 404s (active call sites, no PS1): "
                   f"{p404_names[:5]}{'...' if len(p404_names) > 5 else ''}")
     if _new_orphans:
-        print(f"[Stage 3] 🆕 {len(_new_orphans)} NEW orphans since last run: {_new_orphans}")
+        print(f"[Stage 3] NEW {len(_new_orphans)} NEW orphans since last run: {_new_orphans}")
     if sidecar_warnings:
-        print(f"[Stage 3] ⚠ Sidecar warnings for: {sorted(sidecar_warnings)}")
+        print(f"[Stage 3] WARN Sidecar warnings for: {sorted(sidecar_warnings)}")
 
     if endpoint_filter and endpoint_filter in all_mismatches:
-        print(f"\n── Mismatch report for {endpoint_filter} ──")
+        print(f"\n-- Mismatch report for {endpoint_filter} --")
         for m in all_mismatches[endpoint_filter]:
             print(f"  [{m['issue']}] {m['param']}: {m['detail']}")
 

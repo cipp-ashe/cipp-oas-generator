@@ -1,0 +1,184 @@
+{
+  "New-MailContact": [
+    "Name",
+    "ExternalEmailAddress"
+  ],
+  "Remove-MailContact": [
+    "Identity"
+  ],
+  "Enable-Mailbox": [
+    "Identity"
+  ],
+  "Remove-Mailbox": [
+    "Identity"
+  ],
+  "Get-Mailbox": [],
+  "Set-Mailbox": [],
+  "New-DistributionGroup": [
+    "Name"
+  ],
+  "Set-DistributionGroup": [],
+  "Remove-DistributionGroup": [
+    "Identity"
+  ],
+  "Add-DistributionGroupMember": [
+    "Identity",
+    "Member"
+  ],
+  "Remove-DistributionGroupMember": [
+    "Identity",
+    "Member"
+  ],
+  "Get-DistributionGroupMember": [
+    "Identity"
+  ],
+  "New-UnifiedGroup": [
+    "DisplayName"
+  ],
+  "Set-UnifiedGroup": [
+    "Identity"
+  ],
+  "Remove-UnifiedGroup": [
+    "Identity"
+  ],
+  "Add-UnifiedGroupLinks": [
+    "Identity",
+    "LinkType",
+    "Links"
+  ],
+  "Remove-UnifiedGroupLinks": [
+    "Identity",
+    "LinkType",
+    "Links"
+  ],
+  "Add-MailboxPermission": [
+    "Identity",
+    "User",
+    "AccessRights"
+  ],
+  "Remove-MailboxPermission": [
+    "Identity",
+    "User",
+    "AccessRights"
+  ],
+  "Add-RecipientPermission": [
+    "Identity",
+    "Trustee",
+    "AccessRights"
+  ],
+  "Remove-RecipientPermission": [
+    "Identity",
+    "Trustee",
+    "AccessRights"
+  ],
+  "Add-MailboxFolderPermission": [
+    "Identity",
+    "User",
+    "AccessRights"
+  ],
+  "Set-MailboxFolderPermission": [
+    "Identity",
+    "User",
+    "AccessRights"
+  ],
+  "Remove-MailboxFolderPermission": [
+    "Identity",
+    "User"
+  ],
+  "New-TransportRule": [
+    "Name"
+  ],
+  "Set-TransportRule": [
+    "Identity"
+  ],
+  "Remove-TransportRule": [
+    "Identity"
+  ],
+  "New-InboundConnector": [
+    "Name",
+    "ConnectorType"
+  ],
+  "Set-InboundConnector": [
+    "Identity"
+  ],
+  "Remove-InboundConnector": [
+    "Identity"
+  ],
+  "New-OutboundConnector": [
+    "Name",
+    "ConnectorType"
+  ],
+  "Set-OutboundConnector": [
+    "Identity"
+  ],
+  "Remove-OutboundConnector": [
+    "Identity"
+  ],
+  "New-HostedContentFilterPolicy": [
+    "Name"
+  ],
+  "Set-HostedContentFilterPolicy": [
+    "Identity"
+  ],
+  "Remove-HostedContentFilterPolicy": [
+    "Identity"
+  ],
+  "New-HostedContentFilterRule": [
+    "Name",
+    "HostedContentFilterPolicy"
+  ],
+  "Set-HostedContentFilterRule": [
+    "Identity"
+  ],
+  "Set-HostedConnectionFilterPolicy": [
+    "Identity"
+  ],
+  "New-SafeLinksPolicy": [
+    "Name"
+  ],
+  "Set-SafeLinksPolicy": [
+    "Identity"
+  ],
+  "Remove-SafeLinksPolicy": [
+    "Identity"
+  ],
+  "New-SafeAttachmentPolicy": [
+    "Name"
+  ],
+  "Set-SafeAttachmentPolicy": [
+    "Identity"
+  ],
+  "Remove-SafeAttachmentPolicy": [
+    "Identity"
+  ],
+  "New-QuarantinePolicy": [
+    "Name"
+  ],
+  "Set-QuarantinePolicy": [
+    "Identity"
+  ],
+  "Remove-QuarantinePolicy": [
+    "Identity"
+  ],
+  "Remove-MobileDevice": [
+    "Identity"
+  ],
+  "Search-UnifiedAuditLog": [
+    "StartDate",
+    "EndDate"
+  ],
+  "Search-unifiedAuditLog": [
+    "StartDate",
+    "EndDate"
+  ],
+  "Get-BlockedSenderAddress": [],
+  "Get-QuarantineMessage": [],
+  "Get-MailboxStatistics": [],
+  "Get-MobileDeviceStatistics": [
+    "Mailbox"
+  ],
+  "Get-MessageTrace": [],
+  "Get-Recipient": [],
+  "Get-EXOMailbox": [],
+  "Get-EXORecipient": []
+}
